@@ -1,0 +1,29 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+*~
+arcade
+CMakeLists.txt
+cmake-build-debug/
+*.iml
+out
+gen### C++ template
+*.d
+*.slo
+*.lo
+*.o
+*.obj
+*.gch
+*.pch
+*.so
+*.dylib
+*.dll
+*.mod
+*.smod
+*.lai
+*.la
+*.a
+*.lib
+*.exe
+*.out
+*.app
+gen
