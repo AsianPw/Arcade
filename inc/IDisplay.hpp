@@ -10,9 +10,9 @@
 
 class IDisplay {
 	public:
-	virtual IDisplay() = default;
 	virtual ~IDisplay() = default;
 
+	public:
 	virtual bool	Display() = 0;
 	virtual bool	BindKey() = 0;
 };
