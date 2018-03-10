@@ -52,6 +52,10 @@ else
 endif
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@ $(LDFLAGS)
 
+generate_coverage: tests_run
+	@lcov --directory . -c -o rapport.info
+	@genhtml -o ../rapport -t "Coverage of tests" rapport.info
+
 tests_run:
 	@printf "%b" "\n$(COM_COLOR)--------------------Compilation Of $(UNIT_TEST)--------------------$(NO_COLOR)\n";
 	$(CXX) $(UNIT_SRCS) --coverage -o $(UNIT_TEST) $(UNIT_FLAGS) $(LDFLAGS)
@@ -64,9 +68,13 @@ ifneq ($(shell find -name '*~'),)
 	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Temporary file(s)\t$(OBJ_COLOR)($(shell find -name '*~'))$(NO_COLOR)\n";
 	@find -name '*~' -delete
 endif
-ifneq ($(shell find -name '*.gcda' -o -name '*.gcno'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Coverage file(s)\t$(OBJ_COLOR)($(shell find -name '*.gcda' -o -name '*.gcno'))$(NO_COLOR)\n";
-	@find -name '*.gcda' -delete -o -name '*.gcno' -delete
+ifneq ($(shell find -name '*.gcda' -o -name '*.gcno' -o -name '*.gcov'),)
+	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Coverage file(s)\t$(OBJ_COLOR)($(shell find -name '*.gcda' -o -name '*.gcno' -o -name '*.gcov'))$(NO_COLOR)\n";
+	@find -name '*.gcda' -delete -o -name '*.gcno' -delete -o -name '*.gcov' -delete
+endif
+ifneq ($(shell find -name '*.info'),)
+	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Info file(s)\t$(OBJ_COLOR)($(shell find -name '*.info'))$(NO_COLOR)\n";
+	@find -name '*.info' -delete
 endif
 ifneq ($(shell find -name '*.o'),)
 	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Object file(s)\t$(OBJ_COLOR)($(OBJS))$(NO_COLOR)\n";
@@ -93,4 +101,4 @@ endif
 
 re: fclean all
 
-.PHONY: all clean fclean re tests_run
+.PHONY: all clean fclean re tests_run generate_coverage

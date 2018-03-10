@@ -27,3 +27,8 @@ gen### C++ template
 *.out
 *.app
 gen
+*.gcov
+*.gcno
+*.gcda
+unit_test
+*.info

@@ -30,3 +30,8 @@ Test(Generate, framebuffer, .description = "Check if framebuffer is correctly al
 	std::vector<uint8_t>	*tmp = createFramebuffer(800, 600, 4);
 	cr_assert(tmp->size() == (800 * 600 * 4), "Test if size of framebuffer is good\n");
 }
+
+Test(Generate, framebuffer_bad_alloc, .description = "Test of big framebuffer allocation")
+{
+	cr_assert_any_throw(createFramebuffer(((size_t)~0), 100000, 4), "Exception doesn't catch\n");
+}
