@@ -19,7 +19,7 @@ class SfmlDisplay : public IDisplay
 
 	public:
 	bool	Display();
-	bool	BindKey();
+	bool	GetKey(arcade::TypeEvent typeEvent);
 
 	private:
 	sf::RenderWindow	*window;

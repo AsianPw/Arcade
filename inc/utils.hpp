@@ -11,6 +11,14 @@
 #include <cstdint>
 #include <vector>
 
+namespace arcade {
+	enum TypeEvent {
+		JOYSTICK,
+		KEYBOARD,
+		MOUSE
+	};
+}
+
 std::vector<uint8_t>	*createFramebuffer(size_t, size_t, size_t);
 
 #endif //CPP_ARCADE_UTILS_HPP

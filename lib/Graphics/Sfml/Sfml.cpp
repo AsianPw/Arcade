@@ -6,7 +6,7 @@
 */
 
 #include <SFML/Window.hpp>
-#include "../inc/Sfml.hpp"
+#include "../../../inc/Sfml.hpp"
 
 SfmlDisplay::SfmlDisplay(uint width, uint height){
 	this->width = width;
@@ -21,7 +21,15 @@ bool	SfmlDisplay::Display()
 	return (true);
 }
 
-bool	SfmlDisplay::BindKey()
-{
-	return (true);
+bool	SfmlDisplay::GetKey(arcade::TypeEvent typeEvent){
+	if (typeEvent == arcade::TypeEvent::KEYBOARD)
+	{
+		//compare with keyboard
+	}
+	else if (typeEvent == arcade::TypeEvent::MOUSE)
+	{
+		//compare with mouse
+	}
+
+	return (false);
 }
