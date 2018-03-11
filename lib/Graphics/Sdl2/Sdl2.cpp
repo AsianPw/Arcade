@@ -27,12 +27,15 @@ Sdl2::Sdl2(unsigned int width, unsigned int height)
 	allEvent.insert(std::pair<std::string, int>(arcade::CLOSE, SDL_WINDOWEVENT_CLOSE));
 	allEvent.insert(std::pair<std::string, int>(arcade::ESCAPE, SDL_SCANCODE_ESCAPE));
 	allEvent.insert(std::pair<std::string, int>(arcade::UP, SDL_SCANCODE_UP));
+	allEvent.insert(std::pair<std::string, int>(arcade::DOWN, SDL_SCANCODE_DOWN));
+	allEvent.insert(std::pair<std::string, int>(arcade::LEFT, SDL_SCANCODE_LEFT));
+	allEvent.insert(std::pair<std::string, int>(arcade::RIGHT, SDL_SCANCODE_RIGHT));
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		std::cerr << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << std::endl;
 		SDL_Quit();
 	} else {
-		window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, this->width, this->height, SDL_WINDOW_SHOWN);
 		if (window == nullptr) {
 			std::cerr << "Erreur lors de la creation de la fenetre SDL : " << SDL_GetError() << std::endl;
 			SDL_Quit();
@@ -49,7 +52,6 @@ bool	Sdl2::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent)
 {
 	auto	search = allEvent.find(currentEvent);
 
-	std::cout << "Key pressed" << std::endl;
 	if (search == allEvent.end())
 		return (false);
 	if (typeEvent == arcade::WINDOW && search->second == event.window.event)

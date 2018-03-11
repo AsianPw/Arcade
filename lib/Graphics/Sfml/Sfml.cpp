@@ -23,7 +23,7 @@ SfmlDisplay::SfmlDisplay(unsigned int width, unsigned int height)
 {
 	this->width = width;
 	this->height = height;
-	window = new sf::RenderWindow(sf::VideoMode(width, height), "Arcade");
+	window = new sf::RenderWindow(sf::VideoMode(width, height), "SFML");
 	allEvent.insert(std::pair<std::string, int>(arcade::CLOSE,sf::Event::Closed));
 	allEvent.insert(std::pair<std::string, int>(arcade::ESCAPE,sf::Keyboard::Escape));
 	allEvent.insert(std::pair<std::string, int>(arcade::UP,sf::Keyboard::Up));
