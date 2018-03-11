@@ -24,10 +24,8 @@ class SfmlDisplay : public IDisplay
 	bool	isKey();
 	void	destroyWindow();
 
-	public:
-	std::map<std::string, int>	allEvent;
-
 	private:
+	std::map<std::string, int>	allEvent;
 	sf::RenderWindow	*window;
 	sf::Event		event;
 	uint	width;

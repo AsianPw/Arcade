@@ -20,7 +20,7 @@ clean:
 		[ -f $$file/Makefile ] && make --no-print-directory -C "$$file" clean ; \
 	done
 
-fclean: clean
+fclean:
 	@for file in ./**/ ; do \
 		[ -f $$file/Makefile ] && make --no-print-directory -C "$$file" fclean ; \
 	done

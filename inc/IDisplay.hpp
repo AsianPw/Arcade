@@ -8,11 +8,11 @@
 #ifndef CPP_ARCADE_IDISPLAY_HPP
 #define CPP_ARCADE_IDISPLAY_HPP
 
+#include <string>
 #include "utils.hpp"
 
 class IDisplay {
 	public:
-	//virtual IDisplay(unsigned int, unsigned int) = 0;
 	virtual ~IDisplay() = default;
 
 	public:

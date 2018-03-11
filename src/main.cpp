@@ -7,8 +7,8 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <dlfcn.h>
 #include "../inc/IDisplay.hpp"
+#include "../inc/Loader.hpp"
 
 void	printHelp(const char *binaryName)
 {
@@ -18,26 +18,37 @@ void	printHelp(const char *binaryName)
 
 int	startArcade(char *libraryPath)
 {
-	void	*handle = dlopen(libraryPath, RTLD_LAZY);
+	Loader	*loader = nullptr;
+	IDisplay	*display = nullptr;
 
-	IDisplay* (*create)(unsigned int, unsigned int);
-	void (*destroy)(IDisplay*);
-
-	create = (IDisplay* (*)(unsigned int, unsigned int))dlsym(handle, "create_object");
-	destroy = (void (*)(IDisplay*))dlsym(handle, "destroy_object");
-
-	auto myClass = create(800, 600);
-	while (myClass->isOpen()) {
-		while (myClass->isKey())
-		{
-			if (myClass->GetKey(arcade::WINDOW, arcade::CLOSE))
-				myClass->destroyWindow();
-			if (myClass->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
-				myClass->destroyWindow();
-		}
-		myClass->Display();
+	if (!checkFileExist(libraryPath))
+		return (84);
+	try {
+		loader = new Loader(libraryPath);
+	} catch (char const *e) {
+		std::cerr << e << std::endl;
+		return (84);
 	}
-	destroy(myClass);
+	display = loader->create(800, 600);
+	while (display->isOpen()) {
+		while (display->isKey())
+		{
+			if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
+				display->destroyWindow();
+			if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
+				display->destroyWindow();
+			if (display->GetKey(arcade::KEYBOARD, arcade::UP))
+				std::cout << "Arrow Up is pressed !" << std::endl;
+			if (display->GetKey(arcade::KEYBOARD, arcade::DOWN))
+				std::cout << "Arrow Down is pressed !" << std::endl;
+			if (display->GetKey(arcade::KEYBOARD, arcade::LEFT))
+				std::cout << "Arrow Left is pressed !" << std::endl;
+			if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT))
+				std::cout << "Arrow Right is pressed !" << std::endl;
+		}
+		display->Display();
+	}
+	loader->destroy(display);
 	return (EXIT_SUCCESS);
 }
 
