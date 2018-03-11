@@ -18,6 +18,9 @@ namespace arcade {
 		KEYBOARD,
 		MOUSE
 	};
+
+	static const std::string	ESCAPE = "ESCAPE";
+	static const std::string	CLOSE = "CLOSE";
 }
 
 std::vector<uint8_t>	*createFramebuffer(size_t, size_t, size_t);

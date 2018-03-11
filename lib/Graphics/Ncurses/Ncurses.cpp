@@ -21,6 +21,8 @@ extern "C" void destroy_object(IDisplay* object)
 
 NcursesDisplay::NcursesDisplay(unsigned int w, unsigned int h)
 {
+	(void)w;
+	(void)h;
 	initscr();
 }
 
@@ -46,12 +48,10 @@ bool	NcursesDisplay::isKey()
 	return (false);
 }
 
-bool	NcursesDisplay::GetKey(arcade::TypeEvent typeEvent, char *type)
+bool	NcursesDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &type)
 {
-	if (typeEvent == arcade::KEYBOARD)
-	{
-		//
-	}
+	(void)typeEvent;
+	(void)type;
 	return (false);
 }
 

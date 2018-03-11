@@ -19,7 +19,7 @@ class IDisplay {
 	virtual bool	Display() = 0;
 	virtual bool	isKey() = 0;
 	virtual bool	isOpen() = 0;
-	virtual bool	GetKey(arcade::TypeEvent, char *) = 0;
+	virtual bool	GetKey(arcade::TypeEvent, std::string const &) = 0;
 	virtual void	destroyWindow() = 0;
 };
 

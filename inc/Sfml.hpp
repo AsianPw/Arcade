@@ -20,7 +20,7 @@ class SfmlDisplay : public IDisplay
 	public:
 	bool	Display();
 	bool	isOpen();
-	bool	GetKey(arcade::TypeEvent typeEvent, char *event);
+	bool	GetKey(arcade::TypeEvent, std::string const &);
 	bool	isKey();
 	void	destroyWindow();
 

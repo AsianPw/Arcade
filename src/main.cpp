@@ -30,9 +30,9 @@ int	startArcade(char *libraryPath)
 	while (myClass->isOpen()) {
 		while (myClass->isKey())
 		{
-			if (myClass->GetKey(arcade::WINDOW, "CLOSE"))
+			if (myClass->GetKey(arcade::WINDOW, arcade::CLOSE))
 				myClass->destroyWindow();
-			if (myClass->GetKey(arcade::KEYBOARD, "ESCAPE"))
+			if (myClass->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
 				myClass->destroyWindow();
 		}
 		myClass->Display();
