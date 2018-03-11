@@ -19,7 +19,8 @@ UNIT_SRCS	=	./tests/display.cpp	\
 				./src/utils.cpp	\
 
 SRCS		=	./src/main.cpp	\
-				./src/utils.cpp
+				./src/utils.cpp	\
+			./src/Loader.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 

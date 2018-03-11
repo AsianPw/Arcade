@@ -26,6 +26,10 @@ SfmlDisplay::SfmlDisplay(unsigned int width, unsigned int height)
 	window = new sf::RenderWindow(sf::VideoMode(width, height), "Arcade");
 	allEvent.insert(std::pair<std::string, int>(arcade::CLOSE,sf::Event::Closed));
 	allEvent.insert(std::pair<std::string, int>(arcade::ESCAPE,sf::Keyboard::Escape));
+	allEvent.insert(std::pair<std::string, int>(arcade::UP,sf::Keyboard::Up));
+	allEvent.insert(std::pair<std::string, int>(arcade::DOWN,sf::Keyboard::Down));
+	allEvent.insert(std::pair<std::string, int>(arcade::LEFT,sf::Keyboard::Left));
+	allEvent.insert(std::pair<std::string, int>(arcade::RIGHT,sf::Keyboard::Right));
 }
 
 SfmlDisplay::~SfmlDisplay()
@@ -49,8 +53,8 @@ bool	SfmlDisplay::isOpen()
 	return (window->isOpen());
 }
 
-bool	SfmlDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &curentEvent){
-	auto	search = allEvent.find(curentEvent);
+bool	SfmlDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent){
+	auto	search = allEvent.find(currentEvent);
 
 	if (search == allEvent.end())
 		return (false);

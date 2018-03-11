@@ -9,6 +9,7 @@
 #define CPP_ARCADE_NCURSES_HPP
 
 #include <string>
+#include <map>
 #include "IDisplay.hpp"
 
 class NcursesDisplay : public IDisplay {
@@ -22,6 +23,11 @@ class NcursesDisplay : public IDisplay {
 	bool	GetKey(arcade::TypeEvent typeEvent, std::string const &type);
 	bool	isKey();
 	void	destroyWindow();
+
+	private:
+	std::map<std::string, int>	allEvent;
+	int	currentKey;
+	WINDOW	*window;
 };
 
 #endif //CPP_ARCADE_NCURSES_HPP

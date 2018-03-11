@@ -9,6 +9,15 @@
 #include <cstdint>
 #include <vector>
 #include <iostream>
+#include <fcntl.h>
+#include <unistd.h>
+
+bool	checkFileExist(std::string const & file)
+{
+	if (!access(file.c_str(), F_OK))
+		return (true);
+	return (false);
+}
 
 std::vector<uint8_t>	*createFramebuffer(size_t width, size_t height, size_t type)
 {
