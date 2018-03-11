@@ -49,23 +49,25 @@ bool	Sdl2::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent)
 {
 	auto	search = allEvent.find(currentEvent);
 
+	std::cout << "Key pressed" << std::endl;
 	if (search == allEvent.end())
 		return (false);
 	if (typeEvent == arcade::WINDOW && search->second == event.window.event)
 		return (true);
-	if (typeEvent == arcade::KEYBOARD && search->second == event.key.keysym.sym)
+	if (typeEvent == arcade::KEYBOARD && search->second == event.key.keysym.scancode)
 		return (true);
 	return (false);
 }
 
 bool	Sdl2::isKey()
 {
-	return (false);
+	if (SDL_PollEvent(&event) == 0)
+		return (false);
+	return (true);
 }
 
 bool	Sdl2::isOpen()
 {
-	SDL_PollEvent(&event);
 	return (finish);
 }
 
@@ -76,6 +78,6 @@ bool	Sdl2::Display()
 
 void	Sdl2::destroyWindow()
 {
-	finish = !finish;
+	finish = false;
 	SDL_DestroyWindow(window);
 }

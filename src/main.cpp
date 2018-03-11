@@ -23,7 +23,12 @@ int	startArcade(char *libraryPath)
 
 	if (!checkFileExist(libraryPath))
 		return (84);
-	loader = new Loader(libraryPath);
+	try {
+		loader = new Loader(libraryPath);
+	} catch (char const *e) {
+		std::cerr << e << std::endl;
+		return (84);
+	}
 	display = loader->create(800, 600);
 	while (display->isOpen()) {
 		while (display->isKey())
@@ -51,7 +56,6 @@ int	main(int ac, char **av)
 {
 	int	exitValue = EXIT_SUCCESS;
 
-	printf("%s", av[1]);
 	if (ac == 2)
 		exitValue = startArcade(av[1]);
 	else

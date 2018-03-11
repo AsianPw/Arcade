@@ -18,11 +18,9 @@ Loader::Loader(char *libraryPath)
 		exit(84);
 	}
 	create = (IDisplay* (*)(unsigned int, unsigned int))dlsym(handle, "create_object");
-	if (create == nullptr) {
-		std::cerr << "Fail to load create" << std::endl;
-		exit(84);
-	}
 	destroy = (void (*)(IDisplay*))dlsym(handle, "destroy_object");
+	if (!create || !destroy)
+		throw "Incompatible Library !";
 }
 
 Loader::~Loader()
