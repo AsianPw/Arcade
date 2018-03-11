@@ -29,8 +29,9 @@ WARN_STRING	=	"[WARNING]"
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "%b" "\n$(WARN_COLOR)-----------------------Compilation Of $(NAME)----------------------$(NO_COLOR)\n";
+	@printf "%b" "\n$(WARN_COLOR)---------------Compilation Of $(NAME)---------------$(NO_COLOR)\n";
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	@printf "%b" "\n$(WARN_COLOR)---------------------------------Done---------------------------$(NO_COLOR)\n";
 
 clean:
 ifneq ($(shell find -name '*.o'),)

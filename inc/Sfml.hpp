@@ -14,15 +14,22 @@
 class SfmlDisplay : public IDisplay
 {
 	public:
-	SfmlDisplay(uint width, uint height);
-	~SfmlDisplay() = default;
+	SfmlDisplay(unsigned int width, unsigned int height);
+	~SfmlDisplay();
 
 	public:
 	bool	Display();
-	bool	GetKey(arcade::TypeEvent typeEvent);
+	bool	isOpen();
+	bool	GetKey(arcade::TypeEvent typeEvent, char *event);
+	bool	isKey();
+	void	destroyWindow();
+
+	public:
+	std::map<std::string, int>	allEvent;
 
 	private:
 	sf::RenderWindow	*window;
+	sf::Event		event;
 	uint	width;
 	uint	height;
 };

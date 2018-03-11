@@ -25,7 +25,7 @@ OBJS		=	$(SRCS:.cpp=.o)
 
 UNIT_FLAGS	=	-lcriterion
 
-LDFLAGS		=
+LDFLAGS		=	-ldl
 CXXFLAGS	=	-W -Wall -Wextra
 CPPFLAGS	=	-I ./inc/
 

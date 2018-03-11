@@ -13,6 +13,7 @@
 
 namespace arcade {
 	enum TypeEvent {
+		WINDOW,
 		JOYSTICK,
 		KEYBOARD,
 		MOUSE

@@ -12,11 +12,15 @@
 
 class IDisplay {
 	public:
+	//virtual IDisplay(unsigned int, unsigned int) = 0;
 	virtual ~IDisplay() = default;
 
 	public:
 	virtual bool	Display() = 0;
-	virtual bool	GetKey(arcade::TypeEvent) = 0;
+	virtual bool	isKey() = 0;
+	virtual bool	isOpen() = 0;
+	virtual bool	GetKey(arcade::TypeEvent, char *) = 0;
+	virtual void	destroyWindow() = 0;
 };
 
 #endif //CPP_ARCADE_IDISPLAY_HPP
