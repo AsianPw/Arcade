@@ -23,6 +23,7 @@ class SfmlDisplay : public IDisplay
 	bool	GetKey(arcade::TypeEvent, std::string const &);
 	bool	isKey();
 	void	destroyWindow();
+	void	setEvent(sf::Event &newEvent);
 
 	private:
 	std::map<std::string, int>	allEvent;

@@ -27,9 +27,9 @@ Vulkan::Vulkan(unsigned int width, unsigned int height){
 
 	this->width = width;
 	this->height = height;
-	glfwInit();
+	glfwInit();//todo exception
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	window = glfwCreateWindow(width, height, "Vulkan window", nullptr, nullptr);
+	window = glfwCreateWindow(width, height, "Arcade - Vulkan", nullptr, nullptr);//todo exception
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 	std::cout << extensionCount << " extensions supported" << std::endl;
 }
@@ -56,6 +56,7 @@ bool	Vulkan::isKey()
 
 bool	Vulkan::isOpen()
 {
+	glfwPollEvents();
 	return (!glfwWindowShouldClose(window));
 }
 

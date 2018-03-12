@@ -17,6 +17,7 @@ RM		=	rm -f
 
 UNIT_SRCS	=	./tests/display.cpp	\
 				./src/utils.cpp	\
+				./lib/Graphics/Sfml/Sfml.cpp	\
 
 SRCS		=	./src/main.cpp	\
 				./src/utils.cpp	\
@@ -24,7 +25,7 @@ SRCS		=	./src/main.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
-UNIT_FLAGS	=	-lcriterion
+UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system
 
 LDFLAGS		=	-ldl
 CXXFLAGS	=	-W -Wall -Wextra

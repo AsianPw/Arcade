@@ -72,3 +72,8 @@ void	SfmlDisplay::destroyWindow()
 {
 	window->close();
 }
+
+void	SfmlDisplay::setEvent(sf::Event &newEvent)
+{
+	event = newEvent;
+}
