@@ -28,7 +28,7 @@ OBJS		=	$(SRCS:.cpp=.o)
 UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system
 
 LDFLAGS		=	-ldl
-CXXFLAGS	=	-W -Wall -Wextra
+CXXFLAGS	=	-W -Wall -Wextra -std=c++14
 CPPFLAGS	=	-I ./inc/
 
 ifeq ($(DEBUG), y)

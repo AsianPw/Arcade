@@ -15,7 +15,7 @@ SRCS	=	./Vulkan.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-CXXFLAGS	=	-W -Wall -Wextra -fPIC -shared
+CXXFLAGS	=	-W -Wall -Wextra -fPIC -shared -std=c++14
 LDFLAGS		=	-lvulkan `pkg-config --cflags glfw3` `pkg-config --libs glfw3` -lGL -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread
 
 WARN_COLOR	=	\033[0;33m
