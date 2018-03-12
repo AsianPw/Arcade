@@ -45,6 +45,13 @@ WARN_STRING	=	"[WARNING]"
 
 all: $(NAME)
 
+install:
+	sudo apt update
+	sudo apt install libsdl2-dev
+	sudo apt install libsfml-dev
+	sudo apt install libglfw3
+	sudo apt install libglfw3-dev
+
 $(NAME): $(OBJS)
 ifeq ($(DEBUG), y)
 	@printf "%b" "\n$(WARN_COLOR)-----------------------[Debug Mode] $(NAME)----------------------$(NO_COLOR)\n";
@@ -107,4 +114,4 @@ endif
 
 re: fclean all
 
-.PHONY: all clean fclean re tests_run generate_coverage
+.PHONY: all clean fclean re tests_run generate_coverage install
