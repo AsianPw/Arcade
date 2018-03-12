@@ -77,7 +77,7 @@ ifneq ($(shell find -name '*.gcda' -o -name '*.gcno' -o -name '*.gcov'),)
 	@find -name '*.gcda' -delete -o -name '*.gcno' -delete -o -name '*.gcov' -delete
 endif
 ifneq ($(shell find -name '*.info'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Info file(s)\t$(OBJ_COLOR)($(shell find -name '*.info'))$(NO_COLOR)\n";
+	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Info file(s)\t\t$(OBJ_COLOR)($(shell find -name '*.info'))$(NO_COLOR)\n";
 	@find -name '*.info' -delete
 endif
 ifneq ($(shell find -name '*.o'),)
