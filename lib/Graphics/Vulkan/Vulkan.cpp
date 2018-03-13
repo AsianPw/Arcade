@@ -11,12 +11,16 @@
 #include <iostream>
 #include "Vulkan.hpp"
 
-extern "C" IDisplay* create_object(unsigned int w, unsigned int h)
+// When I wrote this,
+// only God and I understood what I was doing
+// Now, God only knows
+
+extern "C" IDisplay	*create_object(unsigned int w, unsigned int h)
 {
 	return new Vulkan(w, h);
 }
 
-extern "C" void destroy_object(IDisplay* object)
+extern "C" void	destroy_object(IDisplay *object)
 {
 	delete object;
 }
@@ -44,25 +48,26 @@ bool	Vulkan::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent
 	auto	search = allEvent.find(currentEvent);
 
 	(void)typeEvent;
-	if (search == allEvent.end())
-		return (false);
-	return (false);
+	if (search == allEvent.end()) {
+		return false;
+	}
+	return false;
 }
 
 bool	Vulkan::isKey()
 {
-	return (true);
+	return true;
 }
 
 bool	Vulkan::isOpen()
 {
 	glfwPollEvents();
-	return (!glfwWindowShouldClose(window));
+	return !glfwWindowShouldClose(window);
 }
 
 bool	Vulkan::Display()
 {
-	return (false);
+	return false;
 }
 
 void	Vulkan::destroyWindow()

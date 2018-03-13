@@ -16,12 +16,17 @@ CXX		=	g++
 RM		=	rm -f
 
 UNIT_SRCS	=	./tests/display.cpp	\
+				./tests/GraphicsSfmlTest.cpp	\
+				./tests/LoaderTest.cpp	\
 				./src/utils.cpp	\
 				./lib/Graphics/Sfml/Sfml.cpp	\
+				./src/Loader.cpp	\
+				./src/ArcadeException.cpp	\
 
 SRCS		=	./src/main.cpp	\
 				./src/utils.cpp	\
-			./src/Loader.cpp
+				./src/Loader.cpp	\
+				./src/ArcadeException.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -65,9 +70,9 @@ generate_coverage: tests_run
 	@lcov --directory . -c -o rapport.info
 	@genhtml -o ../rapport -t "Coverage of tests" rapport.info
 
-tests_run:
+tests_run: all
 	@printf "%b" "\n$(COM_COLOR)--------------------Compilation Of $(UNIT_TEST)--------------------$(NO_COLOR)\n";
-	$(CXX) $(UNIT_SRCS) --coverage -o $(UNIT_TEST) $(UNIT_FLAGS) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(UNIT_SRCS) --coverage -o $(UNIT_TEST) $(UNIT_FLAGS) $(LDFLAGS)
 	@printf "%b" "\n$(COM_COLOR)------------------------Launch Unit Test------------------------$(NO_COLOR)\n";
 	./$(UNIT_TEST) -j1 --always-succeed
 

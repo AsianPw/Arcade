@@ -9,12 +9,12 @@
 #include <iostream>
 #include "../../../inc/Sfml.hpp"
 
-extern "C" IDisplay* create_object(unsigned int w, unsigned int h)
+extern "C" IDisplay	*create_object(unsigned int w, unsigned int h)
 {
 	return new SfmlDisplay(w, h);
 }
 
-extern "C" void destroy_object(IDisplay* object)
+extern "C" void	destroy_object(IDisplay* object)
 {
 	delete object;
 }
@@ -34,38 +34,39 @@ SfmlDisplay::SfmlDisplay(unsigned int width, unsigned int height)
 
 SfmlDisplay::~SfmlDisplay()
 {
+	if (window)
+		window->close();
 }
 
 bool	SfmlDisplay::Display()
 {
 	window->clear();
 	window->display();
-	return (true);
+	return true;
 }
 
 bool	SfmlDisplay::isKey()
 {
-	return (window->pollEvent(event));
+	return window->pollEvent(event);
 }
 
 bool	SfmlDisplay::isOpen()
 {
-	return (window->isOpen());
+	return window->isOpen();
 }
 
 bool	SfmlDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent){
 	auto	search = allEvent.find(currentEvent);
 
 	if (search == allEvent.end())
-		return (false);
+		return false;
 	if (typeEvent == arcade::WINDOW && event.type == search->second)
-		return (true);
-	if (event.type == sf::Event::KeyPressed)
-	{
+		return true;
+	if (event.type == sf::Event::KeyPressed) {
 		if (event.key.code == search->second)
-			return (true);
+			return true;
 	}
-	return (false);
+	return false;
 }
 
 void	SfmlDisplay::destroyWindow()

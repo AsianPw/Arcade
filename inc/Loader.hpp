@@ -12,12 +12,12 @@
 
 class Loader {
 	public:
-	explicit Loader(char *library_path);
+	explicit Loader(const char *);
 	~Loader();
 
 	public:
 	IDisplay	*(*create)(unsigned int, unsigned int);
-	void		(*destroy)(IDisplay*);
+	void		(*destroy)(IDisplay *);
 
 	private:
 	void		*handle;

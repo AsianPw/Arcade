@@ -60,5 +60,5 @@ int	main(int ac, char **av)
 		exitValue = startArcade(av[1]);
 	else
 		printHelp(av[0]);
-	return (exitValue);
+	return exitValue;
 }

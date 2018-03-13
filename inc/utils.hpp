@@ -28,7 +28,7 @@ namespace arcade {
 	static const std::string	RIGHT = "RIGHT";
 }
 
-bool	checkFileExist(std::string const &);
+bool	checkFileExist(std::string const &) noexcept;
 
 std::vector<uint8_t>	*createFramebuffer(size_t, size_t, size_t);
 

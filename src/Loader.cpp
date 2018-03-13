@@ -8,19 +8,22 @@
 #include <dlfcn.h>
 #include <iostream>
 #include "../inc/Loader.hpp"
+#include "../inc/ArcadeException.hpp"
 
-Loader::Loader(char *libraryPath)
+Loader::Loader(const char *libraryPath)
 {
 	handle = dlopen(libraryPath, RTLD_LAZY);
-
 	if (handle == nullptr) {
-		std::cerr << "Fail to load the library" << std::endl;
-		exit(84);
+		throw arcade::LoaderError("Can't open Library !");
 	}
 	create = (IDisplay* (*)(unsigned int, unsigned int))dlsym(handle, "create_object");
+	if (!create) {
+		throw arcade::LoaderError("Can't find create_object symbol");
+	}
 	destroy = (void (*)(IDisplay*))dlsym(handle, "destroy_object");
-	if (!create || !destroy)
-		throw "Incompatible Library !";
+	if (!destroy) {
+		throw arcade::LoaderError("Can't find destroy_object symbol");
+	}
 }
 
 Loader::~Loader()
