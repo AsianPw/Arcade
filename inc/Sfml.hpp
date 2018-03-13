@@ -11,26 +11,23 @@
 #	include <SFML/Graphics.hpp>
 #	include "IDisplay.hpp"
 
-class SfmlDisplay : public IDisplay
-{
-	public:
-	SfmlDisplay(unsigned int width, unsigned int height);
+class SfmlDisplay : public IDisplay {
+public:
+	SfmlDisplay(size_t, size_t);
 	~SfmlDisplay();
-
-	public:
-	bool	Display();
-	bool	isOpen();
-	bool	GetKey(arcade::TypeEvent, std::string const &);
-	bool	isKey();
-	void	destroyWindow();
-	void	setEvent(sf::Event &newEvent);
-
-	private:
-	std::map<std::string, int>	allEvent;
-	sf::RenderWindow	*window;
-	sf::Event		event;
-	uint	width;
-	uint	height;
+public:
+	bool Display();
+	bool isOpen();
+	bool GetKey(arcade::TypeEvent, std::string const &);
+	bool isKey();
+	void destroyWindow();
+	void setEvent(sf::Event &newEvent);
+private:
+	std::map<std::string, int> allEvent;
+	sf::RenderWindow *window;
+	sf::Event event;
+	size_t width;
+	size_t height;
 };
 
 #endif //CPP_ARCADE_SFML_HPP

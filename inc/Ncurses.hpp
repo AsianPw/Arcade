@@ -10,24 +10,23 @@
 
 #include <string>
 #include <map>
+#include <ncurses.h>
 #include "IDisplay.hpp"
 
 class NcursesDisplay : public IDisplay {
-	public:
-	NcursesDisplay(unsigned int, unsigned int);
+public:
+	NcursesDisplay(size_t, size_t);
 	~NcursesDisplay();
-
-	public:
-	bool	Display();
-	bool	isOpen();
-	bool	GetKey(arcade::TypeEvent typeEvent, std::string const &type);
-	bool	isKey();
-	void	destroyWindow();
-
-	private:
-	std::map<std::string, int>	allEvent;
-	int	currentKey;
-	WINDOW	*window;
+public:
+	bool Display();
+	bool isOpen();
+	bool GetKey(arcade::TypeEvent typeEvent, std::string const &type);
+	bool isKey();
+	void destroyWindow();
+private:
+	std::map<std::string, int> allEvent;
+	int currentKey;
+	WINDOW *window;
 };
 
 #endif //CPP_ARCADE_NCURSES_HPP

@@ -12,6 +12,7 @@ CXX		=	g++
 RM		=	rm -f
 
 SRCS	=	./Ncurses.cpp	\
+			./extern.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 

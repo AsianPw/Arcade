@@ -8,18 +8,7 @@
 #include <iostream>
 #include "../../../inc/Sdl2.hpp"
 
-extern "C" IDisplay* create_object(unsigned int w, unsigned int h)
-{
-	return new Sdl2(w, h);
-}
-
-extern "C" void destroy_object(IDisplay* object)
-{
-	delete object;
-}
-
-
-Sdl2::Sdl2(unsigned int w, unsigned int h)
+Sdl2::Sdl2(size_t w, size_t h)
 {
 	width = w;
 	height = h;
@@ -30,7 +19,7 @@ Sdl2::Sdl2(unsigned int w, unsigned int h)
 	allEvent.insert(std::pair<std::string, int>(arcade::DOWN, SDL_SCANCODE_DOWN));
 	allEvent.insert(std::pair<std::string, int>(arcade::LEFT, SDL_SCANCODE_LEFT));
 	allEvent.insert(std::pair<std::string, int>(arcade::RIGHT, SDL_SCANCODE_RIGHT));
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		std::cerr << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << std::endl;
 		SDL_Quit();
 	} else {
@@ -72,11 +61,16 @@ bool	Sdl2::isOpen()
 
 bool	Sdl2::Display()
 {
-	return false;
+	return true;
 }
 
 void	Sdl2::destroyWindow()
 {
 	finish = false;
 	SDL_DestroyWindow(window);
+}
+
+void Sdl2::setEvent(const SDL_Event &event)
+{
+	Sdl2::event = event;
 }

@@ -15,24 +15,23 @@
 #include "IDisplay.hpp"
 
 class Sdl2 : public IDisplay {
-	public:
-	Sdl2(unsigned int width, unsigned int height);
+public:
+	Sdl2(size_t, size_t);
 	~Sdl2();
-
-	public:
-	bool	Display();
-	bool	isOpen();
-	bool	GetKey(arcade::TypeEvent, std::string const &);
-	bool	isKey();
-	void	destroyWindow();
-
-	private:
-	std::map<std::string, int>	allEvent;
-	bool	finish;
-	SDL_Window	*window;
-	SDL_Event	event;
-	unsigned int	width;
-	unsigned int	height;
+public:
+	bool Display();
+	bool isOpen();
+	bool GetKey(arcade::TypeEvent, std::string const &);
+	bool isKey();
+	void destroyWindow();
+	void setEvent(const SDL_Event &event);
+private:
+	std::map<std::string, int> allEvent;
+	bool finish;
+	SDL_Window *window;
+	SDL_Event event;
+	size_t width;
+	size_t height;
 };
 
 #endif //CPP_ARCADE_SDL2_HPP

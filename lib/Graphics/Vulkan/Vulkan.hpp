@@ -13,24 +13,21 @@
 #include <map>
 #include "../../../inc/IDisplay.hpp"
 
-class Vulkan : public IDisplay
-{
-	public:
-	Vulkan(unsigned int width, unsigned int height);
+class Vulkan : public IDisplay {
+public:
+	Vulkan(size_t, size_t);
 	~Vulkan();
-
-	public:
-	bool	Display();
-	bool	isOpen();
-	bool	GetKey(arcade::TypeEvent, std::string const &);
-	bool	isKey();
-	void	destroyWindow();
-
-	private:
-	std::map<std::string, int>	allEvent;
-	GLFWwindow	*window;
-	unsigned int	width;
-	unsigned int	height;
+public:
+	bool Display();
+	bool isOpen();
+	bool GetKey(arcade::TypeEvent, std::string const &);
+	bool isKey();
+	void destroyWindow();
+private:
+	std::map<std::string, int> allEvent;
+	GLFWwindow *window;
+	size_t width;
+	size_t height;
 };
 
 #endif //CPP_ARCADE_VULKAN_HPP

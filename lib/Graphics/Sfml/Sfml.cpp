@@ -9,17 +9,7 @@
 #include <iostream>
 #include "../../../inc/Sfml.hpp"
 
-extern "C" IDisplay	*create_object(unsigned int w, unsigned int h)
-{
-	return new SfmlDisplay(w, h);
-}
-
-extern "C" void	destroy_object(IDisplay* object)
-{
-	delete object;
-}
-
-SfmlDisplay::SfmlDisplay(unsigned int width, unsigned int height)
+SfmlDisplay::SfmlDisplay(size_t width, size_t height)
 {
 	this->width = width;
 	this->height = height;

@@ -15,22 +15,11 @@
 // only God and I understood what I was doing
 // Now, God only knows
 
-extern "C" IDisplay	*create_object(unsigned int w, unsigned int h)
+
+Vulkan::Vulkan(size_t width, size_t height) : width(width), height(height)
 {
-	return new Vulkan(w, h);
-}
-
-extern "C" void	destroy_object(IDisplay *object)
-{
-	delete object;
-}
-
-
-Vulkan::Vulkan(unsigned int width, unsigned int height){
 	uint32_t	extensionCount = 0;
 
-	this->width = width;
-	this->height = height;
 	glfwInit();//todo exception
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	window = glfwCreateWindow(width, height, "Arcade - Vulkan", nullptr, nullptr);//todo exception

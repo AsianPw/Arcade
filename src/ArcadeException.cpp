@@ -13,7 +13,7 @@ arcade::Error::Error(std::string const &e) noexcept : message(e)
 
 const char	*arcade::Error::what() const noexcept
 {
-	return (message.what());
+	return message.what();
 }
 
 arcade::LoaderError::LoaderError(std::string const &e) noexcept : Error(e)

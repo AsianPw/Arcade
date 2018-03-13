@@ -12,6 +12,7 @@ CXX		=	g++
 RM		=	rm -f
 
 SRCS	=	./Sdl2.cpp	\
+			./extern.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 

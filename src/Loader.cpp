@@ -10,19 +10,19 @@
 #include "../inc/Loader.hpp"
 #include "../inc/ArcadeException.hpp"
 
-Loader::Loader(const char *libraryPath)
+Loader::Loader(std::string const &libraryPath)
 {
-	handle = dlopen(libraryPath, RTLD_LAZY);
+	handle = dlopen(libraryPath.c_str(), RTLD_LAZY);
 	if (handle == nullptr) {
-		throw arcade::LoaderError("Can't open Library !");
+		throw arcade::LoaderError(dlerror());
 	}
-	create = (IDisplay* (*)(unsigned int, unsigned int))dlsym(handle, "create_object");
+	create = (IDisplay *(*)(size_t, size_t))dlsym(handle, "create_object");
 	if (!create) {
-		throw arcade::LoaderError("Can't find create_object symbol");
+		throw arcade::LoaderError(dlerror());
 	}
-	destroy = (void (*)(IDisplay*))dlsym(handle, "destroy_object");
+	destroy = (void (*)(IDisplay *))dlsym(handle, "destroy_object");
 	if (!destroy) {
-		throw arcade::LoaderError("Can't find destroy_object symbol");
+		throw arcade::LoaderError(dlerror());
 	}
 }
 

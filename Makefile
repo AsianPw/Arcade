@@ -17,9 +17,11 @@ RM		=	rm -f
 
 UNIT_SRCS	=	./tests/display.cpp	\
 				./tests/GraphicsSfmlTest.cpp	\
+				./tests/GraphicsSdl2Test.cpp	\
 				./tests/LoaderTest.cpp	\
 				./src/utils.cpp	\
 				./lib/Graphics/Sfml/Sfml.cpp	\
+				./lib/Graphics/Sdl2/Sdl2.cpp	\
 				./src/Loader.cpp	\
 				./src/ArcadeException.cpp	\
 
@@ -30,7 +32,7 @@ SRCS		=	./src/main.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
-UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system
+UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system -lSDL2
 
 LDFLAGS		=	-ldl
 CXXFLAGS	=	-W -Wall -Wextra -std=c++14

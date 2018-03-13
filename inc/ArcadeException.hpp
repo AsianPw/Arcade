@@ -14,16 +14,15 @@
 namespace arcade {
 	class Error : public std::exception {
 	public:
-		explicit Error(std::string const& e) noexcept;
-		const char	*what() const noexcept override;
-
+		explicit Error(std::string const &e) noexcept;
+		const char *what() const noexcept override;
 	protected:
-		std::runtime_error	message;
+		std::runtime_error message;
 	};
 
 	class LoaderError : public Error {
 	public:
-		explicit LoaderError(std::string const& e) noexcept;
+		explicit LoaderError(std::string const &e) noexcept;
 	};
 }
 
