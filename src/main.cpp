@@ -10,6 +10,7 @@
 #include <bits/unique_ptr.h>
 #include "../inc/IDisplay.hpp"
 #include "../inc/Loader.hpp"
+#include "../inc/ArcadeException.hpp"
 
 void	printHelp(const char *binaryName)
 {
@@ -26,14 +27,13 @@ int	startArcade(char *libraryPath)
 		return (84);
 	try {
 		loader = std::make_unique<Loader>(libraryPath);
-	} catch (char const *e) {
-		std::cerr << e << std::endl;
+	} catch (arcade::LoaderError const& e) {
+		std::cerr << e.what() << std::endl;
 		return (84);
 	}
 	display = loader->create(800, 600);
 	while (display->isOpen()) {
-		while (display->isKey())
-		{
+		while (display->isKey()) {
 			if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 				display->destroyWindow();
 			if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))

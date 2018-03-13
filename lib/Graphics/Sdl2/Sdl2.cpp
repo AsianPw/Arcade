@@ -7,27 +7,24 @@
 
 #include <iostream>
 #include "../../../inc/Sdl2.hpp"
+#include "../../../inc/ArcadeException.hpp"
 
-Sdl2::Sdl2(size_t w, size_t h)
+Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
 {
-	width = w;
-	height = h;
-	finish = true;
-	allEvent.insert(std::pair<std::string, int>(arcade::CLOSE, SDL_WINDOWEVENT_CLOSE));
-	allEvent.insert(std::pair<std::string, int>(arcade::ESCAPE, SDL_SCANCODE_ESCAPE));
-	allEvent.insert(std::pair<std::string, int>(arcade::UP, SDL_SCANCODE_UP));
-	allEvent.insert(std::pair<std::string, int>(arcade::DOWN, SDL_SCANCODE_DOWN));
-	allEvent.insert(std::pair<std::string, int>(arcade::LEFT, SDL_SCANCODE_LEFT));
-	allEvent.insert(std::pair<std::string, int>(arcade::RIGHT, SDL_SCANCODE_RIGHT));
+	allEvent.insert(std::make_pair(arcade::CLOSE, SDL_WINDOWEVENT_CLOSE));
+	allEvent.insert(std::make_pair(arcade::ESCAPE, SDL_SCANCODE_ESCAPE));
+	allEvent.insert(std::make_pair(arcade::UP, SDL_SCANCODE_UP));
+	allEvent.insert(std::make_pair(arcade::DOWN, SDL_SCANCODE_DOWN));
+	allEvent.insert(std::make_pair(arcade::LEFT, SDL_SCANCODE_LEFT));
+	allEvent.insert(std::make_pair(arcade::RIGHT, SDL_SCANCODE_RIGHT));
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		std::cerr << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << std::endl;
 		SDL_Quit();
-	} else {
-		window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
-		if (window == nullptr) {
-			std::cerr << "Erreur lors de la creation de la fenetre SDL : " << SDL_GetError() << std::endl;
-			SDL_Quit();
-		}
+		throw arcade::GraphicsLibraryError(SDL_GetError());
+	}
+	window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
+	if (window == nullptr) {
+		SDL_Quit();
+		throw arcade::GraphicsLibraryError(SDL_GetError());
 	}
 }
 

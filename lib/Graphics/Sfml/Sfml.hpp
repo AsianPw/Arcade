@@ -9,25 +9,25 @@
 #	define CPP_ARCADE_SFML_HPP
 
 #	include <SFML/Graphics.hpp>
-#	include "IDisplay.hpp"
+#	include "../../../inc/IDisplay.hpp"
 
 class SfmlDisplay : public IDisplay {
 public:
 	SfmlDisplay(size_t, size_t);
-	~SfmlDisplay();
+	~SfmlDisplay() override;
 public:
-	bool Display();
-	bool isOpen();
-	bool GetKey(arcade::TypeEvent, std::string const &);
-	bool isKey();
-	void destroyWindow();
+	bool Display() override;
+	bool isOpen() override;
+	bool GetKey(arcade::TypeEvent, std::string const &) override;
+	bool isKey() override;
+	void destroyWindow() override;
 	void setEvent(sf::Event &newEvent);
 private:
+	size_t width;
+	size_t height;
 	std::map<std::string, int> allEvent;
 	sf::RenderWindow *window;
 	sf::Event event;
-	size_t width;
-	size_t height;
 };
 
 #endif //CPP_ARCADE_SFML_HPP

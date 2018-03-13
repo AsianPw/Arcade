@@ -7,6 +7,9 @@
 
 #include <criterion/criterion.h>
 #include "../inc/Sdl2.hpp"
+#include "../inc/ArcadeException.hpp"
+
+using criterion::logging::warn;
 
 Test(SDL2_TEST, ESCAPE_KEY)
 {
@@ -78,4 +81,17 @@ Test(SDL2_TEST, DISPLAY)
 
 	cr_assert(sdl->Display(), "DISPLAY test Failed");
 	sdl->destroyWindow();
+}
+
+Test(SDL2_TEST, FAILED_WINDOW_CREATION)
+{
+	warn << "An Exception must be catch for this test" << std::flush;
+	try {
+		new Sdl2(99999999999999999999999, 600);
+	}
+	catch (arcade::GraphicsLibraryError const& e) {
+		warn << e.what() << std::flush;
+		cr_assert(false, "Treokdmljsqld");
+	}
+	//cr_assert_fail("FAILED_WINDOW_CREATION failed");
 }

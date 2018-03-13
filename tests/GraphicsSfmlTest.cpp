@@ -7,7 +7,7 @@
 
 #include <criterion/criterion.h>
 #include <iostream>
-#include "../inc/Sfml.hpp"
+#include "../lib/Graphics/Sfml/Sfml.hpp"
 #include "../inc/Loader.hpp"
 
 Test(SFML_Library, ESCAPE_Key, .description = "Test of KEY_ESCAPE binding")

@@ -24,6 +24,11 @@ namespace arcade {
 	public:
 		explicit LoaderError(std::string const &e) noexcept;
 	};
+
+	class GraphicsLibraryError : public Error {
+	public:
+		explicit GraphicsLibraryError(std::string const &e) noexcept;
+	};
 }
 
 #endif //CPP_ARCADE_ARCADEEXCEPTION_HPP

@@ -7,25 +7,21 @@
 
 #include <SFML/Window.hpp>
 #include <iostream>
-#include "../../../inc/Sfml.hpp"
+#include "Sfml.hpp"
 
-SfmlDisplay::SfmlDisplay(size_t width, size_t height)
+SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h)//, window(sf::VideoMode(width,height), "SFML")
 {
-	this->width = width;
-	this->height = height;
-	window = new sf::RenderWindow(sf::VideoMode(width, height), "SFML");
-	allEvent.insert(std::pair<std::string, int>(arcade::CLOSE,sf::Event::Closed));
-	allEvent.insert(std::pair<std::string, int>(arcade::ESCAPE,sf::Keyboard::Escape));
-	allEvent.insert(std::pair<std::string, int>(arcade::UP,sf::Keyboard::Up));
-	allEvent.insert(std::pair<std::string, int>(arcade::DOWN,sf::Keyboard::Down));
-	allEvent.insert(std::pair<std::string, int>(arcade::LEFT,sf::Keyboard::Left));
-	allEvent.insert(std::pair<std::string, int>(arcade::RIGHT,sf::Keyboard::Right));
+	window = new sf::RenderWindow(sf::VideoMode(width,height), "SFML");
+	allEvent.insert(std::make_pair(arcade::CLOSE, sf::Event::Closed));
+	allEvent.insert(std::make_pair(arcade::ESCAPE,sf::Keyboard::Escape));
+	allEvent.insert(std::make_pair(arcade::UP,sf::Keyboard::Up));
+	allEvent.insert(std::make_pair(arcade::DOWN,sf::Keyboard::Down));
+	allEvent.insert(std::make_pair(arcade::LEFT,sf::Keyboard::Left));
+	allEvent.insert(std::make_pair(arcade::RIGHT,sf::Keyboard::Right));
 }
 
 SfmlDisplay::~SfmlDisplay()
 {
-	if (window)
-		window->close();
 }
 
 bool	SfmlDisplay::Display()

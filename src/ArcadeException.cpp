@@ -19,3 +19,7 @@ const char	*arcade::Error::what() const noexcept
 arcade::LoaderError::LoaderError(std::string const &e) noexcept : Error(e)
 {
 }
+
+arcade::GraphicsLibraryError::GraphicsLibraryError(std::string const &e) noexcept : Error(e)
+{
+}

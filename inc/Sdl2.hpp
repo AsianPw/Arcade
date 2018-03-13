@@ -26,12 +26,12 @@ public:
 	void destroyWindow();
 	void setEvent(const SDL_Event &event);
 private:
-	std::map<std::string, int> allEvent;
-	bool finish;
-	SDL_Window *window;
-	SDL_Event event;
 	size_t width;
 	size_t height;
+	bool finish;
+	std::map<std::string, int> allEvent;
+	SDL_Window *window;
+	SDL_Event event;
 };
 
 #endif //CPP_ARCADE_SDL2_HPP
