@@ -13,6 +13,7 @@ RM		=	rm -f
 
 SRCS	=	./Sdl2.cpp	\
 			./extern.cpp	\
+			./../../src/ArcadeException.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
