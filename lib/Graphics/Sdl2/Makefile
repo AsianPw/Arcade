@@ -5,7 +5,7 @@
 ## Makefile for SDL2 shared Library
 ##
 
-NAME	=	lsdl2_graphic.so
+NAME	=	lib_arcade_sdl2.so
 
 CXX		=	g++
 
@@ -13,7 +13,6 @@ RM		=	rm -f
 
 SRCS	=	./Sdl2.cpp	\
 			./extern.cpp	\
-			./../../src/ArcadeException.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
@@ -24,31 +23,35 @@ WARN_COLOR	=	\033[0;33m
 COM_COLOR	=	\033[0;34m
 OBJ_COLOR	=	\033[0;36m
 OK_COLOR	=	\033[0;32m
+ERROR_COLOR	=	\033[0;31m
 NO_COLOR	=	\033[m
 OK_STRING	=	"[OK]"
 WARN_STRING	=	"[WARNING]"
 
 all: $(NAME)
 
+%.o: %.cpp
+		@printf "[\033[0;32mcompiled\033[0m] % 70s\n" $< | tr ' ' '.'
+		@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+
 $(NAME): $(OBJS)
-	@printf "%b" "\n$(WARN_COLOR)---------------Compilation Of $(NAME)------------------$(NO_COLOR)\n";
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
-	@printf "%b" "\n$(WARN_COLOR)---------------------------------Done---------------------------$(NO_COLOR)\n";
+	@printf "$(OK_COLOR)% 55s % 25s$(NO_COLOR)\n\n" "[BUILD] $(NAME)" "" | tr ' ' '-'
 
 clean:
 ifneq ($(shell find -name '*.o'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Object file(s)\t\t$(OBJ_COLOR)($(OBJS))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "OBJECT FILE ($(NAME))" | tr ' ' '.'
 	@$(RM) $(OBJS)
 else
-	@printf "%b" "$(WARN_COLOR)$(WARN_STRING)\t$(COM_COLOR)No Object file to remove$(NO_COLOR)\n";
+	@printf "[$(WARN_COLOR)NONE$(NO_COLOR)] % 72s\n" "OBJECT FILE ($(NAME))" | tr ' ' '.'
 endif
 
 fclean: clean
 ifneq ($(shell find -name '$(NAME)'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Project Binary\t\t$(OBJ_COLOR)($(NAME))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "$(NAME)" | tr ' ' '.'
 	@$(RM) $(NAME)
 else
-	@printf "%b" "$(WARN_COLOR)$(WARN_STRING)\t$(COM_COLOR)No \"$(NAME)\" Binary found$(NO_COLOR)\n"
+	@printf "[$(WARN_COLOR)NONE$(NO_COLOR)] % 72s\n" "$(NAME)" | tr ' ' '.'
 endif
 
 re: fclean all

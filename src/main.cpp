@@ -23,8 +23,8 @@ int	startArcade(char *libraryPath)
 	std::unique_ptr<Loader>	loader = nullptr;
 	IDisplay	*display = nullptr;
 
-//	if (!checkFileExist(libraryPath))
-//		return (84);
+	if (!checkFileExist(libraryPath))
+		return (84);
 	try {
 		loader = std::make_unique<Loader>(libraryPath);
 	} catch (arcade::LoaderError const& e) {

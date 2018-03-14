@@ -46,6 +46,7 @@ WARN_COLOR	=	\033[0;33m
 COM_COLOR	=	\033[0;34m
 OBJ_COLOR	=	\033[0;36m
 OK_COLOR	=	\033[0;32m
+ERROR_COLOR	=	\033[0;31m
 NO_COLOR	=	\033[m
 OK_STRING	=	"[OK]"
 WARN_STRING	=	"[WARNING]"
@@ -59,65 +60,68 @@ install:
 	sudo apt install libglfw3
 	sudo apt install libglfw3-dev
 
-$(NAME): $(OBJS)
-ifeq ($(DEBUG), y)
-	@printf "%b" "\n$(WARN_COLOR)-----------------------[Debug Mode] $(NAME)----------------------$(NO_COLOR)\n";
-else
-	@printf "%b" "\n$(OK_COLOR)----------------------[Release Mode] $(NAME)---------------------$(NO_COLOR)\n";
-endif
+%.o: %.cpp
+	@printf "[\033[0;32mcompiled\033[0m] % 70s\n" $< | tr ' ' '.'
+	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+
+$(NAME): core graphicals games
+
+core: $(OBJS)
+	@printf "$(COM_COLOR)% 50s % 30s$(NO_COLOR)\n" "[BUILD $(NAME)]" "" | tr ' ' '-'
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $(NAME) $(LDFLAGS)
+
+
+graphicals:
 	@make --no-print-directory -C ./lib/Graphics all
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@ $(LDFLAGS)
+
+games:
+	@printf ""
 
 generate_coverage: tests_run
 	@lcov --directory . -c -o rapport.info
 	@genhtml -o ../rapport -t "Coverage of tests" rapport.info
 
 tests_run: all
-	@printf "%b" "\n$(COM_COLOR)--------------------Compilation Of $(UNIT_TEST)--------------------$(NO_COLOR)\n";
+	@printf "$(COM_COLOR)% 50s % 30s$(NO_COLOR)\n" "[BUILD] $(UNIT_TEST)" "" | tr ' ' '-'
 	$(CXX) $(CXXFLAGS) $(UNIT_SRCS) --coverage -o $(UNIT_TEST) $(UNIT_FLAGS) $(LDFLAGS)
-	@printf "%b" "\n$(COM_COLOR)------------------------Launch Unit Test------------------------$(NO_COLOR)\n";
+	@printf "$(COM_COLOR)% 50s % 30s$(NO_COLOR)\n" "LAUNCH UNIT TEST" "" | tr ' ' '-'
 	./$(UNIT_TEST) -j1 --always-succeed
 
 clean:
-	@printf "%b" "\n$(WARN_COLOR)------------------Cleanup Graphics Library Dir-----------------$(NO_COLOR)\n\n"
 	@make --no-print-directory -C ./lib/Graphics clean
-	@printf "%b" "\n$(WARN_COLOR)----------------------Cleanup Directories----------------------$(NO_COLOR)\n\n"
 ifneq ($(shell find -name '*~'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Temporary file(s)\t$(OBJ_COLOR)($(shell find -name '*~'))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "TEMPORARY FILES" | tr ' ' '.'
 	@find -name '*~' -delete
 endif
 ifneq ($(shell find -name '*.gcda' -o -name '*.gcno' -o -name '*.gcov'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Coverage file(s)\t\t$(OBJ_COLOR)($(shell find -name '*.gcda' -o -name '*.gcno' -o -name '*.gcov'))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "COVERAGE FILE" | tr ' ' '.'
 	@find -name '*.gcda' -delete -o -name '*.gcno' -delete -o -name '*.gcov' -delete
 endif
 ifneq ($(shell find -name '*.info'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Info file(s)\t\t$(OBJ_COLOR)($(shell find -name '*.info'))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "INFO FILES" | tr ' ' '.'
 	@find -name '*.info' -delete
 endif
 ifneq ($(shell find -name '*.o'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Object file(s)\t\t$(OBJ_COLOR)($(OBJS))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "OBJECT FILE ($(NAME))" | tr ' ' '.'
 	@$(RM) $(OBJS)
 else
-	@printf "%b" "$(WARN_COLOR)$(WARN_STRING)\t$(COM_COLOR)No Object file to remove$(NO_COLOR)\n";
+	@printf "[$(WARN_COLOR)NONE$(NO_COLOR)] % 72s\n" "OBJECT FILE ($(NAME))" | tr ' ' '.'
 endif
 
 fclean: clean
-	@printf "%b" "\n$(WARN_COLOR)--------------------Cleanup Graphics Library-------------------$(NO_COLOR)\n\n"
 	@make --no-print-directory -C ./lib/Graphics fclean
-	@printf "%b" "\n$(WARN_COLOR)------------------------Remove Binaries------------------------$(NO_COLOR)\n\n"
 ifneq ($(shell find -name '$(UNIT_TEST)'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Unit Test Binary\t\t$(OBJ_COLOR)($(UNIT_TEST))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "$(UNIT_TEST)" | tr ' ' '.'
 	@$(RM) $(UNIT_TEST)
 else
-	@printf "%b" "$(WARN_COLOR)$(WARN_STRING)\t$(COM_COLOR)No Unit Test Binary found$(NO_COLOR)\n"
+	@printf "[$(WARN_COLOR)NONE$(NO_COLOR)] % 72s\n" "$(UNIT_TEST)" | tr ' ' '.'
 endif
 ifneq ($(shell find -name '$(NAME)'),)
-	@printf "%b" "$(OK_COLOR)$(OK_STRING)\t\t$(COM_COLOR)Remove Project Binary\t\t$(OBJ_COLOR)($(NAME))$(NO_COLOR)\n";
+	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "$(NAME)" | tr ' ' '.'
 	@$(RM) $(NAME)
 else
-	@printf "%b" "$(WARN_COLOR)$(WARN_STRING)\t$(COM_COLOR)No \"$(NAME)\" Binary found$(NO_COLOR)\n"
+	@printf "[$(WARN_COLOR)NONE$(NO_COLOR)] % 72s\n" "$(NAME)" | tr ' ' '.'
 endif
-	@printf "%b" "\n$(OK_COLOR)--------------------------All clear !--------------------------$(NO_COLOR)\n\n"
 
 re: fclean all
 
