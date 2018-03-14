@@ -102,7 +102,7 @@ Test(SFML_Library, isOpen, .description = "Check if window is open")
 Test(SFML_LIBRARY, Load_SFML_LIBRARY)
 {
 	std::unique_ptr<Loader> loader(
-		new Loader((char *)"./lib/Graphics/Sfml/lsfml_graphic.so"));
+		new Loader((char *)"./lib/Graphics/Sfml/lib_arcade_sfml.so"));
 	std::unique_ptr<IDisplay> display(loader->create(800, 600));
 
 	cr_assert_not_null(display, "Loading SFML library failed !");
