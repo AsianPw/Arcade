@@ -28,6 +28,7 @@ UNIT_SRCS	=	./tests/display.cpp	\
 SRCS		=	./src/main.cpp	\
 				./src/utils.cpp	\
 				./src/Loader.cpp	\
+				./src/GameLoader.cpp	\
 				./src/ArcadeException.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
@@ -75,7 +76,7 @@ graphicals:
 	@make --no-print-directory -C ./lib/Graphics all
 
 games:
-	@printf ""
+	@make --no-print-directory -C ./lib/Games all
 
 generate_coverage: tests_run
 	@lcov --directory . -c -o rapport.info
@@ -89,6 +90,7 @@ tests_run: all
 
 clean:
 	@make --no-print-directory -C ./lib/Graphics clean
+	@make --no-print-directory -C ./lib/Games clean
 ifneq ($(shell find -name '*~'),)
 	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "TEMPORARY FILES" | tr ' ' '.'
 	@find -name '*~' -delete
@@ -110,6 +112,7 @@ endif
 
 fclean: clean
 	@make --no-print-directory -C ./lib/Graphics fclean
+	@make --no-print-directory -C ./lib/Games fclean
 ifneq ($(shell find -name '$(UNIT_TEST)'),)
 	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "$(UNIT_TEST)" | tr ' ' '.'
 	@$(RM) $(UNIT_TEST)
