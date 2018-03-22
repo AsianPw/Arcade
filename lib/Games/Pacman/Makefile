@@ -2,22 +2,22 @@
 ## EPITECH PROJECT, 2018
 ## Arcade
 ## File description:
-## Makefile for Ncurses shared Library
+## Makefile for Compile Pacman
 ##
 
-NAME	=	lib_arcade_ncurses.so
+NAME	=	lib_arcade_pacman.so
 
 CXX		=	g++
 
 RM		=	rm -f
 
-SRCS	=	./Ncurses.cpp	\
-			./extern.cpp	\
+SRCS	=	./Extern.cpp	\
+			./Pacman.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
 CXXFLAGS	=	-W -Wall -Wextra -fPIC -shared -std=c++14
-LDFLAGS		=	-lncurses
+LDFLAGS		=
 
 WARN_COLOR	=	\033[0;33m
 COM_COLOR	=	\033[0;34m
@@ -33,6 +33,7 @@ all: $(NAME)
 %.o: %.cpp
 		@printf "[\033[0;32mcompiled\033[0m] % 70s\n" $< | tr ' ' '.'
 		@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+
 
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)

@@ -8,30 +8,12 @@
 #include <criterion/criterion.h>
 #include <iostream>
 #include "../inc/utils.hpp"
+#include "../lib/Graphics/Sfml/Sfml.hpp"
 
-ReportHook(PRE_SUITE)(struct criterion_suite_set *suite_set) {
-	std::cout << suite_set->suite.name << " suite:" << std::endl;
-}
-
-ReportHook(PRE_TEST)(struct criterion_test *test) {
-	std::cout << "Begin of " << test->name << ":\t" << test->data->description << std::endl;
-}
-
-ReportHook(POST_TEST)(struct criterion_test_stats *stats) {
-	std::cout << "\tTest elapsed:" << stats->elapsed_time << std::endl;
-}
-
-ReportHook(POST_SUITE)(struct criterion_suite_stats *stats) {
-	std::cout << stats->suite->name << " is Finish" << std::endl;
-}
-
-Test(Generate, framebuffer, .description = "Check if framebuffer is correctly allocate")
+Test(Utils, FileExist, .description = "Check if file exist")
 {
-	std::vector<uint8_t>	*tmp = createFramebuffer(800, 600, 4);
-	cr_assert(tmp->size() == (800 * 600 * 4), "Test if size of framebuffer is good\n");
-}
-
-Test(Generate, framebuffer_bad_alloc, .description = "Test of big framebuffer allocation")
-{
-	cr_assert_any_throw(createFramebuffer(((size_t)~0), 100000, 4), "Exception doesn't catch\n");
+	cr_expect(checkFileExist("Makefile"),
+		"Test for check existing file failed !");
+	cr_expect_not(checkFileExist("dsqjlkdsq"),
+		"Test for a file doesn't exist failed !");
 }

@@ -7,8 +7,10 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <bits/unique_ptr.h>
 #include "../inc/IDisplay.hpp"
 #include "../inc/Loader.hpp"
+#include "../inc/ArcadeException.hpp"
 
 void	printHelp(const char *binaryName)
 {
@@ -18,21 +20,22 @@ void	printHelp(const char *binaryName)
 
 int	startArcade(char *libraryPath)
 {
-	Loader	*loader = nullptr;
+	std::unique_ptr<Loader>	loader = nullptr;
 	IDisplay	*display = nullptr;
 
-	if (!checkFileExist(libraryPath))
+	if (!checkFileExist(libraryPath)) {
+		std::cerr << libraryPath << " doesn't exist" << std::endl;
 		return (84);
+	}
 	try {
-		loader = new Loader(libraryPath);
-	} catch (char const *e) {
-		std::cerr << e << std::endl;
+		loader = std::make_unique<Loader>(libraryPath);
+	} catch (arcade::LoaderError const& e) {
+		std::cerr << e.what() << std::endl;
 		return (84);
 	}
 	display = loader->create(800, 600);
 	while (display->isOpen()) {
-		while (display->isKey())
-		{
+		while (display->isKey()) {
 			if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 				display->destroyWindow();
 			if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
@@ -60,5 +63,5 @@ int	main(int ac, char **av)
 		exitValue = startArcade(av[1]);
 	else
 		printHelp(av[0]);
-	return (exitValue);
+	return exitValue;
 }

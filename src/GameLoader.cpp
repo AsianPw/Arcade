@@ -6,27 +6,26 @@
 */
 
 #include <dlfcn.h>
-#include <iostream>
-#include "../inc/Loader.hpp"
+#include "../inc/GameLoader.hpp"
 #include "../inc/ArcadeException.hpp"
 
-Loader::Loader(std::string const &libraryPath)
+GameLoader::GameLoader(std::string const &libraryPath)
 {
 	handle = dlopen(libraryPath.c_str(), RTLD_LAZY);
 	if (handle == nullptr) {
 		throw arcade::LoaderError(dlerror());
 	}
-	create = (IDisplay *(*)(size_t, size_t))dlsym(handle, "create_object");
+	create = (IGame *(*)())dlsym(handle, "init_game");
 	if (!create) {
 		throw arcade::LoaderError(dlerror());
 	}
-	destroy = (void (*)(IDisplay *))dlsym(handle, "destroy_object");
+	destroy = (void (*)(IGame *))dlsym(handle, "destroy_game");
 	if (!destroy) {
 		throw arcade::LoaderError(dlerror());
 	}
 }
 
-Loader::~Loader()
+GameLoader::~GameLoader()
 {
 	dlclose(handle);
 }

@@ -20,16 +20,14 @@ namespace arcade {
 		MOUSE
 	};
 
-	static const std::string	ESCAPE = "ESCAPE";
-	static const std::string	CLOSE = "CLOSE";
-	static const std::string	UP = "UP";
-	static const std::string	DOWN = "DOWN";
-	static const std::string	LEFT = "LEFT";
-	static const std::string	RIGHT = "RIGHT";
+	static const char	ESCAPE[] = "ESCAPE";
+	static const char	CLOSE[] = "CLOSE";
+	static const char	UP[] = "UP";
+	static const char	DOWN[] = "DOWN";
+	static const char	LEFT[] = "LEFT";
+	static const char	RIGHT[] = "RIGHT";
 }
 
-bool	checkFileExist(std::string const &);
-
-std::vector<uint8_t>	*createFramebuffer(size_t, size_t, size_t);
+bool checkFileExist(std::string const &) noexcept;
 
 #endif //CPP_ARCADE_UTILS_HPP

@@ -12,10 +12,9 @@
 #include "utils.hpp"
 
 class IDisplay {
-	public:
+public:
 	virtual ~IDisplay() = default;
-
-	public:
+public:
 	virtual bool	Display() = 0;
 	virtual bool	isKey() = 0;
 	virtual bool	isOpen() = 0;

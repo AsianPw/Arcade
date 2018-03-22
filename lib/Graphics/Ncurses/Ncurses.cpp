@@ -9,18 +9,7 @@
 #include <iostream>
 #include "../../../inc/Ncurses.hpp"
 
-extern "C" IDisplay* create_object(unsigned int w, unsigned int h)
-{
-	return new NcursesDisplay(w, h);
-}
-
-extern "C" void destroy_object(IDisplay* object)
-{
-	delete object;
-}
-
-
-NcursesDisplay::NcursesDisplay(unsigned int w, unsigned int h)
+NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 {
 	(void)w;
 	(void)h;
@@ -59,9 +48,7 @@ bool	NcursesDisplay::isOpen()
 
 bool	NcursesDisplay::isKey()
 {
-	if (currentKey == ERR)
-		return (false);
-	return (true);
+	return currentKey != ERR;
 }
 
 bool	NcursesDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &type)
