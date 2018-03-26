@@ -63,3 +63,13 @@ void	Vulkan::destroyWindow()
 {
 	glfwDestroyWindow(window);
 }
+
+bool Vulkan::loadText(std::map<std::string, Texture> const& text)
+{
+	return false;
+}
+
+bool Vulkan::loadTexture(std::map<std::string, Texture> const& texture)
+{
+	return false;
+}

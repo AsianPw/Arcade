@@ -26,6 +26,7 @@ namespace arcade {
 	static const char	DOWN[] = "DOWN";
 	static const char	LEFT[] = "LEFT";
 	static const char	RIGHT[] = "RIGHT";
+	static const char	SPACE[] = "SPACE";
 }
 
 bool checkFileExist(std::string const &) noexcept;

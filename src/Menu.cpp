@@ -10,7 +10,13 @@
 
 Menu::Menu()
 {
-	//sceneTexture.insert("back", createTexture(BACKGROUND, true, 0, 0));
+	auto	back = std::string("./res/menu_background.png");
+	auto	first = std::string("first game");
+	auto	second = std::string("second game");
+
+	menuTexture.insert(std::make_pair<std::string, Texture>("back", createTexture(back, true, 0, 0)));
+	menuTexture.insert(std::make_pair("first", createTexture(first, true, 0, 0)));
+	menuTexture.insert(std::make_pair("second", createTexture(second, true, 0, 60)));
 }
 
 void	Menu::sceneEvent(IDisplay *display)
@@ -20,15 +26,20 @@ void	Menu::sceneEvent(IDisplay *display)
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP))
-		std::cout << "Arrow Up is pressed !" << std::endl;
+		menuTexture["back"].position.y -= 10;
 	if (display->GetKey(arcade::KEYBOARD, arcade::DOWN))
-		std::cout << "Arrow Down is pressed !" << std::endl;
+		menuTexture["back"].position.y += 10;
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT))
-		std::cout << "Arrow Left is pressed !" << std::endl;
+		menuTexture["back"].position.x -= 10;
 	if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT))
-		std::cout << "Arrow Right is pressed !" << std::endl;
+		menuTexture["back"].position.x += 10;
 }
 
-Menu::~Menu()
+void	Menu::compute()
 {
+}
+
+inline std::map<std::string, Texture> Menu::getTexture() const
+{
+	return (menuTexture);
 }

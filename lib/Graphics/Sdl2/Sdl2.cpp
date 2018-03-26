@@ -74,3 +74,13 @@ void Sdl2::setEvent(const SDL_Event &event)
 {
 	Sdl2::event = event;
 }
+
+bool Sdl2::loadText(std::map<std::string, Texture> const&text)
+{
+	return false;
+}
+
+bool Sdl2::loadTexture(std::map<std::string, Texture> const&texture)
+{
+	return false;
+}

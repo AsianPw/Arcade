@@ -15,11 +15,12 @@
 
 Texture	createTexture(std::string &path, bool state, size_t x, size_t y)
 {
-	Texture	newTexture = {
-		path,
-		state,
-		{x, y}
-	};
+	Texture	newTexture;
+
+	newTexture.isFile = checkFileExist(path);
+	newTexture.position = {x,y};
+	newTexture.path = path;
+	newTexture.display = state;
 	return (newTexture);
 }
 
@@ -31,9 +32,9 @@ void	printHelp(const char *binaryName)
 
 int	startArcade(char *libraryPath)
 {
+	auto			menu = std::make_unique<Menu>();
 	std::unique_ptr<Loader>	loader = nullptr;
-	IDisplay	*display = nullptr;
-	IScene	*menu = new Menu();
+	IDisplay		*display = nullptr;
 
 	if (!checkFileExist(libraryPath)) {
 		std::cerr << libraryPath << " doesn't exist" << std::endl;
@@ -49,6 +50,9 @@ int	startArcade(char *libraryPath)
 	while (display->isOpen()) {
 		while (display->isKey())
 			menu->sceneEvent(display);
+		display->loadTexture(menu->getTexture());
+		//display->loadText(menu->getTexture());
+		menu->compute();
 		display->Display();
 	}
 	loader->destroy(display);

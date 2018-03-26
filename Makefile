@@ -74,7 +74,7 @@ core: $(OBJS)
 
 
 graphicals:
-	@make $(MAKEFLAGS) --no-print-directory -C ./lib/Graphics all
+	@make --no-print-directory -C ./lib/Graphics all
 
 games:
 	@make --no-print-directory -C ./lib/Games all

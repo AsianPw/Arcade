@@ -22,6 +22,8 @@ public:
 	bool isOpen();
 	bool GetKey(arcade::TypeEvent typeEvent, std::string const &type);
 	bool isKey();
+	bool	loadTexture(std::map<std::string, Texture> const&);
+	bool	loadText(std::map<std::string, Texture> const&);
 	void destroyWindow();
 private:
 	std::map<std::string, int> allEvent;

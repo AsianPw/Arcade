@@ -17,7 +17,8 @@ class IScene {
 public:
 	virtual	~IScene() = default;
 	virtual void	sceneEvent(IDisplay *) = 0;
-
+	virtual std::map<std::string, Texture>	getTexture() const = 0;
+	virtual	void	compute() = 0;
 };
 
 #endif //CPP_ARCADE_ISCENE_HPP
