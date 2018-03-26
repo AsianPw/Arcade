@@ -30,6 +30,7 @@ SRCS		=	./src/main.cpp	\
 				./src/Loader.cpp	\
 				./src/GameLoader.cpp	\
 				./src/ArcadeException.cpp	\
+				./src/Menu.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -73,7 +74,7 @@ core: $(OBJS)
 
 
 graphicals:
-	@make --no-print-directory -C ./lib/Graphics all
+	@make $(MAKEFLAGS) --no-print-directory -C ./lib/Graphics all
 
 games:
 	@make --no-print-directory -C ./lib/Games all

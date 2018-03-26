@@ -13,15 +13,9 @@
 
 class Menu : public IScene {
 public:
-	explicit Menu(Loader const&);
-	~Menu() override = default;
-
-public:
-	virtual void	setBackground(std::string const&path);
-	virtual void	addTexture(std::string const&path);
-
-private:
-	Loader	const&loader;
+	explicit Menu();
+	~Menu();
+	void	sceneEvent(IDisplay *) override;
 };
 
 #endif //CPP_ARCADE_MENU_HPP

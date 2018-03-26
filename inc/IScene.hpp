@@ -9,15 +9,15 @@
 #define CPP_ARCADE_ISCENE_HPP
 
 #include <string>
+#include <map>
+#include "IDisplay.hpp"
+#include "Texture.hpp"
 
 class IScene {
 public:
-	virtual ~IScene() = 0;
+	virtual	~IScene() = default;
+	virtual void	sceneEvent(IDisplay *) = 0;
 
-public:
-	virtual void	setBackground(std::string const&path) = 0;
-	virtual void	addTexture(std::string const&path) = 0;
-	virtual void	setEvent() = 0;
 };
 
 #endif //CPP_ARCADE_ISCENE_HPP
