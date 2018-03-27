@@ -27,6 +27,9 @@ namespace arcade {
 	static const char	LEFT[] = "LEFT";
 	static const char	RIGHT[] = "RIGHT";
 	static const char	SPACE[] = "SPACE";
+
+	static const char	GRAPHICSDIR[] = "./lib/";
+	static const char	GAMESDIR[] = "./games/";
 }
 
 bool checkFileExist(std::string const &) noexcept;

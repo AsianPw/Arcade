@@ -6,17 +6,42 @@
 */
 
 #include <iostream>
+#include <dirent.h>
+#include <cstring>
+#include "../inc/utils.hpp"
 #include "Menu.hpp"
+
+void	listFiles(const char* path, std::vector<std::string> &list)
+{
+	DIR	*dirFile = opendir(path);
+	struct dirent	*hFile;
+
+	if (dirFile)
+	{
+		while ((hFile = readdir( dirFile )) != nullptr) {
+			if (!strcmp(hFile->d_name, "." )) continue;
+			if (!strcmp(hFile->d_name, "..")) continue;
+			if ((hFile->d_name[0] == '.')) continue;
+			if (strstr( hFile->d_name, ".so"))
+				list.emplace_back(hFile->d_name);
+		}
+		closedir(dirFile);
+	}
+}
 
 Menu::Menu()
 {
 	auto	back = std::string("./res/menu_background.png");
-	auto	first = std::string("first game");
-	auto	second = std::string("second game");
+	std::vector<std::string>	graphicLib;
+	std::vector<std::string>::iterator	it;
 
+	listFiles(arcade::GRAPHICSDIR, graphicLib);
+	it = graphicLib.begin();
+	while (it != graphicLib.end()) {
+		menuTexture.insert(std::make_pair(*it, createTexture(*it, true, 0, 0)));
+		it++;
+	}
 	menuTexture.insert(std::make_pair<std::string, Texture>("back", createTexture(back, true, 0, 0)));
-	menuTexture.insert(std::make_pair("first", createTexture(first, true, 0, 0)));
-	menuTexture.insert(std::make_pair("second", createTexture(second, true, 0, 60)));
 }
 
 void	Menu::sceneEvent(IDisplay *display)

@@ -35,7 +35,7 @@ bool	SfmlDisplay::Display()
 		it++;
 	}
 	while (textIt != texts.end()) {
-		window->draw(it->second);
+		window->draw(*textIt);
 		textIt++;
 	}
 	window->display();
@@ -52,7 +52,8 @@ bool	SfmlDisplay::isOpen()
 	return window->isOpen();
 }
 
-bool	SfmlDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent){
+bool	SfmlDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent)
+{
 	auto	search = allEvent.find(currentEvent);
 
 	if (search == allEvent.end())
@@ -101,14 +102,16 @@ bool SfmlDisplay::loadText(std::map<std::string, Texture> const &text)
 	auto	it = text.begin();
 
 	texts.clear();
-	font.loadFromFile("./res/Walk-Around-the-Block.ttf");
+	if (!font.loadFromFile("./res/Walk-Around-the-Block.ttf"))
+		return false;
 	while (it != text.end()) {
-//		if (!it->second.isFile) {
-//			sf::Text	newText(it->second.path, font);
-//			newText.setPosition(it->second.position.x, it->second.position.y);
-//			texts.emplace_back(newText);
-//		}
+		if (!it->second.isFile) {
+			sf::Text	newText(it->second.path, font);
+			newText.setPosition(it->second.position.x, it->second.position.y);
+			texts.emplace_back(newText);
+		}
 		it++;
 	}
+	std::cout << "Text Load" << std::endl;
 	return true;
 }
