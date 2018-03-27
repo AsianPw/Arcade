@@ -51,7 +51,7 @@ int	startArcade(char *libraryPath)
 		while (display->isKey())
 			menu->sceneEvent(display);
 		display->loadTexture(menu->getTexture());
-		//display->loadText(menu->getTexture());
+		display->loadText(menu->getTexture());
 		menu->compute();
 		display->Display();
 	}
