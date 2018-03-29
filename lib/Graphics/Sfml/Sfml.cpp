@@ -85,7 +85,7 @@ bool SfmlDisplay::loadTexture(std::map<std::string, Texture> const &texture)
 	sprites.clear();
 	while (it != texture.end()) {
 		sf::Texture	newTexture;
-		if (it->second.isFile && newTexture.loadFromFile(it->second.path)) {
+		if (it->second.isFile && it->second.display && newTexture.loadFromFile(it->second.path)) {
 			sf::Sprite	newSprite;
 			textures.emplace_back(newTexture);
 			newSprite.setTexture(textures.back());
@@ -105,13 +105,12 @@ bool SfmlDisplay::loadText(std::map<std::string, Texture> const &text)
 	if (!font.loadFromFile("./res/Walk-Around-the-Block.ttf"))
 		return false;
 	while (it != text.end()) {
-		if (!it->second.isFile) {
+		if (!it->second.isFile && it->second.display) {
 			sf::Text	newText(it->second.path, font);
 			newText.setPosition(it->second.position.x, it->second.position.y);
 			texts.emplace_back(newText);
 		}
 		it++;
 	}
-	std::cout << "Text Load" << std::endl;
 	return true;
 }

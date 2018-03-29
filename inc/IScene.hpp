@@ -18,6 +18,7 @@ public:
 	virtual	~IScene() = default;
 	virtual void	sceneEvent(IDisplay *) = 0;
 	virtual std::map<std::string, Texture>	getTexture() const = 0;
+	virtual std::map<std::string, Texture>	getText() const = 0;
 	virtual	void	compute() = 0;
 };
 

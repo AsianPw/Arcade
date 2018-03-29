@@ -13,7 +13,7 @@
 #include "../inc/ArcadeException.hpp"
 #include "Menu.hpp"
 
-Texture	createTexture(std::string &path, bool state, size_t x, size_t y)
+Texture	createTexture(std::string path, bool state, size_t x, size_t y)
 {
 	Texture	newTexture;
 
@@ -51,7 +51,7 @@ int	startArcade(char *libraryPath)
 		while (display->isKey())
 			menu->sceneEvent(display);
 		display->loadTexture(menu->getTexture());
-		display->loadText(menu->getTexture());
+		display->loadText(menu->getText());
 		menu->compute();
 		display->Display();
 	}
