@@ -11,6 +11,7 @@ COM_COLOR	=	\033[0;34m
 
 all:
 	@printf "\n$(WARN_COLOR)% 50s % 30s$(NO_COLOR)\n\n" "[BUILD] Graphics" "" | tr ' ' '-'
+	mkdir ../../games
 	@make --no-print-directory -C ./Pacman all
 	@printf "$(WARN_COLOR)% 50s % 30s$(NO_COLOR)\n\n" "[BUILD] Done" "" | tr ' ' '-'
 
@@ -20,6 +21,7 @@ clean:
 
 fclean:
 	@make --no-print-directory -C ./Pacman fclean
+	rm -fr ../../games
 
 
 re: fclean all

@@ -14,20 +14,20 @@
 namespace arcade {
 	class Error : public std::exception {
 	public:
-		explicit Error(std::string const &e) noexcept;
-		const char *what() const noexcept override;
+		explicit Error(std::string const &e) noexcept : message(e) {};
+		const char *what() const noexcept override { return message.what(); };
 	protected:
 		std::runtime_error message;
 	};
 
 	class LoaderError : public Error {
 	public:
-		explicit LoaderError(std::string const &e) noexcept;
+		explicit LoaderError(std::string const &e) noexcept : Error(e) {};
 	};
 
 	class GraphicsLibraryError : public Error {
 	public:
-		explicit GraphicsLibraryError(std::string const &e) noexcept;
+		explicit GraphicsLibraryError(std::string const &e) noexcept : Error(e) {};
 	};
 }
 

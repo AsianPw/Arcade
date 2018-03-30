@@ -8,9 +8,21 @@
 #include <cstdlib>
 #include <iostream>
 #include <bits/unique_ptr.h>
-#include "../inc/IDisplay.hpp"
+#include "../inc/IScene.hpp"
 #include "../inc/Loader.hpp"
 #include "../inc/ArcadeException.hpp"
+#include "Menu.hpp"
+
+Texture	createTexture(std::string path, bool state, size_t x, size_t y)
+{
+	Texture	newTexture;
+
+	newTexture.isFile = checkFileExist(path);
+	newTexture.position = {x,y};
+	newTexture.path = path;
+	newTexture.display = state;
+	return (newTexture);
+}
 
 void	printHelp(const char *binaryName)
 {
@@ -20,8 +32,9 @@ void	printHelp(const char *binaryName)
 
 int	startArcade(char *libraryPath)
 {
+	auto			menu = std::make_unique<Menu>();
 	std::unique_ptr<Loader>	loader = nullptr;
-	IDisplay	*display = nullptr;
+	IDisplay		*display = nullptr;
 
 	if (!checkFileExist(libraryPath)) {
 		std::cerr << libraryPath << " doesn't exist" << std::endl;
@@ -33,22 +46,13 @@ int	startArcade(char *libraryPath)
 		std::cerr << e.what() << std::endl;
 		return (84);
 	}
-	display = loader->create(800, 600);
+	display = loader->create(arcade::WIDTH, arcade::HEIGHT);
 	while (display->isOpen()) {
-		while (display->isKey()) {
-			if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
-				display->destroyWindow();
-			if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
-				display->destroyWindow();
-			if (display->GetKey(arcade::KEYBOARD, arcade::UP))
-				std::cout << "Arrow Up is pressed !" << std::endl;
-			if (display->GetKey(arcade::KEYBOARD, arcade::DOWN))
-				std::cout << "Arrow Down is pressed !" << std::endl;
-			if (display->GetKey(arcade::KEYBOARD, arcade::LEFT))
-				std::cout << "Arrow Left is pressed !" << std::endl;
-			if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT))
-				std::cout << "Arrow Right is pressed !" << std::endl;
-		}
+		while (display->isKey())
+			menu->sceneEvent(display);
+		display->loadTexture(menu->getTexture());
+		display->loadText(menu->getText());
+		menu->compute();
 		display->Display();
 	}
 	loader->destroy(display);

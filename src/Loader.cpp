@@ -9,6 +9,7 @@
 #include <iostream>
 #include "../inc/Loader.hpp"
 #include "../inc/ArcadeException.hpp"
+#include "../inc/IDisplay.hpp"
 
 Loader::Loader(std::string const &libraryPath)
 {

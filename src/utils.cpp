@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <unistd.h>
+#include "../inc/Texture.hpp"
 
 bool	checkFileExist(std::string const & file) noexcept
 {

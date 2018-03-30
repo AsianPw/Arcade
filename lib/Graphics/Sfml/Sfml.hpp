@@ -21,10 +21,17 @@ public:
 	bool GetKey(arcade::TypeEvent, std::string const &) override;
 	bool isKey() override;
 	void destroyWindow() override;
-	void setEvent(sf::Event &newEvent);
+	bool loadTexture(std::map<std::string, Texture> const&) override;
+	bool	loadText(std::map<std::string, Texture> const&) override;
+	void setEvent(sf::Event &);
 private:
 	size_t width;
 	size_t height;
+	bool	alreadyLoad;
+	sf::Font	font;
+	std::vector<sf::Text>	texts;
+	std::vector<sf::Texture>	textures;
+	std::map<std::string, sf::Sprite>	sprites;
 	std::map<std::string, int> allEvent;
 	sf::RenderWindow *window;
 	sf::Event event;

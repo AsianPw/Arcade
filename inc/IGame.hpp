@@ -19,7 +19,6 @@ public:
 protected:
 	std::string	name;
 	std::string	description;
-
 };
 
 #endif //CPP_ARCADE_IGAME_HPP

@@ -20,12 +20,19 @@ namespace arcade {
 		MOUSE
 	};
 
+	static const size_t	WIDTH = 800;
+	static const size_t	HEIGHT = 600;
+
 	static const char	ESCAPE[] = "ESCAPE";
 	static const char	CLOSE[] = "CLOSE";
 	static const char	UP[] = "UP";
 	static const char	DOWN[] = "DOWN";
 	static const char	LEFT[] = "LEFT";
 	static const char	RIGHT[] = "RIGHT";
+	static const char	SPACE[] = "SPACE";
+
+	static const char	GRAPHICSDIR[] = "./lib/";
+	static const char	GAMESDIR[] = "./games/";
 }
 
 bool checkFileExist(std::string const &) noexcept;

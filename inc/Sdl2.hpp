@@ -23,6 +23,8 @@ public:
 	bool isOpen();
 	bool GetKey(arcade::TypeEvent, std::string const &);
 	bool isKey();
+	bool	loadTexture(std::map<std::string, Texture> const&);
+	bool	loadText(std::map<std::string, Texture> const&);
 	void destroyWindow();
 	void setEvent(const SDL_Event &event);
 private:

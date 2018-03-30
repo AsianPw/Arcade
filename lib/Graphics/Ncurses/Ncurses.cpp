@@ -73,3 +73,13 @@ void	NcursesDisplay::destroyWindow()
 	//delwin(window);
 	endwin();
 }
+
+bool NcursesDisplay::loadText(std::map<std::string, Texture> const&text)
+{
+	return false;
+}
+
+bool NcursesDisplay::loadTexture(std::map<std::string, Texture> const &texture)
+{
+	return false;
+}

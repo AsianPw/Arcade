@@ -23,13 +23,12 @@ UNIT_SRCS	=	./tests/display.cpp	\
 				./lib/Graphics/Sfml/Sfml.cpp	\
 				./lib/Graphics/Sdl2/Sdl2.cpp	\
 				./src/Loader.cpp	\
-				./src/ArcadeException.cpp	\
 
 SRCS		=	./src/main.cpp	\
 				./src/utils.cpp	\
 				./src/Loader.cpp	\
 				./src/GameLoader.cpp	\
-				./src/ArcadeException.cpp	\
+				./src/Menu.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 

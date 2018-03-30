@@ -34,9 +34,9 @@ all: $(NAME)
 		@printf "[\033[0;32mcompiled\033[0m] % 70s\n" $< | tr ' ' '.'
 		@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	mv $(NAME) ../../../games
 	@printf "$(OK_COLOR)% 55s % 25s$(NO_COLOR)\n\n" "[BUILD] $(NAME)" "" | tr ' ' '-'
 
 clean:
@@ -48,12 +48,8 @@ else
 endif
 
 fclean: clean
-ifneq ($(shell find -name '$(NAME)'),)
 	@printf "[$(ERROR_COLOR)REMOVE$(NO_COLOR)] % 70s\n" "$(NAME)" | tr ' ' '.'
-	@$(RM) $(NAME)
-else
-	@printf "[$(WARN_COLOR)NONE$(NO_COLOR)] % 72s\n" "$(NAME)" | tr ' ' '.'
-endif
+	@$(RM) ../../../games/$(NAME)
 
 re: fclean all
 
