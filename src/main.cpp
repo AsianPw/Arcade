@@ -46,7 +46,7 @@ int	startArcade(char *libraryPath)
 		std::cerr << e.what() << std::endl;
 		return (84);
 	}
-	display = loader->create(800, 600);
+	display = loader->create(arcade::WIDTH, arcade::HEIGHT);
 	while (display->isOpen()) {
 		while (display->isKey())
 			menu->sceneEvent(display);

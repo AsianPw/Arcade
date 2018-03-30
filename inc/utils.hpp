@@ -20,6 +20,9 @@ namespace arcade {
 		MOUSE
 	};
 
+	static const size_t	WIDTH = 800;
+	static const size_t	HEIGHT = 600;
+
 	static const char	ESCAPE[] = "ESCAPE";
 	static const char	CLOSE[] = "CLOSE";
 	static const char	UP[] = "UP";

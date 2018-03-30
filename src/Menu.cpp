@@ -47,6 +47,7 @@ Menu::Menu()
 	init_text(arcade::GRAPHICSDIR, graphicLib, menuText, pos);
 	pos.y = 500;
 	init_text(arcade::GAMESDIR, gamesLib, menuText, pos);
+	//menuText.insert({"title", createTexture("Choose a graphic library", true, )});
 	menuTexture.insert({"cursor", createTexture("./res/menu_cursor.png", true, 140, 300)});
 	menuTexture.insert({"0", createTexture("./res/menu_wallpaper.jpeg", true, 0, 0)});
 	menuTexture.insert({"champi", createTexture("./res/menu_champi.png", true, 80, 130)});
@@ -103,9 +104,9 @@ void	Menu::compute()
 {
 	menuTexture["champi"].position.x += 2;
 	menuTexture["mario"].position.x += 2;
-	if (menuTexture["champi"].position.x > 800)
+	if (menuTexture["champi"].position.x > arcade::WIDTH)
 		menuTexture["champi"].position.x = 0;
-	if (menuTexture["mario"].position.x > 800)
+	if (menuTexture["mario"].position.x > arcade::WIDTH)
 		menuTexture["mario"].position.x = 0;
 }
 
