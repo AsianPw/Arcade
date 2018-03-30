@@ -64,7 +64,7 @@ install:
 	@printf "[\033[0;32mcompiled\033[0m] % 70s\n" $< | tr ' ' '.'
 	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-$(NAME): core graphicals games
+$(NAME): core games graphicals
 
 core: $(OBJS)
 	@printf "$(COM_COLOR)% 50s % 30s$(NO_COLOR)\n" "[BUILD $(NAME)]" "" | tr ' ' '-'
