@@ -36,10 +36,6 @@ int	startArcade(char *libraryPath)
 	std::unique_ptr<Loader>	loader = nullptr;
 	IDisplay		*display = nullptr;
 
-	if (!checkFileExist(libraryPath)) {
-		std::cerr << libraryPath << " doesn't exist" << std::endl;
-		return (84);
-	}
 	try {
 		loader = std::make_unique<Loader>(libraryPath);
 	} catch (arcade::LoaderError const& e) {
@@ -63,9 +59,10 @@ int	main(int ac, char **av)
 {
 	int	exitValue = EXIT_SUCCESS;
 
-	if (ac == 2)
+	if (ac == 2) {
 		exitValue = startArcade(av[1]);
-	else
+	} else {
 		printHelp(av[0]);
+	}
 	return exitValue;
 }

@@ -29,7 +29,7 @@ namespace arcade {
 	static const char	DOWN[] = "DOWN";
 	static const char	LEFT[] = "LEFT";
 	static const char	RIGHT[] = "RIGHT";
-	static const char	SPACE[] = "SPACE";
+	static const char	ENTER[] = "ENTER";
 
 	static const char	GRAPHICSDIR[] = "./lib/";
 	static const char	GAMESDIR[] = "./games/";

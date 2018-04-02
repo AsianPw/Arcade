@@ -11,28 +11,35 @@
 #include <string>
 #include <map>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "utils.hpp"
 #include "IDisplay.hpp"
 
 class Sdl2 : public IDisplay {
 public:
 	Sdl2(size_t, size_t);
-	~Sdl2();
+	~Sdl2() override;
 public:
-	bool Display();
-	bool isOpen();
-	bool GetKey(arcade::TypeEvent, std::string const &);
-	bool isKey();
-	bool	loadTexture(std::map<std::string, Texture> const&);
-	bool	loadText(std::map<std::string, Texture> const&);
-	void destroyWindow();
+	bool Display() override;
+	bool isOpen() override;
+	bool GetKey(arcade::TypeEvent, std::string const &) override;
+	bool isKey() override;
+	bool	loadTexture(std::map<std::string, Texture> const&) override;
+	bool	loadText(std::map<std::string, Texture> const&) override;
+	void destroyWindow() override;
 	void setEvent(const SDL_Event &event);
 private:
 	size_t width;
 	size_t height;
 	bool finish;
+	TTF_Font	*font;
 	std::map<std::string, int> allEvent;
-	SDL_Window *window;
+	std::map<SDL_Surface*, Position>	texts;
+	std::map<SDL_Surface*, Position>	textures;
+	SDL_Surface	*windowSurface;
+	SDL_Renderer	*renderer;
+	SDL_Window	*window;
 	SDL_Event event;
 };
 

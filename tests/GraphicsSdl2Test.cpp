@@ -87,7 +87,7 @@ Test(SDL2_TEST, FAILED_WINDOW_CREATION)
 {
 	warn << "An Exception must be catch for this test" << std::flush;
 	try {
-		new Sdl2(99999999999999999999999, 600);
+		new Sdl2(-1, -1);
 	}
 	catch (arcade::GraphicsLibraryError const& e) {
 		warn << e.what() << std::flush;

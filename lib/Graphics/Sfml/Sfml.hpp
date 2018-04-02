@@ -25,8 +25,8 @@ public:
 	bool	loadText(std::map<std::string, Texture> const&) override;
 	void setEvent(sf::Event &);
 private:
-	size_t width;
-	size_t height;
+	size_t	width;
+	size_t	height;
 	bool	alreadyLoad;
 	sf::Font	font;
 	std::vector<sf::Text>	texts;
