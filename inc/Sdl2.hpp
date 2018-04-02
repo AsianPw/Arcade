@@ -37,8 +37,8 @@ private:
 	std::map<std::string, int> allEvent;
 	std::map<SDL_Surface*, Position>	texts;
 	std::map<SDL_Surface*, Position>	textures;
+
 	SDL_Surface	*windowSurface;
-	SDL_Renderer	*renderer;
 	SDL_Window	*window;
 	SDL_Event event;
 };

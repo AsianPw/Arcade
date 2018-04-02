@@ -9,17 +9,14 @@
 #include "../../../inc/Sdl2.hpp"
 #include "../../../inc/ArcadeException.hpp"
 
-Sdl2::Sdl2(size_t w, size_t h)
+Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
 {
-	width = w;
-	height = h;
-	finish = true;
-	allEvent.insert(std::make_pair(arcade::CLOSE, SDL_WINDOWEVENT_CLOSE));
-	allEvent.insert(std::make_pair(arcade::ESCAPE, SDL_SCANCODE_ESCAPE));
-	allEvent.insert(std::make_pair(arcade::UP, SDL_SCANCODE_UP));
-	allEvent.insert(std::make_pair(arcade::DOWN, SDL_SCANCODE_DOWN));
-	allEvent.insert(std::make_pair(arcade::LEFT, SDL_SCANCODE_LEFT));
-	allEvent.insert(std::make_pair(arcade::RIGHT, SDL_SCANCODE_RIGHT));
+	allEvent.insert({arcade::CLOSE, SDL_WINDOWEVENT_CLOSE});
+	allEvent.insert({arcade::ESCAPE, SDL_SCANCODE_ESCAPE});
+	allEvent.insert({arcade::UP, SDL_SCANCODE_UP});
+	allEvent.insert({arcade::DOWN, SDL_SCANCODE_DOWN});
+	allEvent.insert({arcade::LEFT, SDL_SCANCODE_LEFT});
+	allEvent.insert({arcade::RIGHT, SDL_SCANCODE_RIGHT});
 	allEvent.insert({arcade::ENTER, SDL_SCANCODE_RETURN});
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_Quit();
@@ -30,10 +27,18 @@ Sdl2::Sdl2(size_t w, size_t h)
 		SDL_Quit();
 		throw arcade::GraphicsLibraryError(SDL_GetError());
 	}
-	windowSurface = SDL_GetWindowSurface(window);//todo check
+	windowSurface = SDL_GetWindowSurface(window);
+	if (windowSurface == nullptr) {
+		SDL_Quit();
+		throw arcade::GraphicsLibraryError(SDL_GetError());
+	}
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 	TTF_Init();
 	font = TTF_OpenFont("./res/Walk-Around-the-Block.ttf", 30);
+	if (font == nullptr) {
+		SDL_Quit();
+		throw arcade::GraphicsLibraryError(SDL_GetError());
+	}
 }
 
 Sdl2::~Sdl2()
@@ -128,8 +133,9 @@ bool Sdl2::loadText(std::map<std::string, Texture> const&text)
 
 bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
 {
-	for (auto const &texture : textures)
-		SDL_FreeSurface(texture.first);
+
+	for (auto const &it : textures)
+		SDL_FreeSurface(it.first);
 	textures.clear();
 	for (auto const &it : toLoad) {
 		if (!it.second.isFile || !it.second.display)
@@ -144,15 +150,4 @@ bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
 		textures.insert({tmpTexture, {it.second.position.x, it.second.position.y}});
 	}
 	return true;
-}
-
-template <typename Type>
-void	init_texture(std::map<std::string, Texture> const&texture, Type &textureLoad)
-{
-	auto	it = texture.begin();
-
-	while (it != texture.end()) {
-
-		it++;
-	}
 }
