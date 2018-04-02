@@ -20,6 +20,7 @@ Sdl2::Sdl2(size_t w, size_t h)
 	allEvent.insert(std::make_pair(arcade::DOWN, SDL_SCANCODE_DOWN));
 	allEvent.insert(std::make_pair(arcade::LEFT, SDL_SCANCODE_LEFT));
 	allEvent.insert(std::make_pair(arcade::RIGHT, SDL_SCANCODE_RIGHT));
+	allEvent.insert({arcade::ENTER, SDL_SCANCODE_RETURN});
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_Quit();
 		throw arcade::GraphicsLibraryError(SDL_GetError());
@@ -51,7 +52,7 @@ bool	Sdl2::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent)
 		return false;
 	if (typeEvent == arcade::WINDOW && search->second == event.window.event)
 		return true;
-	if (typeEvent == arcade::KEYBOARD && search->second == event.key.keysym.scancode)
+	if (event.type == SDL_KEYUP && typeEvent == arcade::KEYBOARD && search->second == event.key.keysym.scancode)
 		return true;
 	return false;
 }
