@@ -17,7 +17,7 @@ SRCS	=	./Sdl2.cpp	\
 OBJS	=	$(SRCS:.cpp=.o)
 
 CXXFLAGS	=	-W -Wall -Wextra -fPIC -shared -std=c++14 -g3
-LDFLAGS		=	-lSDL2
+LDFLAGS		=	-lSDL2 -lSDL2_image -lSDL2_ttf
 
 WARN_COLOR	=	\033[0;33m
 COM_COLOR	=	\033[0;34m

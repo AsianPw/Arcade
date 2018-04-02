@@ -10,6 +10,7 @@
 #include <cstring>
 #include "../inc/utils.hpp"
 #include "Menu.hpp"
+#include "../inc/GameLoader.hpp"
 
 void	listFiles(const char* path, std::vector<std::string> &list)
 {
@@ -42,16 +43,17 @@ void	init_text(char const *dir, std::vector<std::string> &list, std::map<std::st
 
 Menu::Menu()
 {
-	Position	pos = {200, 300};
+	Position	pos = {arcade::WIDTH / 2 - 100, 100};
 
+	time = 0;
 	init_text(arcade::GRAPHICSDIR, graphicLib, menuText, pos);
-	pos.y = 500;
+	pos.y = 200;
 	init_text(arcade::GAMESDIR, gamesLib, menuText, pos);
-	//menuText.insert({"title", createTexture("Choose a graphic library", true, )});
-	menuTexture.insert({"cursor", createTexture("./res/menu_cursor.png", true, 140, 300)});
+	menuText.insert({"press", createTexture(PRESS, true, arcade::WIDTH / 2, 500)});
+	menuTexture.insert({"cursor", createTexture("./res/menu_cursor.png", true, 140, 100)});
 	menuTexture.insert({"0", createTexture("./res/menu_wallpaper.jpeg", true, 0, 0)});
-	menuTexture.insert({"champi", createTexture("./res/menu_champi.png", true, 80, 130)});
-	menuTexture.insert({"mario", createTexture("./res/menu_mario.png", true, 0, 100)});
+	menuTexture.insert({"champi", createTexture("./res/menu_champi.png", true, 80, 160)});
+	menuTexture.insert({"mario", createTexture("./res/menu_mario.png", true, 0, 130)});
 	current = &graphicLib;
 }
 
@@ -65,14 +67,14 @@ void	Menu::sceneEvent(IDisplay *display)
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP)) {
-		if (menuTexture["cursor"].position.y == 500) {
-			menuTexture["cursor"].position.y -= 200;
+		if (menuTexture["cursor"].position.y == 200) {
+			menuTexture["cursor"].position.y = 100;
 			current = &graphicLib;
 		}
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::DOWN)) {
-		if (menuTexture["cursor"].position.y == 300) {
-			menuTexture["cursor"].position.y += 200;
+		if (menuTexture["cursor"].position.y == 100) {
+			menuTexture["cursor"].position.y = 200;
 			current = &gamesLib;
 		}
 	}
@@ -98,16 +100,29 @@ void	Menu::sceneEvent(IDisplay *display)
 			it++;
 		}
 	}
+	if (display->GetKey(arcade::KEYBOARD, arcade::ENTER)) {
+		std::cout << "Enter press" << std::endl;
+		for (auto const &game : gamesLib) {
+			if (menuText[game].display) {
+				std::cout << "Load game " << game << std::endl;
+			}
+		}
+	}
 }
 
 void	Menu::compute()
 {
+	if (time == 10) {
+		menuText["press"].display = !menuText["press"].display;
+		time = 0;
+	}
 	menuTexture["champi"].position.x += 2;
 	menuTexture["mario"].position.x += 2;
 	if (menuTexture["champi"].position.x > arcade::WIDTH)
 		menuTexture["champi"].position.x = 0;
 	if (menuTexture["mario"].position.x > arcade::WIDTH)
 		menuTexture["mario"].position.x = 0;
+	time += 1;
 }
 
 std::map<std::string, Texture> Menu::getText() const

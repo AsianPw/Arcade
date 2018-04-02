@@ -102,8 +102,19 @@ Test(SFML_Library, isOpen, .description = "Check if window is open")
 Test(SFML_LIBRARY, Load_SFML_LIBRARY)
 {
 	std::unique_ptr<Loader> loader(
-		new Loader((char *)"./lib/Graphics/Sfml/lib_arcade_sfml.so"));
+		new Loader((char *)"./lib/lib_arcade_sfml.so"));
 	std::unique_ptr<IDisplay> display(loader->create(800, 600));
 
 	cr_assert_not_null(display, "Loading SFML library failed !");
 }
+
+/*
+Test(SFML_LIBRARY, Load_Texture)
+{
+	std::unique_ptr<Loader> loader(new Loader((char *)"./lib/lib_arcade_sfml.so"));
+	std::unique_ptr<IDisplay> display(loader->create(800, 600));
+	std::map<std::string, Texture>	textures;
+
+	textures.insert({"cursor", createTexture("./res/menu_cursor.png", true, 140, 100)});
+	display->loadTexture(textures);
+}*/

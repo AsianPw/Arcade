@@ -11,7 +11,7 @@
 #include "../inc/IScene.hpp"
 #include "../inc/Loader.hpp"
 
-
+static const char PRESS[] = "Press Enter";
 
 class Menu : public IScene {
 public:
@@ -28,7 +28,7 @@ private:
 	std::vector<std::string>	*current;
 	std::vector<std::string>	graphicLib;
 	std::vector<std::string>	gamesLib;
-	//std::pair<std::vector<std::string>, int>	&current;
+	size_t	time;
 };
 
 #endif //CPP_ARCADE_MENU_HPP
