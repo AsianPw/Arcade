@@ -12,8 +12,8 @@
 #include <string>
 
 struct Position {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
 };
 
 struct Texture {
