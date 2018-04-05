@@ -73,3 +73,21 @@ bool Vulkan::loadTexture(std::map<std::string, Texture> const& texture)
 {
 	return false;
 }
+
+void Vulkan::changeLibrary(std::string const &path)
+{
+}
+
+bool Vulkan::getChange() const
+{
+	return false;
+}
+
+void Vulkan::setChange(bool b)
+{
+}
+
+const std::string &Vulkan::getLibraryPath() const
+{
+	return newLibraryPath;
+}

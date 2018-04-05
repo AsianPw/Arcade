@@ -32,7 +32,7 @@ SRCS		=	./src/main.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
-UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system -lSDL2
+UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system -lSDL2 -lSDL2_image -lSDL2_ttf
 
 LDFLAGS		=	-ldl
 CXXFLAGS	=	-W -Wall -Wextra -std=c++14

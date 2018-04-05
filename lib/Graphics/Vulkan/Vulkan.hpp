@@ -29,6 +29,16 @@ private:
 	std::map<std::string, int> allEvent;
 	GLFWwindow *window;
 	size_t width;
+public:
+	void changeLibrary(std::string const &path) override;
+
+	bool getChange() const override;
+
+	void setChange(bool b) override;
+
+	const std::string &getLibraryPath() const override;
+
+private:
 	size_t height;
 };
 

@@ -24,6 +24,15 @@ public:
 	bool isKey();
 	bool	loadTexture(std::map<std::string, Texture> const&);
 	bool	loadText(std::map<std::string, Texture> const&);
+
+	void changeLibrary(std::string const &path) override;
+
+	bool getChange() const override;
+
+	void setChange(bool b) override;
+
+	const std::string &getLibraryPath() const override;
+
 	void destroyWindow();
 private:
 	std::map<std::string, int> allEvent;

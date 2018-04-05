@@ -83,3 +83,21 @@ bool NcursesDisplay::loadTexture(std::map<std::string, Texture> const &texture)
 {
 	return false;
 }
+
+void NcursesDisplay::changeLibrary(std::string const &path)
+{
+}
+
+bool NcursesDisplay::getChange() const
+{
+	return false;
+}
+
+void NcursesDisplay::setChange(bool b)
+{
+}
+
+const std::string &NcursesDisplay::getLibraryPath() const
+{
+	return newLibraryPath;
+}
