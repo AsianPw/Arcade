@@ -151,3 +151,24 @@ bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
 	}
 	return true;
 }
+
+void Sdl2::changeLibrary(std::string const &path)
+{
+	change = true;
+	newLibraryPath = path;
+}
+
+std::string const&	Sdl2::getLibraryPath() const
+{
+	return newLibraryPath;
+}
+
+bool	Sdl2::getChange() const
+{
+	return change;
+}
+
+void	Sdl2::setChange(bool state)
+{
+	change = state;
+}

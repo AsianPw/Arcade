@@ -28,6 +28,10 @@ public:
 	bool	loadTexture(std::map<std::string, Texture> const&) override;
 	bool	loadText(std::map<std::string, Texture> const&) override;
 	void destroyWindow() override;
+	void changeLibrary(std::string const &) override;
+	bool	getChange() const override;
+	void	setChange(bool) override;
+	std::string const	&getLibraryPath() const override;
 	void setEvent(const SDL_Event &event);
 private:
 	size_t width;
@@ -37,7 +41,6 @@ private:
 	std::map<std::string, int> allEvent;
 	std::map<SDL_Surface*, Position>	texts;
 	std::map<SDL_Surface*, Position>	textures;
-
 	SDL_Surface	*windowSurface;
 	SDL_Window	*window;
 	SDL_Event event;

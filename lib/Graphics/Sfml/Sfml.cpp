@@ -100,3 +100,24 @@ bool SfmlDisplay::loadText(std::map<std::string, Texture> const &text)
 	}
 	return true;
 }
+
+void SfmlDisplay::changeLibrary(std::string const &path)
+{
+	change = true;
+	newLibraryPath = path;
+}
+
+bool SfmlDisplay::getChange() const
+{
+	return change;
+}
+
+std::string const& SfmlDisplay::getLibraryPath() const
+{
+	return newLibraryPath;
+}
+
+void SfmlDisplay::setChange(bool state)
+{
+	change = state;
+}

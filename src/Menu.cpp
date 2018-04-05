@@ -83,6 +83,8 @@ void	Menu::sceneEvent(IDisplay *display)
 			if (count > 0 && menuText[*it].display) {
 				menuText[*it].display = false;
 				menuText[*--it].display = true;
+				if (current == &graphicLib)
+					display->changeLibrary(menuText[*it].path);
 				break;
 			}
 			count += 1;
@@ -94,6 +96,8 @@ void	Menu::sceneEvent(IDisplay *display)
 			if (current->size() - 1 > count && menuText[*it].display) {
 				menuText[*it].display = false;
 				menuText[*++it].display = true;
+				if (current == &graphicLib)
+					display->changeLibrary(menuText[*it].path);
 				break;
 			}
 			count += 1;

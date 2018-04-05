@@ -23,6 +23,10 @@ public:
 	void destroyWindow() override;
 	bool loadTexture(std::map<std::string, Texture> const&) override;
 	bool	loadText(std::map<std::string, Texture> const&) override;
+	void	changeLibrary(std::string const &) override;
+	bool	getChange() const override;
+	void	setChange(bool) override;
+	std::string const	&getLibraryPath() const override;
 	void setEvent(sf::Event &);
 private:
 	size_t	width;

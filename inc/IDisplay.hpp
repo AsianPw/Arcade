@@ -24,6 +24,13 @@ public:
 	virtual bool	loadTexture(std::map<std::string, Texture> const&) = 0;
 	virtual bool	loadText(std::map<std::string, Texture> const&) = 0;
 	virtual void	destroyWindow() = 0;
+	virtual void	changeLibrary(std::string const &path) = 0;
+	virtual bool	getChange() const = 0;
+	virtual void	setChange(bool) = 0;
+	virtual std::string const	&getLibraryPath() const = 0;
+protected:
+	bool	change;
+	std::string	newLibraryPath;
 };
 
 #endif //CPP_ARCADE_IDISPLAY_HPP

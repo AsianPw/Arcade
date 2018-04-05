@@ -30,6 +30,24 @@ void	printHelp(const char *binaryName)
 		<< binaryName << " path_to_graphic_library" << std::endl;
 }
 
+IDisplay	*switchLibrary(std::unique_ptr<Loader> &loader, IDisplay *display)
+{
+	std::string	tmpPath = arcade::GRAPHICSDIR + display->getLibraryPath();
+
+	display->setChange(false);
+	if (display->getLibraryPath().empty())
+		return display;
+	if (display->isOpen())
+		display->destroyWindow();
+	loader->destroy(display);
+	try {
+		loader.reset(new Loader(tmpPath));
+	} catch (arcade::LoaderError const& e) {
+		std::cerr << e.what() << std::endl;
+	}
+	return loader->create(arcade::WIDTH, arcade::HEIGHT);
+}
+
 int	startArcade(char *libraryPath)
 {
 	auto			menu = std::make_unique<Menu>();
@@ -46,9 +64,11 @@ int	startArcade(char *libraryPath)
 	while (display->isOpen()) {
 		while (display->isKey())
 			menu->sceneEvent(display);
+		if (display->getChange())
+			display = switchLibrary(loader, display);
+		menu->compute();
 		display->loadTexture(menu->getTexture());
 		display->loadText(menu->getText());
-		menu->compute();
 		display->Display();
 	}
 	loader->destroy(display);
