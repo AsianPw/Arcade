@@ -13,14 +13,16 @@ all:
 	@printf "\n$(WARN_COLOR)% 50s % 30s$(NO_COLOR)\n\n" "[BUILD] Graphics" "" | tr ' ' '-'
 	mkdir ../../games
 	@make --no-print-directory -C ./Pacman all
+	@make --no-print-directory -C ./Nibbler all
 	@printf "$(WARN_COLOR)% 50s % 30s$(NO_COLOR)\n\n" "[BUILD] Done" "" | tr ' ' '-'
 
 clean:
 	@make --no-print-directory -C ./Pacman clean
-
+	@make --no-print-directory -C ./Nibbler clean
 
 fclean:
 	@make --no-print-directory -C ./Pacman fclean
+	@make --no-print-directory -C ./Nibbler fclean
 	rm -fr ../../games
 
 

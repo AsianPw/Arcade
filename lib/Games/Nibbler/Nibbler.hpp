@@ -14,7 +14,7 @@ class Nibbler : public IGame {
 public:
 	Nibbler();
 	~Nibbler() override = default;
-	void	Start() override;
+	//void	Start() override;
 
 public:
 	std::string const &getName() const override;

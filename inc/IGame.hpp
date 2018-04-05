@@ -15,7 +15,7 @@ public:
 	virtual ~IGame() = 0;
 	virtual	std::string	const &getName() const = 0;
 	virtual	std::string	const &getDescription() const = 0;
-	virtual	void	Start() = 0;
+	//virtual	void	Start() = 0;
 
 protected:
 	std::string	name;

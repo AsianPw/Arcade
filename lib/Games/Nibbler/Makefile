@@ -2,17 +2,18 @@
 ## EPITECH PROJECT, 2018
 ## Arcade
 ## File description:
-## Makefile for Compile Pacman
+## Makefile for Compile Nibbler
 ##
 
-NAME	=	lib_arcade_pacman.so
+NAME	=	lib_arcade_Nibbler.so
 
 CXX		=	g++
 
 RM		=	rm -f
 
 SRCS	=	./Extern.cpp	\
-			./Pacman.cpp	\
+			./Nibbler.cpp	\
+			./NibblerScene.cpp\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
