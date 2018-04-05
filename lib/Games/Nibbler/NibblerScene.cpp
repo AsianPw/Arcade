@@ -12,6 +12,7 @@ NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), mov
 	size_t	x = 0;
 	size_t	y = 0;
 
+	candy = {15, 5};
 	for (auto const &line : nibblerMap) {
 		y = 0;
 		for (auto const &block : line) {
@@ -32,7 +33,9 @@ void	NibblerScene::createMap()
 		x = 0;
 		while (x <= WIDTH) {
 			if (y == 0 || y == HEIGHT || x == 0 || x == WIDTH)
-				nibblerMap[x][y] = '#';
+				nibblerMap[y][x] = '#';
+			else if (x == candy.x && y == candy.y)
+				nibblerMap[y][x] = '@';
 			x++;
 		}
 		y++;
