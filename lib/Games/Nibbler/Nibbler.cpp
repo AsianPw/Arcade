@@ -23,7 +23,3 @@ std::string	const&Nibbler::getName() const
 {
 	return name;
 }
-
-void	Nibbler::Start()
-{
-}
