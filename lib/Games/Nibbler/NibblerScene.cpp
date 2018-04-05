@@ -18,6 +18,8 @@ NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), mov
 		for (auto const &block : line) {
 			if (block == '#')
 				nibblerTexture.insert({"block" + std::to_string(42), createTexture("./res/wall_nibbler.png",true, x * WIDTH_TEXTURE, y * HEIGHT_TEXTURE)});
+			else if (block == '@')
+				nibblerTexture.insert({"candy", createTexture("./res/candy_nibbler.png",true, x * WIDTH_TEXTURE, y * HEIGHT_TEXTURE)});
 			x++;
 		}
 		y++;
