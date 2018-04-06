@@ -37,8 +37,7 @@ void	init_text(char const *dir, std::vector<std::string> &list, std::map<std::st
 
 	listFiles(dir, list);
 	for (auto const &current : list) {
-		text.insert({current, createTexture(current, count == 0, pos.x, pos.y)});
-		createTexture(current, count == 0, pos.x, pos.y);
+		text.insert({current, {current, ' ', checkFileExist(current), count == 0, {pos.x, pos.y}}});
 		count += 1;
 	}
 }
@@ -51,11 +50,11 @@ Menu::Menu()
 	init_text(arcade::GRAPHICSDIR, graphicLib, menuText, pos);
 	pos.y = 200;
 	init_text(arcade::GAMESDIR, gamesLib, menuText, pos);
-	menuText.insert({"press", createTexture(PRESS, true, arcade::WIDTH / 2, 500)});
-	menuTexture.insert({"cursor", createTexture("./res/menu_cursor.png", true, 140, 100)});
-	menuTexture.insert({"0", createTexture("./res/menu_wallpaper.jpeg", true, 0, 0)});
-	menuTexture.insert({"champi", createTexture("./res/menu_champi.png", true, 80, 160)});
-	menuTexture.insert({"mario", createTexture("./res/menu_mario.png", true, 0, 130)});
+	menuText.insert({"press", {PRESS, ' ', false, true, {arcade::WIDTH / 2, 500} } });
+	menuTexture.insert({"cursor", {"./res/menu_cursor.png", '>', true, true, {140, 100}}});
+	menuTexture.insert({"0", {"./res/menu_wallpaper.jpeg", ' ', true, true, {0, 0}}});
+	menuTexture.insert({"champi", {"./res/menu_champi.png", ' ', true, true, {80, 160}}});
+	menuTexture.insert({"mario", {"./res/menu_mario.png", ' ', true, true, {0, 130}}});
 	current = &graphicLib;
 }
 

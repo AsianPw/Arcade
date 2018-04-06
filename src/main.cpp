@@ -15,12 +15,13 @@
 #include "Menu.hpp"
 #include "../inc/GameLoader.hpp"
 
-Texture	createTexture(std::string path, bool state, int x, int y)
+[[deprecated("Add to few arguments")]] Texture	createTexture(std::string path, bool state, Position pos, char similar)
 {
 	Texture	newTexture;
 
 	newTexture.isFile = checkFileExist(path);
-	newTexture.position = {x,y};
+	newTexture.position = pos;
+	newTexture.similar = similar;
 	newTexture.path = path;
 	newTexture.display = state;
 	return newTexture;

@@ -18,6 +18,7 @@ struct Position {
 
 struct Texture {
 	std::string	path;
+	char		similar;
 	bool		isFile;
 	bool		display;
 	Position	position;

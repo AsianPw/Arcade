@@ -71,7 +71,6 @@ void	NcursesDisplay::destroyWindow()
 
 bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
 {
-	clear();
 	for (auto const &it : text) {
 		if (!it.second.isFile && it.second.display) {
 			mvprintw(it.second.position.y % LINES, it.second.position.x % COLS, "%s", it.second.path.c_str());
@@ -82,7 +81,11 @@ bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
 
 bool NcursesDisplay::loadTexture(std::map<std::string, Texture> const &texture)
 {
-	(void)texture;
+	clear();
+	for (auto const &it : texture) {
+		if (it.second.isFile && it.second.display && it.second.similar != ' ')
+			mvprintw(it.second.position.y % LINES, it.second.position.x % COLS, "%c", it.second.similar);
+	}
 	return false;
 }
 
