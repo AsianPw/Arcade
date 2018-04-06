@@ -18,6 +18,9 @@ public:
 public:
 	bool	Display() override;
 	bool	isOpen() override;
+
+	bool loadMap(std::vector<std::vector<char>> const &vector) override;
+
 	bool	GetKey(arcade::TypeEvent, std::string const &) override;
 	bool	isKey() override;
 	void	destroyWindow() override;

@@ -194,3 +194,9 @@ void Sdl2::setNewGamePath(std::string const &gamePath)
 {
 	newGamePath = gamePath;
 }
+
+bool Sdl2::loadMap(std::vector<std::vector<char>> const &map)
+{
+	(void)map;
+	return false;
+}

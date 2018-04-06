@@ -22,10 +22,12 @@ public:
 	void	sceneEvent(IDisplay *) override;
 	std::map<std::string, Texture>	getTexture() const override;
 	std::map<std::string, Texture>	getText() const override;
+	std::vector<std::vector<char>> getMap() const override;
 	void	compute() override;
 private:
 	std::map<std::string, Texture>	menuTexture;
 	std::map<std::string, Texture>	menuText;
+	std::vector<std::vector<char>>	menuMap;
 	std::vector<std::string>	*current;
 	std::vector<std::string>	graphicLib;
 	std::vector<std::string>	gamesLib;

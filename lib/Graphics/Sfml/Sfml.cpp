@@ -143,3 +143,9 @@ std::string const	&SfmlDisplay::getNewGamePath() const
 {
 	return newGamePath;
 }
+
+bool SfmlDisplay::loadMap(std::vector<std::vector<char>> const &map)
+{
+	(void)map;
+	return false;
+}

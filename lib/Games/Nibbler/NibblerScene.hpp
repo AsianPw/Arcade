@@ -31,6 +31,9 @@ public:
 	std::map<std::string, Texture>	getText() const override ;
 	void	compute() override;
 	int	eatAndGrow();
+
+	std::vector<std::vector<char>> getMap() const override;
+
 	void	snakeMove();
 	void	createCandy();
 	void	createMap();

@@ -29,15 +29,13 @@ public:
 	void setChange(bool b) override;
 	const std::string &getLibraryPath() const override;
 	void destroyWindow() override;
-
 	const std::string &getNewGamePath() const override;
-
 	void setNewGamePath(std::string const &string) override;
 
+	bool loadMap(std::vector<std::vector<char>> const &vector) override;
+
 	bool getSwitchScene() const override;
-
 	void setSwitchScene(bool b) override;
-
 private:
 	std::map<std::string, int> allEvent;
 	int currentKey;

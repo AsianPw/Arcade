@@ -92,20 +92,14 @@ int	startArcade(char *libraryPath)
 		if (display->getSwitchScene()) {
 			switchScene(display, scene, gameLoader, game);
 		}
-		std::cerr << "Compute" << std::endl;
 		scene->compute();
-		std::cerr << "Texture" << std::endl;
 		display->loadTexture(scene->getTexture());
-		std::cerr << "Text" << std::endl;
 		display->loadText(scene->getText());
-		std::cerr << "Display" << std::endl;
 		display->Display();
-		std::cerr << "End while" << std::endl;
 	}
 	scene.reset();
 	if (gameLoader != nullptr)
 		gameLoader->destroy(game.release());
-	std::cerr << "End game" << std::endl;
 	loader->destroy(display);
 	return (EXIT_SUCCESS);
 }

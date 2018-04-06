@@ -6,6 +6,7 @@
 //
 
 #include <ncurses.h>
+#include <unistd.h>
 #include <iostream>
 #include "../../../inc/Ncurses.hpp"
 
@@ -13,14 +14,14 @@ NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 {
 	(void)w;
 	(void)h;
-	allEvent.insert(std::pair<std::string, int>(arcade::UP, KEY_UP));
-	allEvent.insert(std::pair<std::string, int>(arcade::DOWN, KEY_DOWN));
-	allEvent.insert(std::pair<std::string, int>(arcade::LEFT, KEY_LEFT));
-	allEvent.insert(std::pair<std::string, int>(arcade::RIGHT, KEY_RIGHT));
-	allEvent.insert(std::pair<std::string, int>(arcade::ESCAPE, 113));
+	allEvent.insert({arcade::UP, KEY_UP});
+	allEvent.insert({arcade::DOWN, KEY_DOWN});
+	allEvent.insert({arcade::LEFT, KEY_LEFT});
+	allEvent.insert({arcade::RIGHT, KEY_RIGHT});
+	allEvent.insert({arcade::ENTER, KEY_ENTER});
+	allEvent.insert({arcade::ESCAPE, 27});
 	initscr();
 	cbreak();
-	//window = newwin(h, w, 0, 0);
 	keypad(stdscr, true);
 	nodelay(stdscr, true);
 }
@@ -35,66 +36,70 @@ NcursesDisplay::~NcursesDisplay()
 
 bool	NcursesDisplay::Display()
 {
-	//clear();
 	refresh();
 	return (false);
 }
 
 bool	NcursesDisplay::isOpen()
 {
-	currentKey = getch();
-	return (true);
+	return true;
 }
 
 bool	NcursesDisplay::isKey()
 {
+	currentKey = getch();
 	return currentKey != ERR;
 }
 
 bool	NcursesDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &type)
 {
-	auto	search = allEvent.find(type);
-	int	tmpKey = currentKey;
-
-	currentKey = ERR;
-	printw("%d key press\n", tmpKey);
-	//wprintw(window, "%d key press\n", tmpKey);
-	if (search == allEvent.end())
-		return (false);
-	(void)typeEvent;
-	if (search->second == tmpKey)
-		return (true);
-	return (false);
+	if (typeEvent == arcade::WINDOW)
+		return false;
+	for (auto const &it : allEvent) {
+		if (it.first == type && it.second == currentKey) {
+			currentKey = ERR;
+			return true;
+		}
+	}
+	return false;
 }
 
 void	NcursesDisplay::destroyWindow()
 {
-	//wprintw(window, "delete\n");
-	//delwin(window);
 	endwin();
 }
 
-bool NcursesDisplay::loadText(std::map<std::string, Texture> const&text)
+bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
 {
-	return false;
+	clear();
+	for (auto const &it : text) {
+		if (!it.second.isFile && it.second.display) {
+			mvprintw(it.second.position.y % LINES, it.second.position.x % COLS, "%s", it.second.path.c_str());
+		}
+	}
+	return true;
 }
 
 bool NcursesDisplay::loadTexture(std::map<std::string, Texture> const &texture)
 {
+	(void)texture;
 	return false;
 }
 
 void NcursesDisplay::changeLibrary(std::string const &path)
 {
+	change = true;
+	newLibraryPath = path;
 }
 
 bool NcursesDisplay::getChange() const
 {
-	return false;
+	return change;
 }
 
-void NcursesDisplay::setChange(bool b)
+void NcursesDisplay::setChange(bool state)
 {
+	change = state;
 }
 
 const std::string &NcursesDisplay::getLibraryPath() const
@@ -107,9 +112,9 @@ const std::string &NcursesDisplay::getNewGamePath() const
 	return newGamePath;
 }
 
-void NcursesDisplay::setNewGamePath(std::string const &gamePath)
+void NcursesDisplay::setNewGamePath(std::string const &path)
 {
-	newGamePath = gamePath;
+	newGamePath = path;
 }
 
 bool NcursesDisplay::getSwitchScene() const
@@ -120,4 +125,20 @@ bool NcursesDisplay::getSwitchScene() const
 void NcursesDisplay::setSwitchScene(bool state)
 {
 	switchScene = state;
+}
+
+bool NcursesDisplay::loadMap(std::vector<std::vector<char>> const &map)
+{
+	int	y = 0;
+	int	x = 0;
+
+	for (auto const &line : map) {
+		x = 0;
+		for (auto const &character : line) {
+			mvprintw(x, y, "%c", character);
+			x += 1;
+		}
+		y += 1;
+	}
+	return false;
 }

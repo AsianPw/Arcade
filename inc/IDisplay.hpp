@@ -22,6 +22,7 @@ public:
 	virtual bool	isOpen() = 0;
 	virtual bool	GetKey(arcade::TypeEvent, std::string const&) = 0;
 	virtual bool	loadTexture(std::map<std::string, Texture> const&) = 0;
+	virtual	bool	loadMap(std::vector<std::vector<char>> const&) = 0;
 	virtual bool	loadText(std::map<std::string, Texture> const&) = 0;
 	virtual void	destroyWindow() = 0;
 	virtual void	changeLibrary(std::string const &path) = 0;

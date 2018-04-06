@@ -35,6 +35,9 @@ public:
 	void	setNewGamePath(std::string const &string) override;
 	const std::string &getNewGamePath() const override;
 	void	setChange(bool) override;
+
+	bool loadMap(std::vector<std::vector<char>> const &vector) override;
+
 	std::string const	&getLibraryPath() const override;
 	void setEvent(const SDL_Event &event);
 private:

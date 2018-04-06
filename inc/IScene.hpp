@@ -19,6 +19,7 @@ public:
 	virtual void	sceneEvent(IDisplay *) = 0;
 	virtual std::map<std::string, Texture>	getTexture() const = 0;
 	virtual std::map<std::string, Texture>	getText() const = 0;
+	virtual std::vector<std::vector<char>>	getMap() const = 0;
 	virtual	void	compute() = 0;
 };
 

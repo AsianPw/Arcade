@@ -125,3 +125,8 @@ void	NibblerScene::compute()
 	else if ((it->x + move.x) == candy.x && (it->y + move.y) == candy.y)
 		eatAndGrow();
 }
+
+std::vector<std::vector<char>> NibblerScene::getMap() const
+{
+	return nibblerMap;
+}

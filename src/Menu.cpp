@@ -137,3 +137,8 @@ std::map<std::string, Texture> Menu::getTexture() const
 {
 	return menuTexture;
 }
+
+std::vector<std::vector<char>> Menu::getMap() const
+{
+	return menuMap;
+}
