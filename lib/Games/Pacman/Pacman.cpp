@@ -22,3 +22,8 @@ std::string	const&Pacman::getName() const
 {
 	return name;
 }
+
+IScene	*Pacman::start()
+{
+	return nullptr;
+}

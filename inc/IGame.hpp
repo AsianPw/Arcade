@@ -9,14 +9,14 @@
 #define CPP_ARCADE_IGAME_HPP
 
 #include <string>
+#include "IScene.hpp"
 
 class IGame {
 public:
-	virtual ~IGame() = 0;
+	virtual ~IGame() = default;
 	virtual	std::string	const &getName() const = 0;
 	virtual	std::string	const &getDescription() const = 0;
-	//virtual	void	Start() = 0;
-
+	virtual	IScene	*start() = 0;
 protected:
 	std::string	name;
 	std::string	description;

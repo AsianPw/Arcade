@@ -39,6 +39,8 @@ Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
 		SDL_Quit();
 		throw arcade::GraphicsLibraryError(SDL_GetError());
 	}
+	change = false;
+	switchScene = false;
 }
 
 Sdl2::~Sdl2()
@@ -171,4 +173,24 @@ bool	Sdl2::getChange() const
 void	Sdl2::setChange(bool state)
 {
 	change = state;
+}
+
+bool Sdl2::getSwitchScene() const
+{
+	return switchScene;
+}
+
+void	Sdl2::setSwitchScene(bool state)
+{
+	switchScene = state;
+}
+
+std::string const	&Sdl2::getNewGamePath() const
+{
+	return newGamePath;
+}
+
+void Sdl2::setNewGamePath(std::string const &gamePath)
+{
+	newGamePath = gamePath;
 }

@@ -10,6 +10,8 @@
 
 #include "../inc/IScene.hpp"
 #include "../inc/Loader.hpp"
+#include "../inc/IGame.hpp"
+#include "../inc/GameLoader.hpp"
 
 static const char PRESS[] = "Press Enter";
 
@@ -21,7 +23,6 @@ public:
 	std::map<std::string, Texture>	getTexture() const override;
 	std::map<std::string, Texture>	getText() const override;
 	void	compute() override;
-
 private:
 	std::map<std::string, Texture>	menuTexture;
 	std::map<std::string, Texture>	menuText;

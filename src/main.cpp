@@ -8,12 +8,14 @@
 #include <cstdlib>
 #include <iostream>
 #include <bits/unique_ptr.h>
+#include <cstring>
 #include "../inc/IScene.hpp"
 #include "../inc/Loader.hpp"
 #include "../inc/ArcadeException.hpp"
 #include "Menu.hpp"
+#include "../inc/GameLoader.hpp"
 
-Texture	createTexture(std::string path, bool state, size_t x, size_t y)
+Texture	createTexture(std::string path, bool state, int x, int y)
 {
 	Texture	newTexture;
 
@@ -21,7 +23,7 @@ Texture	createTexture(std::string path, bool state, size_t x, size_t y)
 	newTexture.position = {x,y};
 	newTexture.path = path;
 	newTexture.display = state;
-	return (newTexture);
+	return newTexture;
 }
 
 void	printHelp(const char *binaryName)
@@ -48,12 +50,33 @@ IDisplay	*switchLibrary(std::unique_ptr<Loader> &loader, IDisplay *display)
 	return loader->create(arcade::WIDTH, arcade::HEIGHT);
 }
 
+void	switchScene(IDisplay *display, std::unique_ptr<IScene> &scene, std::unique_ptr<GameLoader> &gameLoader, std::unique_ptr<IGame>	&game)
+{
+	display->setSwitchScene(false);
+	if (display->getNewGamePath() == "menu") {
+		gameLoader = nullptr;
+		scene.reset(new Menu());
+	}
+	try {
+		gameLoader.reset(new GameLoader(display->getNewGamePath()));
+	} catch (arcade::LoaderError const& e) {
+		std::cerr << e.what() << std::endl;
+		gameLoader = nullptr;
+		return;
+	}
+	game.reset(gameLoader->create());
+	scene.reset(game->start());
+}
+
 int	startArcade(char *libraryPath)
 {
-	auto			menu = std::make_unique<Menu>();
+	std::unique_ptr<IScene>	scene = nullptr;
 	std::unique_ptr<Loader>	loader = nullptr;
+	std::unique_ptr<GameLoader>	gameLoader = nullptr;
+	std::unique_ptr<IGame>		game = nullptr;
 	IDisplay		*display = nullptr;
 
+	scene = std::make_unique<Menu>();
 	try {
 		loader = std::make_unique<Loader>(libraryPath);
 	} catch (arcade::LoaderError const& e) {
@@ -63,14 +86,26 @@ int	startArcade(char *libraryPath)
 	display = loader->create(arcade::WIDTH, arcade::HEIGHT);
 	while (display->isOpen()) {
 		while (display->isKey())
-			menu->sceneEvent(display);
+			scene->sceneEvent(display);
 		if (display->getChange())
 			display = switchLibrary(loader, display);
-		menu->compute();
-		display->loadTexture(menu->getTexture());
-		display->loadText(menu->getText());
+		if (display->getSwitchScene()) {
+			switchScene(display, scene, gameLoader, game);
+		}
+		std::cerr << "Compute" << std::endl;
+		scene->compute();
+		std::cerr << "Texture" << std::endl;
+		display->loadTexture(scene->getTexture());
+		std::cerr << "Text" << std::endl;
+		display->loadText(scene->getText());
+		std::cerr << "Display" << std::endl;
 		display->Display();
+		std::cerr << "End while" << std::endl;
 	}
+	scene.reset();
+	if (gameLoader != nullptr)
+		gameLoader->destroy(game.release());
+	std::cerr << "End game" << std::endl;
 	loader->destroy(display);
 	return (EXIT_SUCCESS);
 }

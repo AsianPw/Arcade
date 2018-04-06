@@ -12,11 +12,11 @@
 
 class GameLoader {
 public:
-	explicit GameLoader(std::string const &);
+	explicit	GameLoader(std::string const &);
 	~GameLoader();
 public:
-	IGame *(*create)();
-	void (*destroy)(IGame *);
+	IGame	*(*create)();
+	void	(*destroy)(IGame *);
 private:
 	void *handle;
 

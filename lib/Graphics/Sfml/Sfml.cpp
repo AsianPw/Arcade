@@ -19,6 +19,8 @@ SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h), alreadyLoad(
 	allEvent.insert({arcade::LEFT,sf::Keyboard::Left});
 	allEvent.insert({arcade::RIGHT,sf::Keyboard::Right});
 	allEvent.insert({arcade::ENTER, sf::Keyboard::Return});
+	change = false;
+	switchScene = false;
 }
 
 SfmlDisplay::~SfmlDisplay()
@@ -120,4 +122,24 @@ std::string const& SfmlDisplay::getLibraryPath() const
 void SfmlDisplay::setChange(bool state)
 {
 	change = state;
+}
+
+bool SfmlDisplay::getSwitchScene() const
+{
+	return switchScene;
+}
+
+void SfmlDisplay::setSwitchScene(bool state)
+{
+	switchScene = state;
+}
+
+void SfmlDisplay::setNewGamePath(std::string const &gamePath)
+{
+	newGamePath = gamePath;
+}
+
+std::string const	&SfmlDisplay::getNewGamePath() const
+{
+	return newGamePath;
 }

@@ -25,7 +25,7 @@ static const size_t HEIGHT_TEXTURE = 20;
 class NibblerScene : public IScene{
 public:
 	NibblerScene();
-	~NibblerScene() = default;
+	~NibblerScene() override = default;
 	void	sceneEvent(IDisplay *) override ;
 	std::map<std::string, Texture>	getTexture() const override ;
 	std::map<std::string, Texture>	getText() const override ;

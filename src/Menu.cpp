@@ -8,9 +8,12 @@
 #include <iostream>
 #include <dirent.h>
 #include <cstring>
+#include <algorithm>
 #include "../inc/utils.hpp"
 #include "Menu.hpp"
+#include "../inc/Texture.hpp"
 #include "../inc/GameLoader.hpp"
+#include "../inc/ArcadeException.hpp"
 
 void	listFiles(const char* path, std::vector<std::string> &list)
 {
@@ -20,8 +23,6 @@ void	listFiles(const char* path, std::vector<std::string> &list)
 	if (dirFile)
 	{
 		while ((hFile = readdir( dirFile )) != nullptr) {
-			if (!strcmp(hFile->d_name, "." )) continue;
-			if (!strcmp(hFile->d_name, "..")) continue;
 			if ((hFile->d_name[0] == '.')) continue;
 			if (strstr(hFile->d_name, ".so"))
 				list.emplace_back(hFile->d_name);
@@ -37,6 +38,7 @@ void	init_text(char const *dir, std::vector<std::string> &list, std::map<std::st
 	listFiles(dir, list);
 	for (auto const &current : list) {
 		text.insert({current, createTexture(current, count == 0, pos.x, pos.y)});
+		createTexture(current, count == 0, pos.x, pos.y);
 		count += 1;
 	}
 }
@@ -60,7 +62,6 @@ Menu::Menu()
 void	Menu::sceneEvent(IDisplay *display)
 {
 	auto	it = current->begin();
-	size_t	count = 0;
 
 	if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 		display->destroyWindow();
@@ -80,35 +81,33 @@ void	Menu::sceneEvent(IDisplay *display)
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		while (it != current->end()) {
-			if (count > 0 && menuText[*it].display) {
+			if (it != current->begin() && menuText[*it].display) {
 				menuText[*it].display = false;
 				menuText[*--it].display = true;
 				if (current == &graphicLib)
 					display->changeLibrary(menuText[*it].path);
 				break;
 			}
-			count += 1;
 			it++;
 		}
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT)) {
 		while (it != current->end()) {
-			if (current->size() - 1 > count && menuText[*it].display) {
+			if (it != current->end() - 1 && menuText[*it].display) {
 				menuText[*it].display = false;
 				menuText[*++it].display = true;
 				if (current == &graphicLib)
 					display->changeLibrary(menuText[*it].path);
 				break;
 			}
-			count += 1;
 			it++;
 		}
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::ENTER)) {
-		std::cout << "Enter press" << std::endl;
 		for (auto const &game : gamesLib) {
 			if (menuText[game].display) {
-				std::cout << "Load game " << game << std::endl;
+				display->setSwitchScene(true);
+				display->setNewGamePath(arcade::GAMESDIR + game);
 			}
 		}
 	}
@@ -122,10 +121,10 @@ void	Menu::compute()
 	}
 	menuTexture["champi"].position.x += 2;
 	menuTexture["mario"].position.x += 2;
-	if (menuTexture["champi"].position.x > arcade::WIDTH)
-		menuTexture["champi"].position.x = 0;
-	if (menuTexture["mario"].position.x > arcade::WIDTH)
-		menuTexture["mario"].position.x = 0;
+	if (menuTexture["champi"].position.x > (int)(arcade::WIDTH + 20))
+		menuTexture["champi"].position.x = -20;
+	if (menuTexture["mario"].position.x > (int)(arcade::WIDTH + 20))
+		menuTexture["mario"].position.x = -20;
 	time += 1;
 }
 

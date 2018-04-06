@@ -23,6 +23,6 @@ struct Texture {
 	Position	position;
 };
 
-Texture	createTexture(std::string, bool, size_t, size_t);
+Texture	createTexture(std::string, bool, int, int);
 
 #endif //CPP_ARCADE_TEXTURE_HPP

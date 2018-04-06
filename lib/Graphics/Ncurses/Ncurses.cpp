@@ -101,3 +101,23 @@ const std::string &NcursesDisplay::getLibraryPath() const
 {
 	return newLibraryPath;
 }
+
+const std::string &NcursesDisplay::getNewGamePath() const
+{
+	return newGamePath;
+}
+
+void NcursesDisplay::setNewGamePath(std::string const &gamePath)
+{
+	newGamePath = gamePath;
+}
+
+bool NcursesDisplay::getSwitchScene() const
+{
+	return switchScene;
+}
+
+void NcursesDisplay::setSwitchScene(bool state)
+{
+	switchScene = state;
+}

@@ -16,18 +16,22 @@ public:
 	SfmlDisplay(size_t, size_t);
 	~SfmlDisplay() override;
 public:
-	bool Display() override;
-	bool isOpen() override;
-	bool GetKey(arcade::TypeEvent, std::string const &) override;
-	bool isKey() override;
-	void destroyWindow() override;
-	bool loadTexture(std::map<std::string, Texture> const&) override;
+	bool	Display() override;
+	bool	isOpen() override;
+	bool	GetKey(arcade::TypeEvent, std::string const &) override;
+	bool	isKey() override;
+	void	destroyWindow() override;
+	bool	loadTexture(std::map<std::string, Texture> const&) override;
 	bool	loadText(std::map<std::string, Texture> const&) override;
 	void	changeLibrary(std::string const &) override;
 	bool	getChange() const override;
+	bool	getSwitchScene() const override;
+	void	setSwitchScene(bool) override;
 	void	setChange(bool) override;
 	std::string const	&getLibraryPath() const override;
-	void setEvent(sf::Event &);
+	std::string const	&getNewGamePath() const override;
+	void	setNewGamePath(std::string const &) override;
+	void	setEvent(sf::Event &);
 private:
 	size_t	width;
 	size_t	height;

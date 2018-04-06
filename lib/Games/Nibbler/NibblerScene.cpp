@@ -5,6 +5,7 @@
 // NibblerScene.cpp
 //
 
+#include <iostream>
 #include "NibblerScene.hpp"
 
 NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right)
@@ -72,12 +73,10 @@ void	NibblerScene::createCandy()
 
 void	NibblerScene::sceneEvent(IDisplay *display)
 {
-	if (display->GetKey(arcade::KEYBOARD, arcade::CLOSE)) {
+	if (display->GetKey(arcade::KEYBOARD, arcade::CLOSE))
 		display->destroyWindow();
-	}
-	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE)) {
-
-	}
+	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
+		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		if (&move == &direction.right || &move == &direction.left)
 			return;

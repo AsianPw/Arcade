@@ -26,10 +26,16 @@ public:
 	virtual void	destroyWindow() = 0;
 	virtual void	changeLibrary(std::string const &path) = 0;
 	virtual bool	getChange() const = 0;
+	virtual std::string const	&getNewGamePath() const = 0;
+	virtual void	setNewGamePath(std::string const &) = 0;
+	virtual	bool	getSwitchScene() const = 0;
+	virtual void	setSwitchScene(bool) = 0;
 	virtual void	setChange(bool) = 0;
 	virtual std::string const	&getLibraryPath() const = 0;
 protected:
 	bool	change;
+	bool	switchScene;
+	std::string	newGamePath;
 	std::string	newLibraryPath;
 };
 

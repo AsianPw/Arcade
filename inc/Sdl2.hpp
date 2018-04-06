@@ -30,6 +30,10 @@ public:
 	void destroyWindow() override;
 	void changeLibrary(std::string const &) override;
 	bool	getChange() const override;
+	bool	getSwitchScene() const override;
+	void	setSwitchScene(bool) override;
+	void	setNewGamePath(std::string const &string) override;
+	const std::string &getNewGamePath() const override;
 	void	setChange(bool) override;
 	std::string const	&getLibraryPath() const override;
 	void setEvent(const SDL_Event &event);
