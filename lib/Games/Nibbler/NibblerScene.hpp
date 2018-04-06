@@ -13,10 +13,10 @@
 #include "Nibbler.hpp"
 
 struct	Direction {
-	Position	up = {1, 0};
-	Position	left = {0, -1};
-	Position	down = {-1, 0};
-	Position	right = {0, 1};
+	Position	up = {0, 1};
+	Position	left = {-1, 0};
+	Position	down = {0, -1};
+	Position	right = {1, 0};
 };
 
 static const size_t WIDTH_TEXTURE = 20;
