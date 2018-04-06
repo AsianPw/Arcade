@@ -9,6 +9,7 @@
 #define CPP_ARCADE_PACMAN_HPP
 
 #include "../../../inc/IGame.hpp"
+#include "time.h"
 
 class Pacman : public IGame {
 public:

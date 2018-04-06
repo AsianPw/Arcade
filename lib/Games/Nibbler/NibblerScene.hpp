@@ -48,7 +48,7 @@ private:
 	Position			move;
 	Position			candy;
 	static const size_t		WIDTH = 20;
-	static const size_t		HEIGHT = 10;
+	static const size_t		HEIGHT =10;
 };
 
 #endif //CPP_ARCADE_NIBBLERSCENE_HPP
