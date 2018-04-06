@@ -25,6 +25,8 @@ PacmanScene::PacmanScene() : pacmanMap(HEIGHT, std::vector<char>(WIDTH))
 				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/food_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'E')
 				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/Ghosts_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+			else if (block == 'B')
+				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/blue_gosht.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			x = x + 1;
 		}
 		y = y + 1;
@@ -33,6 +35,8 @@ PacmanScene::PacmanScene() : pacmanMap(HEIGHT, std::vector<char>(WIDTH))
 
 void    PacmanScene::SetCharacters(void)
 {
+	player.x = 8;
+	player.y = 13;
 	gosht1.x = 9;
 	gosht1.y = 12;
 	gosht2.x = 9;
@@ -42,9 +46,10 @@ void    PacmanScene::SetCharacters(void)
 	gosht4.x = 10;
 	gosht4.y = 13;
 	pacmanMap[gosht1.x][gosht1.y] = 'E';
-	pacmanMap[gosht2.x][gosht2.y] = 'E';
+	pacmanMap[gosht2.x][gosht2.y] = 'B';
 	pacmanMap[gosht3.x][gosht3.y] = 'E';
 	pacmanMap[gosht4.x][gosht4.y] = 'E';
+	pacmanMap[player.x][player.y] = 'G';
 }
 
 std::map<std::string, Texture>  PacmanScene::getTexture() const
@@ -121,11 +126,11 @@ void    PacmanScene::GoshtMove(void)
 void    PacmanScene::compute(void)
 {
 	// TO DO ia of the goshts //
-	//srand(time(NULL));
-	//GoshtMove();
+	srand(time(NULL));
+	GoshtMove();
 }
 
-void    PacmanScene::createMap()
+void    PacmanScene::createMap(void)
 {
 	pacmanMap.resize(WIDTH, std::vector<char>(HEIGHT));
 	pacmanMap = {{'\n','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'},
@@ -136,7 +141,7 @@ void    PacmanScene::createMap()
 		     {'\n','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*'},
 		     {'\n','*','o','*','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','*','o','*'},
 		     {'\n','*','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','*'},
-		     {'\n','*','o','*','o','o','*','*','o','*','*','*',' ','G',' ','*','*','*','o','o','*','*','o','*','o','*'},
+		     {'\n','*','o','*','o','o','*','*','o','*','*','*',' ',' ',' ','*','*','*','o','o','*','*','o','*','o','*'},
 		     {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
 		     {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
 		     {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
