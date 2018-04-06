@@ -42,7 +42,7 @@ void    PacmanScene::createMap(void)
                  {'\n','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'}};
  }
 
-std::vector<std::vector<char>>   PacmanScene::get_map(void)
+std::vector<std::vector<char>>   PacmanScene::getMap() const
 {
 	return (pacmanMap);
 }

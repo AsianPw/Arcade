@@ -5,7 +5,10 @@
 ** Created by asianpw,
 */
 
+#include <vector>
+#include <iostream>
 #include "Pacman.hpp"
+#include "PacmanScene.hpp"
 
 Pacman::Pacman()
 {
@@ -25,5 +28,5 @@ std::string	const&Pacman::getName() const
 
 IScene	*Pacman::start()
 {
-	return nullptr;
+	return new PacmanScene();
 }
