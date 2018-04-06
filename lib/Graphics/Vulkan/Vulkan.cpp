@@ -22,9 +22,9 @@ Vulkan::Vulkan(size_t width, size_t height) : width(width), height(height)
 
 	glfwInit();//todo exception
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	window = glfwCreateWindow(width, height, "Arcade - Vulkan", nullptr, nullptr);//todo exception
+	window = glfwCreateWindow(width, height, "Arcade - Vulkan", nullptr, nullptr);
+	allEvent.insert({arcade::ESCAPE, GLFW_KEY_ESCAPE});
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-	std::cout << extensionCount << " extensions supported" << std::endl;
 }
 
 Vulkan::~Vulkan()
@@ -34,11 +34,9 @@ Vulkan::~Vulkan()
 
 bool	Vulkan::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent)
 {
-	auto	search = allEvent.find(currentEvent);
-
-	(void)typeEvent;
-	if (search == allEvent.end()) {
-		return false;
+	for (auto const &key : allEvent) {
+		if (key.first == currentEvent && glfwGetKey(window, key.second) != GLFW_PRESS)
+			return true;
 	}
 	return false;
 }
@@ -66,28 +64,59 @@ void	Vulkan::destroyWindow()
 
 bool Vulkan::loadText(std::map<std::string, Texture> const& text)
 {
+	(void)text;
 	return false;
 }
 
 bool Vulkan::loadTexture(std::map<std::string, Texture> const& texture)
 {
+	(void)texture;
 	return false;
 }
 
 void Vulkan::changeLibrary(std::string const &path)
 {
+	change = true;
+	newLibraryPath = path;
 }
 
 bool Vulkan::getChange() const
 {
-	return false;
+	return change;
 }
 
-void Vulkan::setChange(bool b)
+void Vulkan::setChange(bool state)
 {
+	change = state;
 }
 
 const std::string &Vulkan::getLibraryPath() const
 {
 	return newLibraryPath;
+}
+
+bool Vulkan::loadMap(std::vector<std::vector<char>> const &map)
+{
+	(void)map;
+	return false;
+}
+
+const std::string &Vulkan::getNewGamePath() const
+{
+	return newGamePath;
+}
+
+void Vulkan::setNewGamePath(std::string const &path)
+{
+	newGamePath = path;
+}
+
+bool Vulkan::getSwitchScene() const
+{
+	return switchScene;
+}
+
+void Vulkan::setSwitchScene(bool state)
+{
+	switchScene = state;
 }

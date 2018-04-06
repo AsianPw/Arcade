@@ -71,9 +71,14 @@ void	NcursesDisplay::destroyWindow()
 
 bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
 {
+	float	percentageX;
+	float	percentageY;
+
 	for (auto const &it : text) {
 		if (!it.second.isFile && it.second.display) {
-			mvprintw(it.second.position.y % LINES, it.second.position.x % COLS, "%s", it.second.path.c_str());
+			percentageX = (it.second.position.x / static_cast<float>(arcade::WIDTH));
+			percentageY = (it.second.position.y / static_cast<float>(arcade::HEIGHT));
+			mvprintw((int)(percentageY * LINES), (int)(COLS * percentageX), "%s", it.second.path.c_str());
 		}
 	}
 	return true;
@@ -81,10 +86,16 @@ bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
 
 bool NcursesDisplay::loadTexture(std::map<std::string, Texture> const &texture)
 {
+	float	percentageX;
+	float	percentageY;
+
 	clear();
 	for (auto const &it : texture) {
-		if (it.second.isFile && it.second.display && it.second.similar != ' ')
-			mvprintw(it.second.position.y % LINES, it.second.position.x % COLS, "%c", it.second.similar);
+		if (it.second.isFile && it.second.display && it.second.similar != ' ') {
+			percentageX = (it.second.position.x / static_cast<float>(arcade::WIDTH));
+			percentageY = (it.second.position.y / static_cast<float>(arcade::HEIGHT));
+			mvprintw((int)(percentageY * LINES), (int)(percentageX * COLS), "%c", it.second.similar);
+		}
 	}
 	return false;
 }

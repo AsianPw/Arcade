@@ -16,29 +16,28 @@
 class Vulkan : public IDisplay {
 public:
 	Vulkan(size_t, size_t);
-	~Vulkan();
+	~Vulkan() override;
 public:
-	bool Display();
-	bool isOpen();
-	bool GetKey(arcade::TypeEvent, std::string const &);
-	bool isKey();
-	bool	loadTexture(std::map<std::string, Texture> const&);
-	bool	loadText(std::map<std::string, Texture> const&);
-	void destroyWindow();
+	bool Display() override;
+	bool isOpen() override;
+	bool GetKey(arcade::TypeEvent, std::string const &) override;
+	bool isKey() override;
+	bool	loadTexture(std::map<std::string, Texture> const&) override;
+	bool	loadText(std::map<std::string, Texture> const&) override;
+	void destroyWindow() override;
+	void changeLibrary(std::string const &path) override;
+	bool getChange() const override;
+	void setChange(bool b) override;
+	const std::string &getLibraryPath() const override;
+	bool loadMap(std::vector<std::vector<char>> const &vector) override;
+	const std::string &getNewGamePath() const override;
+	void setNewGamePath(std::string const &string) override;
+	bool getSwitchScene() const override;
+//	void setSwitchScene(bool) override;
 private:
 	std::map<std::string, int> allEvent;
 	GLFWwindow *window;
 	size_t width;
-public:
-	void changeLibrary(std::string const &path) override;
-
-	bool getChange() const override;
-
-	void setChange(bool b) override;
-
-	const std::string &getLibraryPath() const override;
-
-private:
 	size_t height;
 };
 
