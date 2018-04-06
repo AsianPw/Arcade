@@ -13,7 +13,6 @@ RM		=	rm -f
 
 SRCS	=	./Extern.cpp	\
 		./Pacman.cpp	\
-		./CreateMap.cpp \
 		./PacmanScene.cpp\
 
 OBJS	=	$(SRCS:.cpp=.o)
