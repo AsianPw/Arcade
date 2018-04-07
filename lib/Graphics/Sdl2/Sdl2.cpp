@@ -112,7 +112,7 @@ void Sdl2::setEvent(const SDL_Event &event)
 	Sdl2::event = event;
 }
 
-bool Sdl2::loadText(std::map<std::string, Texture> const&text)
+bool Sdl2::loadText(textureList const&text)
 {
 	SDL_Color	black = {255, 255, 255, 0};
 	SDL_Surface	*tmpText;
@@ -133,7 +133,7 @@ bool Sdl2::loadText(std::map<std::string, Texture> const&text)
 	return false;
 }
 
-bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
+bool Sdl2::loadTexture(textureList const&toLoad)
 {
 	SDL_Surface	*tmpTexture;
 
@@ -194,7 +194,7 @@ void Sdl2::setNewGamePath(std::string const &gamePath)
 	newGamePath = gamePath;
 }
 
-bool Sdl2::loadMap(std::vector<std::vector<char>> const &map)
+bool Sdl2::loadMap(mapChar const &map)
 {
 	(void)map;
 	return false;

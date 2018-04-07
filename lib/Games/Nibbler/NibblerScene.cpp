@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <chrono>
-#include "../../../src/Time.hpp"
+#include "../../../inc/Time.hpp"
 #include "NibblerScene.hpp"
 
 NibblerScene::NibblerScene() : nibblerBody(4), nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right), currentTime(getCurrentTime())

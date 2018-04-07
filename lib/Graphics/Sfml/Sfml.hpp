@@ -10,6 +10,7 @@
 
 #	include <SFML/Graphics.hpp>
 #	include "../../../inc/IDisplay.hpp"
+#include "../../../inc/Alias.hpp"
 
 class SfmlDisplay : public IDisplay {
 public:
@@ -18,14 +19,12 @@ public:
 public:
 	bool	Display() override;
 	bool	isOpen() override;
-
-	bool loadMap(std::vector<std::vector<char>> const &vector) override;
-
+	bool	loadMap(mapChar const &vector) override;
 	bool	GetKey(arcade::TypeEvent, std::string const &) override;
 	bool	isKey() override;
 	void	destroyWindow() override;
-	bool	loadTexture(std::map<std::string, Texture> const&) override;
-	bool	loadText(std::map<std::string, Texture> const&) override;
+	bool	loadTexture(textureList const&) override;
+	bool	loadText(textureList const&) override;
 	void	changeLibrary(std::string const &) override;
 	bool	getChange() const override;
 	bool	getSwitchScene() const override;
@@ -43,7 +42,7 @@ private:
 	std::vector<sf::Text>	texts;
 	std::vector<sf::Texture>	textures;
 	std::map<std::string, sf::Sprite>	sprites;
-	std::map<std::string, int> allEvent;
+	eventList	allEvent;
 	sf::RenderWindow *window;
 	sf::Event event;
 };

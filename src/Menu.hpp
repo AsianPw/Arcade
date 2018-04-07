@@ -8,12 +8,11 @@
 #ifndef CPP_ARCADE_MENU_HPP
 #define CPP_ARCADE_MENU_HPP
 
-#include <ctime>
-#include <chrono>
 #include "../inc/IScene.hpp"
 #include "../inc/Loader.hpp"
 #include "../inc/IGame.hpp"
 #include "../inc/GameLoader.hpp"
+#include "../inc/Alias.hpp"
 
 static const char PRESS[] = "Press Enter";
 
@@ -21,18 +20,18 @@ class Menu : public IScene {
 public:
 	explicit Menu();
 	~Menu() override = default;
-	void	sceneEvent(IDisplay *) override;
-	std::map<std::string, Texture>	getTexture() const override;
-	std::map<std::string, Texture>	getText() const override;
-	std::vector<std::vector<char>> getMap() const override;
-	void	compute() override;
+	void		sceneEvent(IDisplay *) override;
+	textureList	getTexture() const override;
+	textureList	getText() const override;
+	mapChar 	getMap() const override;
+	void		compute() override;
 private:
-	std::map<std::string, Texture>	menuTexture;
-	std::map<std::string, Texture>	menuText;
-	std::vector<std::vector<char>>	menuMap;
-	std::vector<std::string>	*current;
-	std::vector<std::string>	graphicLib;
-	std::vector<std::string>	gamesLib;
+	textureList	menuTexture;
+	textureList	menuText;
+	mapChar		menuMap;
+	stringList	*current;
+	stringList	graphicLib;
+	stringList	gamesLib;
 	long	currentTime;
 };
 

@@ -8,6 +8,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include "Sfml.hpp"
+#include "../../../inc/Alias.hpp"
 
 SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h), alreadyLoad(false)
 {
@@ -71,7 +72,7 @@ void	SfmlDisplay::setEvent(sf::Event &newEvent)
 	event = newEvent;
 }
 
-bool SfmlDisplay::loadTexture(std::map<std::string, Texture> const &texture)
+bool SfmlDisplay::loadTexture(textureList const &texture)
 {
 	textures.clear();
 	sprites.clear();
@@ -88,7 +89,7 @@ bool SfmlDisplay::loadTexture(std::map<std::string, Texture> const &texture)
 	return true;
 }
 
-bool SfmlDisplay::loadText(std::map<std::string, Texture> const &text)
+bool SfmlDisplay::loadText(textureList const &text)
 {
 	texts.clear();
 	if (!font.loadFromFile("./res/Walk-Around-the-Block.ttf"))
@@ -144,7 +145,7 @@ std::string const	&SfmlDisplay::getNewGamePath() const
 	return newGamePath;
 }
 
-bool SfmlDisplay::loadMap(std::vector<std::vector<char>> const &map)
+bool SfmlDisplay::loadMap(mapChar const &map)
 {
 	(void)map;
 	return false;

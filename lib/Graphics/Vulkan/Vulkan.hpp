@@ -12,6 +12,7 @@
 #include <GLFW/glfw3.h>
 #include <map>
 #include "../../../inc/IDisplay.hpp"
+#include "../../../inc/Alias.hpp"
 
 static const std::vector<const char*>	validationLayers = {
 	"VK_LAYER_LUNARG_standard_validation"
@@ -44,22 +45,22 @@ public:
 	Vulkan(size_t, size_t);
 	~Vulkan() override;
 public:
-	bool Display() override;
-	bool isOpen() override;
-	bool GetKey(arcade::TypeEvent, std::string const &) override;
-	bool isKey() override;
-	bool	loadTexture(std::map<std::string, Texture> const&) override;
-	bool	loadText(std::map<std::string, Texture> const&) override;
-	void destroyWindow() override;
-	void changeLibrary(std::string const &path) override;
-	bool getChange() const override;
-	void setChange(bool b) override;
-	const std::string &getLibraryPath() const override;
-	bool loadMap(std::vector<std::vector<char>> const &vector) override;
-	const std::string &getNewGamePath() const override;
-	void setNewGamePath(std::string const &string) override;
-	bool getSwitchScene() const override;
-	void setSwitchScene(bool) override;
+	bool	Display() override;
+	bool	isOpen() override;
+	bool	GetKey(arcade::TypeEvent, std::string const &) override;
+	bool	isKey() override;
+	bool	loadTexture(textureList const&) override;
+	bool	loadText(textureList const&) override;
+	void	destroyWindow() override;
+	void	changeLibrary(std::string const &) override;
+	bool	getChange() const override;
+	void	setChange(bool) override;
+	const std::string	&getLibraryPath() const override;
+	bool	loadMap(mapChar const &) override;
+	const std::string	&getNewGamePath() const override;
+	void	setNewGamePath(std::string const &) override;
+	bool	getSwitchScene() const override;
+	void	setSwitchScene(bool) override;
 public:
 	void	initVulkanApi();
 	void	initVulkanInfo();
@@ -96,13 +97,13 @@ private:
 	VkInstanceCreateInfo	createInfo;
 	std::vector<const char*>	extensions;
 	VkDebugReportCallbackEXT	callback;
-	VkInstance			instance;
-	std::map<std::string, int>	allEvent;
-	GLFWwindow			*window;
+	VkInstance	instance;
+	eventList	allEvent;
+	GLFWwindow	*window;
 	bool	keyPress;
 	bool	windowDestroy;
-	size_t width;
-	size_t height;
+	size_t	width;
+	size_t	height;
 };
 
 #endif //CPP_ARCADE_VULKAN_HPP

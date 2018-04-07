@@ -69,7 +69,7 @@ void	NcursesDisplay::destroyWindow()
 	endwin();
 }
 
-bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
+bool NcursesDisplay::loadText(textureList const &text)
 {
 	float	percentageX;
 	float	percentageY;
@@ -84,7 +84,7 @@ bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
 	return true;
 }
 
-bool NcursesDisplay::loadTexture(std::map<std::string, Texture> const &texture)
+bool NcursesDisplay::loadTexture(textureList const &texture)
 {
 	float	percentageX;
 	float	percentageY;
@@ -141,7 +141,7 @@ void NcursesDisplay::setSwitchScene(bool state)
 	switchScene = state;
 }
 
-bool NcursesDisplay::loadMap(std::vector<std::vector<char>> const &map)
+bool NcursesDisplay::loadMap(mapChar const &map)
 {
 	int	y = 0;
 	int	x = 0;

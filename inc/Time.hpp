@@ -9,8 +9,8 @@
 
 #include <chrono>
 
-typedef std::chrono::milliseconds ms;
-typedef std::chrono::steady_clock sc;
+using ms = std::chrono::milliseconds;
+using sc = std::chrono::steady_clock;
 
 inline long	getCurrentTime() {return std::chrono::duration_cast<ms>(sc::now().time_since_epoch()).count();};
 
