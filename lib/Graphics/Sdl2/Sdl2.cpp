@@ -114,7 +114,7 @@ void Sdl2::setEvent(const SDL_Event &event)
 
 bool Sdl2::loadText(std::map<std::string, Texture> const&text)
 {
-	SDL_Color	black = {0, 0, 0, 0};
+	SDL_Color	black = {255, 255, 255, 0};
 
 	if (font == nullptr)
 		return false;
