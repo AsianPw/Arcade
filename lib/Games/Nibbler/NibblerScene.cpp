@@ -10,9 +10,8 @@
 #include "../../../src/Time.hpp"
 #include "NibblerScene.hpp"
 
-NibblerScene::NibblerScene() : nibblerBody(4), nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right)
+NibblerScene::NibblerScene() : nibblerBody(4), nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right), currentTime(getCurrentTime())
 {
-	timer = 0;
 	candy = {25, 9};
 	createSnake();
 	createMap();
@@ -156,16 +155,16 @@ std::map<std::string, Texture>	NibblerScene::getText() const {
 void	NibblerScene::compute()
 {
 	long	now = getCurrentTime();
+
 	int x = (nibblerTexture["candy"].position.x)/20-5;
 	int y = (nibblerTexture["candy"].position.y)/20-5;
-	if (timer > 30) {
+	if (now - currentTime > 1000) {
 		if (nibblerMap[y + move.y][x + move.x] == '#')
 			exit(84);
 		nibblerTexture["candy"].position.x += move.x * 20;
 		nibblerTexture["candy"].position.y += move.y * 20;
-		timer = 0;
+		currentTime = now;
 	}
-	timer++;
 }
 
 std::vector<std::vector<char>> NibblerScene::getMap() const

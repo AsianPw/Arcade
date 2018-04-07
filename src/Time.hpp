@@ -7,9 +7,11 @@
 #ifndef CPP_ARCADE_TIME_HPP
 #define CPP_ARCADE_TIME_HPP
 
+#include <chrono>
+
 typedef std::chrono::milliseconds ms;
 typedef std::chrono::steady_clock sc;
 
-long	getCurrentTime();
+inline long	getCurrentTime() {return std::chrono::duration_cast<ms>(sc::now().time_since_epoch()).count();};
 
 #endif //CPP_ARCADE_TIME_HPP

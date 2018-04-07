@@ -41,7 +41,6 @@ public:
 	void	createSnake();
 
 private:
-	int				timer;
 	std::map<std::string, Texture>	nibblerTexture;
 	std::map<std::string, Texture>	nibblerText;
 	std::vector<Position>		nibblerBody;
