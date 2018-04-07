@@ -42,8 +42,9 @@ private:
 	Position           gosht1;
 	Position           gosht2;
 	Position           gosht3;
-	static const size_t             WIDTH = 44;
-	static const size_t             HEIGHT = 30;
+	Position           gosht4;
+	static const size_t             WIDTH = 26;
+	static const size_t             HEIGHT = 20;
 	std::map<std::string, Texture>  PacmanTexture;
 	std::map<std::string, Texture>  PacmanText;
 public:
