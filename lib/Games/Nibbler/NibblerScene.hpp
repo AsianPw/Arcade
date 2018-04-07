@@ -53,6 +53,7 @@ private:
 	static const int		HEIGHT = 20;
 	long				currentTime;
 	bool				keyOk;
+	bool				play;
 };
 
 #endif //CPP_ARCADE_NIBBLERSCENE_HPP
