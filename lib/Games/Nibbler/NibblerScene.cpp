@@ -6,6 +6,7 @@
 //
 
 #include <iostream>
+#include <unistd.h>
 #include "NibblerScene.hpp"
 
 NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right), nibblerBody(4)
@@ -14,6 +15,7 @@ NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), mov
 	size_t	y = 5;
 
 	candy = {25, 9};
+	createSnake();
 	createMap();
 	for (auto const &line : nibblerMap) {
 		x = 5;
@@ -22,16 +24,26 @@ NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), mov
 				nibblerTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/wall_nibbler.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == '@')
 				nibblerTexture.insert({"candy", (Texture){"./res/candy_nibbler.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+			else if (block == 'O')
+				nibblerTexture.insert({"nibbler" + std::to_string(y) + std::to_string(x), (Texture){"./res/nibbler.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			x++;
 		}
 		y++;
 	}
 }
 
+void	NibblerScene::createSnake()
+{
+	nibblerBody[0] = {6, 9};
+	nibblerBody[1] = {5, 9};
+	nibblerBody[2] = {4, 9};
+	nibblerBody[3] = {3, 9};
+}
+
 void	NibblerScene::createMap()
 {
-	size_t	x = 0;
-	size_t	y = 0;
+	int 	x = 0;
+	int	y = 0;
 
 	//nibblerMap.resize(WIDTH, std::vector<char>(HEIGHT));
 	while (y < HEIGHT) {
@@ -41,6 +53,10 @@ void	NibblerScene::createMap()
 				nibblerMap[y][x] = '#';
 			else if (x == candy.x && y == candy.y)
 				nibblerMap[y][x] = '@';
+			else if ((x == 5 || x == 6 || x == 4 || x == 3) && y == 9)
+			{
+				nibblerMap[y][x] = 'O';
+			}
 			else
 				nibblerMap[y][x] = ' ';
 			x++;
@@ -70,8 +86,10 @@ int	NibblerScene::eatAndGrow() {
 
 	score++;
 	snakeMove();
+	nibblerBody.resize(nibblerBody.size()+1);
 	nibblerBody.emplace_back(lastPos);
 	createCandy();
+	return (0);
 }
 
 void	NibblerScene::createCandy()
@@ -122,12 +140,7 @@ std::map<std::string, Texture>	NibblerScene::getText() const {
 
 void	NibblerScene::compute()
 {
-	auto	it = nibblerBody.begin();
-
-	//if ((it->x + move.x) != candy.x && (it->y + move.y) != candy.y)
-	//	snakeMove();
-	//else if ((it->x + move.x) == candy.x && (it->y + move.y) == candy.y)
-	//	eatAndGrow();
+	nibblerTexture["candy"].position.x -= HEIGHT_TEXTURE;
 }
 
 std::vector<std::vector<char>> NibblerScene::getMap() const
