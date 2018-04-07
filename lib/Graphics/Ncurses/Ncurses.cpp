@@ -18,7 +18,7 @@ NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 	allEvent.insert({arcade::DOWN, KEY_DOWN});
 	allEvent.insert({arcade::LEFT, KEY_LEFT});
 	allEvent.insert({arcade::RIGHT, KEY_RIGHT});
-	allEvent.insert({arcade::ENTER, KEY_ENTER});
+	allEvent.insert({arcade::ENTER, 10});
 	allEvent.insert({arcade::ESCAPE, 27});
 	initscr();
 	cbreak();
@@ -53,6 +53,7 @@ bool	NcursesDisplay::isKey()
 
 bool	NcursesDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &type)
 {
+	printw("check for %d", currentKey);
 	if (typeEvent == arcade::WINDOW)
 		return false;
 	for (auto const &it : allEvent) {
@@ -69,7 +70,7 @@ void	NcursesDisplay::destroyWindow()
 	endwin();
 }
 
-bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
+bool NcursesDisplay::loadText(textureList const &text)
 {
 	float	percentageX;
 	float	percentageY;
@@ -84,7 +85,7 @@ bool NcursesDisplay::loadText(std::map<std::string, Texture> const &text)
 	return true;
 }
 
-bool NcursesDisplay::loadTexture(std::map<std::string, Texture> const &texture)
+bool NcursesDisplay::loadTexture(textureList const &texture)
 {
 	float	percentageX;
 	float	percentageY;
@@ -141,7 +142,7 @@ void NcursesDisplay::setSwitchScene(bool state)
 	switchScene = state;
 }
 
-bool NcursesDisplay::loadMap(std::vector<std::vector<char>> const &map)
+bool NcursesDisplay::loadMap(mapChar const &map)
 {
 	int	y = 0;
 	int	x = 0;

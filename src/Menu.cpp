@@ -14,9 +14,9 @@
 #include "../inc/Texture.hpp"
 #include "../inc/GameLoader.hpp"
 #include "../inc/ArcadeException.hpp"
-#include "Time.hpp"
+#include "../inc/Time.hpp"
 
-void	listFiles(const char* path, std::vector<std::string> &list)
+void	listFiles(const char* path, stringList &list)
 {
 	DIR		*dirFile = opendir(path);
 	struct dirent	*hFile;
@@ -32,7 +32,7 @@ void	listFiles(const char* path, std::vector<std::string> &list)
 	}
 }
 
-void	init_text(char const *dir, std::vector<std::string> &list, std::map<std::string, Texture> &text, Position &pos)
+void	init_text(char const *dir, stringList &list, textureList &text, Position &pos)
 {
 	size_t	count = 0;
 
@@ -128,17 +128,17 @@ void	Menu::compute()
 		menuTexture["mario"].position.x = -20;
 }
 
-std::map<std::string, Texture> Menu::getText() const
+textureList	Menu::getText() const
 {
 	return menuText;
 }
 
-std::map<std::string, Texture> Menu::getTexture() const
+textureList	Menu::getTexture() const
 {
 	return menuTexture;
 }
 
-std::vector<std::vector<char>> Menu::getMap() const
+mapChar	Menu::getMap() const
 {
 	return menuMap;
 }
