@@ -63,6 +63,7 @@ public:
 	void    createMap();
 	void    PlayerEatFood();
 	void    GoshtMove();
+	void    print_map();
 };
 
 #endif
