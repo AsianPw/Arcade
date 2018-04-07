@@ -45,13 +45,14 @@ private:
 	std::map<std::string, Texture>	nibblerText;
 	std::vector<Position>		nibblerBody;
 	std::vector<std::vector<char>>	nibblerMap;
-	size_t				score;
+	int				score;
 	Direction			direction;
 	Position			move;
 	Position			candy;
 	static const int		WIDTH = 30;
 	static const int		HEIGHT = 20;
 	long				currentTime;
+	bool				keyOk;
 };
 
 #endif //CPP_ARCADE_NIBBLERSCENE_HPP
