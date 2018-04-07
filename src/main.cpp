@@ -107,12 +107,13 @@ int	startArcade(char *libraryPath)
 
 int	main(int ac, char **av)
 {
-	int	exitValue = EXIT_SUCCESS;
+	int	exitValue;
 
 	if (ac == 2) {
 		exitValue = startArcade(av[1]);
 	} else {
 		printHelp(av[0]);
+		exitValue = 84;
 	}
 	return exitValue;
 }

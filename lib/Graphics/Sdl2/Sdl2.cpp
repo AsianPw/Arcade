@@ -115,6 +115,7 @@ void Sdl2::setEvent(const SDL_Event &event)
 bool Sdl2::loadText(std::map<std::string, Texture> const&text)
 {
 	SDL_Color	black = {255, 255, 255, 0};
+	SDL_Surface	*tmpText;
 
 	if (font == nullptr)
 		return false;
@@ -124,18 +125,17 @@ bool Sdl2::loadText(std::map<std::string, Texture> const&text)
 	for (auto const &it : text) {
 		if (it.second.isFile || !it.second.display)
 			continue;
-		SDL_Surface	*tmpText;
-
 		tmpText = TTF_RenderText_Blended(font, it.second.path.c_str(), black);
 		if (tmpText == nullptr)
 			continue;
-		texts.insert({tmpText, {it.second.position.x, it.second.position.y}});
+		texts.emplace(std::make_pair(tmpText, (Position){it.second.position.x, it.second.position.y}));
 	}
 	return false;
 }
 
 bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
 {
+	SDL_Surface	*tmpTexture;
 
 	for (auto const &it : textures)
 		SDL_FreeSurface(it.first);
@@ -143,14 +143,12 @@ bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
 	for (auto const &it : toLoad) {
 		if (!it.second.isFile || !it.second.display)
 			continue;
-		SDL_Surface	*tmpTexture;
-
 		tmpTexture = IMG_Load(it.second.path.c_str());
 		if (tmpTexture == nullptr) {
 			std::cerr << "Can't load " << it.second.path << std::endl;
 			continue;
 		}
-		textures.insert({tmpTexture, {it.second.position.x, it.second.position.y}});
+		textures.emplace(std::make_pair(tmpTexture, (Position){it.second.position.x, it.second.position.y}));
 	}
 	return true;
 }
