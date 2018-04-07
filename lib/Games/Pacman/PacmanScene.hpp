@@ -56,7 +56,10 @@ public:
 	std::map<std::string, Texture>  getText() const override ;
 	std::vector<std::vector<char>>  getMap() const override ;
 	void    compute() override;
-	void    PlayerMove();
+	void    Move_right();
+	void    Move_down();
+	void    Move_up();
+	void    Move_left();
 	void    createMap();
 	void    PlayerEatFood();
 	void    GoshtMove();
