@@ -8,20 +8,20 @@
 #include <iostream>
 #include "NibblerScene.hpp"
 
-NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right)
+NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right), nibblerBody(4)
 {
-	size_t	x = 0;
-	size_t	y = 0;
+	size_t	x;
+	size_t	y = 5;
 
-	candy = {15, 5};
+	candy = {25, 9};
 	createMap();
 	for (auto const &line : nibblerMap) {
-		x = 0;
+		x = 5;
 		for (auto const &block : line) {
 			if (block == '#')
-				nibblerTexture.insert({"block" + std::to_string(y) + std::to_string(x), createTexture("./res/wall_nibbler.png",true, x * WIDTH_TEXTURE, y * HEIGHT_TEXTURE)});
+				nibblerTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/wall_nibbler.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == '@')
-				nibblerTexture.insert({"candy", createTexture("./res/candy_nibbler.png",true, x * WIDTH_TEXTURE, y * HEIGHT_TEXTURE)});
+				nibblerTexture.insert({"candy", (Texture){"./res/candy_nibbler.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			x++;
 		}
 		y++;
@@ -33,15 +33,16 @@ void	NibblerScene::createMap()
 	size_t	x = 0;
 	size_t	y = 0;
 
-	printf("Test\n");
 	//nibblerMap.resize(WIDTH, std::vector<char>(HEIGHT));
-	while (y <= HEIGHT) {
+	while (y < HEIGHT) {
 		x = 0;
-		while (x <= WIDTH) {
-			if (y == 0 || y == HEIGHT || x == 0 || x == WIDTH)
+		while (x < WIDTH) {
+			if (y == 0 || y == HEIGHT-1 || x == 0 || x == WIDTH-1)
 				nibblerMap[y][x] = '#';
 			else if (x == candy.x && y == candy.y)
 				nibblerMap[y][x] = '@';
+			else
+				nibblerMap[y][x] = ' ';
 			x++;
 		}
 		y++;
