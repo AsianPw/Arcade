@@ -13,11 +13,11 @@
 #include <map>
 #include "../../../inc/IDisplay.hpp"
 
-static const std::vector<const char*> validationLayers = {
+static const std::vector<const char*>	validationLayers = {
 	"VK_LAYER_LUNARG_standard_validation"
 };
 
-static const std::vector<const char*> deviceExtensions = {
+static const std::vector<const char*>	deviceExtensions = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
 };
 
@@ -63,6 +63,7 @@ public:
 public:
 	void	initVulkanApi();
 	void	initVulkanInfo();
+	void	initSwapInfo(VkExtent2D, uint32_t, VkSurfaceFormatKHR);
 	void	createInstance();
 	void	pickPhysicalDevice();
 	void	createLogicalDevice();
@@ -84,10 +85,13 @@ private:
 	VkDevice		device;
 	VkQueue			graphicsQueue;
 	VkQueue			presentQueue;
+	VkPresentModeKHR	presentMode;
 	VkSwapchainKHR		swapChain;
+	SwapChainSupportDetails	swapChainSupport;
 	std::vector<VkImage>	swapChainImages;
 	VkFormat		swapChainImageFormat;
 	VkExtent2D		swapChainExtent;
+	VkSwapchainCreateInfoKHR	swapCreateInfo;
 	VkApplicationInfo	appInfo;
 	VkInstanceCreateInfo	createInfo;
 	std::vector<const char*>	extensions;
