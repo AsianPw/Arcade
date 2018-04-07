@@ -6,14 +6,13 @@
 //
 
 #include <iostream>
-#include <unistd.h>
+#include <time.h>
+#include <chrono>
 #include "NibblerScene.hpp"
 
 NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right), nibblerBody(4)
 {
-	size_t	x;
-	size_t	y = 5;
-
+	timer = 0;
 	candy = {25, 9};
 	createSnake();
 	createMap();
@@ -55,7 +54,6 @@ void	NibblerScene::createMap()
 	auto	it = nibblerBody.begin();
 	bool	state = false;
 
-	//nibblerMap.resize(WIDTH, std::vector<char>(HEIGHT));
 	while (y < HEIGHT) {
 		x = 0;
 		while (x < WIDTH) {
@@ -122,25 +120,25 @@ void	NibblerScene::sceneEvent(IDisplay *display)
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
-		if (&move == &direction.right || &move == &direction.left)
+		if (move.x == direction.right.x || move.x == direction.left.x)
 			return;
 		else
 			move = direction.left;
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT)) {
-		if (&move == &direction.right || &move == &direction.left)
+		if (move.x == direction.right.x || move.x == direction.left.x)
 			return;
 		else
 			move = direction.right;
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP)) {
-		if (&move == &direction.up || &move == &direction.down)
+		if (move.y == direction.up.y || move.y == direction.down.y)
 			return;
 		else
 			move = direction.up;
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::DOWN)) {
-		if (&move == &direction.up || &move == &direction.down)
+		if (move.y == direction.up.y || move.y == direction.down.y)
 			return;
 		else
 			move = direction.down;
@@ -157,10 +155,17 @@ std::map<std::string, Texture>	NibblerScene::getText() const {
 
 void	NibblerScene::compute()
 {
-	if (nibblerTexture["candy"].position.x > WIDTH*WIDTH_TEXTURE+5*10)
-		nibblerTexture["candy"].position.x = 5*20;
-	nibblerTexture["candy"].position.x += move.x*20;
-	usleep(500000);
+	int x = (nibblerTexture["candy"].position.x)/20-5;
+	int y = (nibblerTexture["candy"].position.y)/20-5;
+	if (nibblerMap[y + move.y][x + move.x] == '#')
+		nibblerTexture["candy"].position.x = 6*20;
+	if (timer > 40) {
+		nibblerTexture["candy"].position.x += move.x * 20;
+		nibblerTexture["candy"].position.y += move.y * 20;
+		timer = 0;
+	}
+	printf("%i %i\n", y, x);
+	timer++;
 }
 
 std::vector<std::vector<char>> NibblerScene::getMap() const

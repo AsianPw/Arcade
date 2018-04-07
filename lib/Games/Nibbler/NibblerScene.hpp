@@ -13,9 +13,9 @@
 #include "Nibbler.hpp"
 
 struct	Direction {
-	Position	up = {0, 1};
+	Position	up = {0, -1};
 	Position	left = {-1, 0};
-	Position	down = {0, -1};
+	Position	down = {0, 1};
 	Position	right = {1, 0};
 };
 
@@ -41,6 +41,7 @@ public:
 	void	createSnake();
 
 private:
+	int				timer;
 	std::map<std::string, Texture>	nibblerTexture;
 	std::map<std::string, Texture>	nibblerText;
 	std::vector<Position>		nibblerBody;
