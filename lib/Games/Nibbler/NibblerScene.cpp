@@ -109,8 +109,13 @@ int	NibblerScene::eatAndGrow() {
 
 void	NibblerScene::createCandy()
 {
-	candy.y = 10;
-	candy.x = 10;
+	int	x = rand() % WIDTH;
+	int	y = rand() % HEIGHT;
+
+	if (nibblerMap[y][x] != '#' && nibblerMap[y][x] != 'O') {
+		candy.y = y;
+		candy.x = x;
+	}
 }
 
 void	NibblerScene::sceneEvent(IDisplay *display)
