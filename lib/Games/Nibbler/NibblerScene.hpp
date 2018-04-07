@@ -52,6 +52,7 @@ private:
 	Position			candy;
 	static const int		WIDTH = 30;
 	static const int		HEIGHT = 20;
+	long				currentTime;
 };
 
 #endif //CPP_ARCADE_NIBBLERSCENE_HPP

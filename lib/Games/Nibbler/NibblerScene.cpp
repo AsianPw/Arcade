@@ -6,11 +6,11 @@
 //
 
 #include <iostream>
-#include <time.h>
 #include <chrono>
+#include "../../../src/Time.hpp"
 #include "NibblerScene.hpp"
 
-NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right), nibblerBody(4)
+NibblerScene::NibblerScene() : nibblerBody(4), nibblerMap(HEIGHT, std::vector<char>(WIDTH)), move(direction.right)
 {
 	timer = 0;
 	candy = {25, 9};
@@ -52,7 +52,7 @@ void	NibblerScene::createMap()
 	int 	x = 0;
 	int	y = 0;
 	auto	it = nibblerBody.begin();
-	bool	state = false;
+	bool	state;
 
 	while (y < HEIGHT) {
 		x = 0;
@@ -155,16 +155,16 @@ std::map<std::string, Texture>	NibblerScene::getText() const {
 
 void	NibblerScene::compute()
 {
+	long	now = getCurrentTime();
 	int x = (nibblerTexture["candy"].position.x)/20-5;
 	int y = (nibblerTexture["candy"].position.y)/20-5;
-	if (nibblerMap[y + move.y][x + move.x] == '#')
-		nibblerTexture["candy"].position.x = 6*20;
-	if (timer > 40) {
+	if (timer > 30) {
+		if (nibblerMap[y + move.y][x + move.x] == '#')
+			exit(84);
 		nibblerTexture["candy"].position.x += move.x * 20;
 		nibblerTexture["candy"].position.y += move.y * 20;
 		timer = 0;
 	}
-	printf("%i %i\n", y, x);
 	timer++;
 }
 
