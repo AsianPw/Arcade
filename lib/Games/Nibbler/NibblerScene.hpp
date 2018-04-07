@@ -13,9 +13,9 @@
 #include "Nibbler.hpp"
 
 struct	Direction {
-	Position	up = {0, 1};
+	Position	up = {0, -1};
 	Position	left = {-1, 0};
-	Position	down = {0, -1};
+	Position	down = {0, 1};
 	Position	right = {1, 0};
 };
 
@@ -34,11 +34,14 @@ public:
 
 	std::vector<std::vector<char>> getMap() const override;
 
+	void	showMap();
 	void	snakeMove();
 	void	createCandy();
 	void	createMap();
+	void	createSnake();
 
 private:
+	int				timer;
 	std::map<std::string, Texture>	nibblerTexture;
 	std::map<std::string, Texture>	nibblerText;
 	std::vector<Position>		nibblerBody;
@@ -47,8 +50,8 @@ private:
 	Direction			direction;
 	Position			move;
 	Position			candy;
-	static const size_t		WIDTH = 20;
-	static const size_t		HEIGHT =10;
+	static const int		WIDTH = 30;
+	static const int		HEIGHT = 20;
 };
 
 #endif //CPP_ARCADE_NIBBLERSCENE_HPP

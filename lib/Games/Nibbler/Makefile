@@ -5,7 +5,7 @@
 ## Makefile for Compile Nibbler
 ##
 
-NAME	=	lib_arcade_Nibbler.so
+NAME	=	lib_arcade_nibbler.so
 
 CXX		=	g++
 

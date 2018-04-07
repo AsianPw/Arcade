@@ -18,15 +18,15 @@ PacmanScene::PacmanScene() : pacmanMap(HEIGHT, std::vector<char>(WIDTH))
 		x = 0;
 		for (auto const &block : line) {
 			if (block == '*')
-				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/wall_nibbler.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+				PacmanTexture.insert({"wall" + std::to_string(y) + std::to_string(x), (Texture){"./res/wall_nibbler.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'G')
-				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/player_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+				PacmanTexture.insert({"player", {"./res/player_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'o')
-				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/food_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+				PacmanTexture.insert({"food" + std::to_string(y) + std::to_string(x), (Texture){"./res/food_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'E')
-				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/Ghosts_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+				PacmanTexture.insert({"gosht" + std::to_string(y) + std::to_string(x), (Texture){"./res/Ghosts_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'B')
-				PacmanTexture.insert({"block" + std::to_string(y) + std::to_string(x), (Texture){"./res/blue_gosht.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+				PacmanTexture.insert({"gosht1", {"./res/blue_gosht.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			x = x + 1;
 		}
 		y = y + 1;
@@ -71,34 +71,47 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 		display->destroyWindow();
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
-		if (&move == &dir.right || &move == &dir.left)
-			return;
-		else
-			move = dir.left;
+		move = dir.left;
+		Move_left();
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT)) {
-		if (&move == &dir.right || &move == &dir.left)
-			return;
-		else
-			move = dir.right;
+		move = dir.right;
+		Move_right();
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP)) {
-		if (&move == &dir.up || &move == &dir.down)
-			return;
-		else
-			move = dir.up;
+		move = dir.up;
+		Move_up();
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::DOWN)) {
-		if (&move == &dir.up || &move == &dir.down)
-			return;
-		else
-			move = dir.down;
+		move = dir.down;
+		Move_down();
 	}
 }
 
-void     PacmanScene::PlayerMove(void)
+void     PacmanScene::Move_right(void)
 {
-	// TO DO PLAYER MOVEMENT //
+	int     pos =  PacmanTexture["player"].position.x + WIDTH_TEXTURE;
+
+	PacmanTexture["player"].position.x += WIDTH_TEXTURE;
+	PacmanTexture["gosht1"].position.x += WIDTH_TEXTURE;
+}
+
+void    PacmanScene::Move_left(void)
+{
+	PacmanTexture["player"].position.x -= WIDTH_TEXTURE;
+	PacmanTexture["gosht1"].position.x -= WIDTH_TEXTURE;
+}
+
+void    PacmanScene::Move_up(void)
+{
+	PacmanTexture["player"].position.y -= HEIGHT_TEXTURE;
+	PacmanTexture["gosht1"].position.y -= HEIGHT_TEXTURE;
+}
+
+void    PacmanScene::Move_down(void)
+{
+	PacmanTexture["player"].position.y += HEIGHT_TEXTURE;
+	PacmanTexture["gosht1"].position.y -= HEIGHT_TEXTURE;
 }
 
 void     PacmanScene::PlayerEatFood(void)
@@ -112,22 +125,21 @@ void    PacmanScene::GoshtMove(void)
 	int  d;
 
 	d = rand()%(3) + 1 - 1;
-	pacmanMap[gosht1.x][gosht1.y] = ' ';
-	if (d == LEFT)
-		pacmanMap[gosht1.x + dir.left.x][gosht1.y + dir.left.y] = 'E';
-	else if (d == RIGHT)
-		pacmanMap[gosht1.x + dir.right.x][gosht1.y + dir.right.y] = 'E';
-	else if (d == UP)
-		pacmanMap[gosht1.x + dir.up.x][gosht1.y + dir.up.y] = 'E';
-	else if (d == DOWN)
-		pacmanMap[gosht1.x + dir.down.x][gosht1.y + dir.down.y] = 'E';
+	if (d == 0)
+		PacmanTexture["gosht1"].position.x -= WIDTH_TEXTURE;
+	else if (d == 1)
+		PacmanTexture["gosht1"].position.x += WIDTH_TEXTURE;
+	else if (d == 2)
+		PacmanTexture["gosht1"].position.y -= HEIGHT_TEXTURE;
+	else if (d == 3)
+		PacmanTexture["gosht1"].position.y += HEIGHT_TEXTURE;
 }
 
 void    PacmanScene::compute(void)
 {
 	// TO DO ia of the goshts //
-	srand(time(NULL));
-	GoshtMove();
+	//srand(time(NULL));
+	//GoshtMove();
 }
 
 void    PacmanScene::createMap(void)
@@ -157,5 +169,5 @@ void    PacmanScene::createMap(void)
 
 std::vector<std::vector<char>>   PacmanScene::getMap() const
 {
-	return (pacmanMap);
+	return pacmanMap;
 }
