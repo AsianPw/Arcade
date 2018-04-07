@@ -47,6 +47,7 @@ IDisplay	*switchLibrary(std::unique_ptr<Loader> &loader, IDisplay *display)
 		loader.reset(new Loader(tmpPath));
 	} catch (arcade::LoaderError const& e) {
 		std::cerr << e.what() << std::endl;
+		return nullptr;
 	}
 	return loader->create(arcade::WIDTH, arcade::HEIGHT);
 }
@@ -82,7 +83,7 @@ int	startArcade(char *libraryPath)
 		loader = std::make_unique<Loader>(libraryPath);
 	} catch (arcade::LoaderError const& e) {
 		std::cerr << e.what() << std::endl;
-		return (84);
+		return 84;
 	}
 	display = loader->create(arcade::WIDTH, arcade::HEIGHT);
 	while (display->isOpen()) {
@@ -90,9 +91,8 @@ int	startArcade(char *libraryPath)
 			scene->sceneEvent(display);
 		if (display->getChange())
 			display = switchLibrary(loader, display);
-		if (display->getSwitchScene()) {
+		if (display->getSwitchScene())
 			switchScene(display, scene, gameLoader, game);
-		}
 		scene->compute();
 		display->loadTexture(scene->getTexture());
 		display->loadText(scene->getText());

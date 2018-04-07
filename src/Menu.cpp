@@ -14,6 +14,7 @@
 #include "../inc/Texture.hpp"
 #include "../inc/GameLoader.hpp"
 #include "../inc/ArcadeException.hpp"
+#include "Time.hpp"
 
 void	listFiles(const char* path, std::vector<std::string> &list)
 {
@@ -42,11 +43,10 @@ void	init_text(char const *dir, std::vector<std::string> &list, std::map<std::st
 	}
 }
 
-Menu::Menu()
+Menu::Menu() : currentTime(getCurrentTime())
 {
 	Position	pos = {arcade::WIDTH / 2 - 100, 100};
 
-	time = 0;
 	init_text(arcade::GRAPHICSDIR, graphicLib, menuText, pos);
 	pos.y = 200;
 	init_text(arcade::GAMESDIR, gamesLib, menuText, pos);
@@ -114,9 +114,11 @@ void	Menu::sceneEvent(IDisplay *display)
 
 void	Menu::compute()
 {
-	if (time == 10) {
+	long	now = getCurrentTime();
+
+	if (now - currentTime > 250) {
 		menuText["press"].display = !menuText["press"].display;
-		time = 0;
+		currentTime = now;
 	}
 	menuTexture["champi"].position.x += 2;
 	menuTexture["mario"].position.x += 2;
@@ -124,7 +126,6 @@ void	Menu::compute()
 		menuTexture["champi"].position.x = -20;
 	if (menuTexture["mario"].position.x > (int)(arcade::WIDTH + 20))
 		menuTexture["mario"].position.x = -20;
-	time += 1;
 }
 
 std::map<std::string, Texture> Menu::getText() const

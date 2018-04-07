@@ -8,6 +8,8 @@
 #ifndef CPP_ARCADE_MENU_HPP
 #define CPP_ARCADE_MENU_HPP
 
+#include <ctime>
+#include <chrono>
 #include "../inc/IScene.hpp"
 #include "../inc/Loader.hpp"
 #include "../inc/IGame.hpp"
@@ -31,7 +33,7 @@ private:
 	std::vector<std::string>	*current;
 	std::vector<std::string>	graphicLib;
 	std::vector<std::string>	gamesLib;
-	size_t	time;
+	long	currentTime;
 };
 
 #endif //CPP_ARCADE_MENU_HPP

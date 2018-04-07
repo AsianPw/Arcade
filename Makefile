@@ -29,6 +29,7 @@ SRCS		=	./src/main.cpp	\
 				./src/Loader.cpp	\
 				./src/GameLoader.cpp	\
 				./src/Menu.cpp	\
+				./src/Time.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -59,6 +60,7 @@ install:
 	sudo apt install libsfml-dev
 	sudo apt install libglfw3
 	sudo apt install libglfw3-dev
+	sudo apt install mesa-vulkan-drivers vulkan-utils
 
 %.o: %.cpp
 	@printf "[\033[0;32mcompiled\033[0m] % 70s\n" $< | tr ' ' '.'
