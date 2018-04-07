@@ -18,7 +18,7 @@ NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 	allEvent.insert({arcade::DOWN, KEY_DOWN});
 	allEvent.insert({arcade::LEFT, KEY_LEFT});
 	allEvent.insert({arcade::RIGHT, KEY_RIGHT});
-	allEvent.insert({arcade::ENTER, KEY_ENTER});
+	allEvent.insert({arcade::ENTER, 10});
 	allEvent.insert({arcade::ESCAPE, 27});
 	initscr();
 	cbreak();
@@ -53,6 +53,7 @@ bool	NcursesDisplay::isKey()
 
 bool	NcursesDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &type)
 {
+	printw("check for %d", currentKey);
 	if (typeEvent == arcade::WINDOW)
 		return false;
 	for (auto const &it : allEvent) {
