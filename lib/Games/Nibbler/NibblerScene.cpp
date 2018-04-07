@@ -14,11 +14,12 @@ NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), mov
 	size_t	y = 0;
 
 	candy = {15, 5};
+	createMap();
 	for (auto const &line : nibblerMap) {
-		y = 0;
+		x = 0;
 		for (auto const &block : line) {
 			if (block == '#')
-				nibblerTexture.insert({"block" + std::to_string(42), createTexture("./res/wall_nibbler.png",true, x * WIDTH_TEXTURE, y * HEIGHT_TEXTURE)});
+				nibblerTexture.insert({"block" + std::to_string(y) + std::to_string(x), createTexture("./res/wall_nibbler.png",true, x * WIDTH_TEXTURE, y * HEIGHT_TEXTURE)});
 			else if (block == '@')
 				nibblerTexture.insert({"candy", createTexture("./res/candy_nibbler.png",true, x * WIDTH_TEXTURE, y * HEIGHT_TEXTURE)});
 			x++;
@@ -32,6 +33,8 @@ void	NibblerScene::createMap()
 	size_t	x = 0;
 	size_t	y = 0;
 
+	printf("Test\n");
+	//nibblerMap.resize(WIDTH, std::vector<char>(HEIGHT));
 	while (y <= HEIGHT) {
 		x = 0;
 		while (x <= WIDTH) {
@@ -120,10 +123,10 @@ void	NibblerScene::compute()
 {
 	auto	it = nibblerBody.begin();
 
-	if ((it->x + move.x) != candy.x && (it->y + move.y) != candy.y)
-		snakeMove();
-	else if ((it->x + move.x) == candy.x && (it->y + move.y) == candy.y)
-		eatAndGrow();
+	//if ((it->x + move.x) != candy.x && (it->y + move.y) != candy.y)
+	//	snakeMove();
+	//else if ((it->x + move.x) == candy.x && (it->y + move.y) == candy.y)
+	//	eatAndGrow();
 }
 
 std::vector<std::vector<char>> NibblerScene::getMap() const
