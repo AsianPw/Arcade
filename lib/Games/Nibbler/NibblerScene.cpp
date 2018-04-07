@@ -17,6 +17,14 @@ NibblerScene::NibblerScene() : nibblerMap(HEIGHT, std::vector<char>(WIDTH)), mov
 	candy = {25, 9};
 	createSnake();
 	createMap();
+	showMap();
+}
+
+void	NibblerScene::showMap()
+{
+	size_t	x;
+	size_t	y = 5;
+
 	for (auto const &line : nibblerMap) {
 		x = 5;
 		for (auto const &block : line) {
@@ -44,22 +52,31 @@ void	NibblerScene::createMap()
 {
 	int 	x = 0;
 	int	y = 0;
+	auto	it = nibblerBody.begin();
+	bool	state = false;
 
 	//nibblerMap.resize(WIDTH, std::vector<char>(HEIGHT));
 	while (y < HEIGHT) {
 		x = 0;
 		while (x < WIDTH) {
+			state = false;
+			while (it != nibblerBody.end())
+			{
+				if (x == it->x && y == it->y)
+				{
+					nibblerMap[y][x] = 'O';
+					state = true;
+				}
+				it++;
+			}
 			if (y == 0 || y == HEIGHT-1 || x == 0 || x == WIDTH-1)
 				nibblerMap[y][x] = '#';
 			else if (x == candy.x && y == candy.y)
 				nibblerMap[y][x] = '@';
-			else if ((x == 5 || x == 6 || x == 4 || x == 3) && y == 9)
-			{
-				nibblerMap[y][x] = 'O';
-			}
-			else
+			else if (!state)
 				nibblerMap[y][x] = ' ';
 			x++;
+			it = nibblerBody.begin();
 		}
 		y++;
 	}
@@ -140,7 +157,10 @@ std::map<std::string, Texture>	NibblerScene::getText() const {
 
 void	NibblerScene::compute()
 {
-	nibblerTexture["candy"].position.x -= HEIGHT_TEXTURE;
+	if (nibblerTexture["candy"].position.x > WIDTH*WIDTH_TEXTURE+5*10)
+		nibblerTexture["candy"].position.x = 5*20;
+	nibblerTexture["candy"].position.x += move.x*20;
+	usleep(500000);
 }
 
 std::vector<std::vector<char>> NibblerScene::getMap() const

@@ -34,6 +34,7 @@ public:
 
 	std::vector<std::vector<char>> getMap() const override;
 
+	void	showMap();
 	void	snakeMove();
 	void	createCandy();
 	void	createMap();
