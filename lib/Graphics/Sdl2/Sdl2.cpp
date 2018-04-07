@@ -80,6 +80,7 @@ bool	Sdl2::Display()
 {
 	SDL_Rect	rect;
 
+	SDL_FillRect(windowSurface, nullptr, SDL_MapRGB(windowSurface->format, 0, 0, 0));
 	for (auto const &it : textures) {
 		rect.x = it.second.x;
 		rect.y = it.second.y;
