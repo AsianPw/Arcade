@@ -240,20 +240,7 @@ int    PacmanScene::get_nbrfood(void)
 
 void    PacmanScene::GoshtMove(void)
 {
-	int d = rand()%3;
-
-	if (d == 0) {
 		PacmanTexture["gosht3"].position.x -= WIDTH_TEXTURE;
-	}
-	else if (d == 1) {
-		PacmanTexture["gosht3"].position.x += WIDTH_TEXTURE;
-	}
-	else if (d == 2) {
-		PacmanTexture["gosht3"].position.y -= HEIGHT_TEXTURE;
-	}
-	else if (d == 3) {
-		PacmanTexture["gosht3"].position.y += HEIGHT_TEXTURE;
-	}
 }
 
 void    PacmanScene::compute(void)
@@ -261,7 +248,8 @@ void    PacmanScene::compute(void)
 	long    now = getCurrentTime();
 
 	if (now - currentTime > 250) {
-		GoshtMove();
+		Move_right();
+		PacmanTexture["gosht4"].position.y -= WIDTH_TEXTURE;
 		currentTime = now;
 	}
 }
