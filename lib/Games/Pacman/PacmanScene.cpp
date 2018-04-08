@@ -41,14 +41,10 @@ PacmanScene::PacmanScene() : pacmanMap(WIDTH, std::vector<char>(HEIGHT))
 				PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'o')
 				PacmanTexture.insert({"food" + std::to_string(y) + std::to_string(x), (Texture){"./res/food_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
-			else if (block == 'A')
-				PacmanTexture.insert({"gosht1" + std::to_string(y) + std::to_string(x), (Texture){"./res/Ghosts_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'B')
 				PacmanTexture.insert({"gosht2", {"./res/blue_gosht.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'C')
 				PacmanTexture.insert({"gosht3", {"./res/Ghosts_pacman1.png", ' ', true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
-			else if (block == 'D')
-                                PacmanTexture.insert({"gosht4", {"./res/Ghosts_pacman2.png", ' ', true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			x = x + 1;
 		}
 		y = y + 1;
@@ -59,18 +55,12 @@ void    PacmanScene::SetCharacters(void)
 {
 	player.x = 8;
 	player.y = 13;
-	gosht1.x = 9;
-	gosht1.y = 12;
 	gosht2.x = 9;
 	gosht2.y = 13;
 	gosht3.x = 10;
 	gosht3.y = 12;
-	gosht4.x = 10;
-	gosht4.y = 13;
-	pacmanMap[gosht1.x][gosht1.y] = 'A';
 	pacmanMap[gosht2.x][gosht2.y] = 'B';
 	pacmanMap[gosht3.x][gosht3.y] = 'C';
-	pacmanMap[gosht4.x][gosht4.y] = 'D';
 	pacmanMap[player.x][player.y] = 'G';
 }
 
@@ -174,7 +164,8 @@ void     PacmanScene::Move_right(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
-	pacmanMap[player.x][player.y] = ' ';
+	pacmanMap[player.x][player.y] = 'G';
+	pacmanMap[player.x][player.y - 1] = ' ';
 	print_map();
 }
 
@@ -190,7 +181,8 @@ void    PacmanScene::Move_left(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
-	pacmanMap[player.x][player.y] = ' ';
+	pacmanMap[player.x][player.y] = 'G';
+	pacmanMap[player.x][player.y + 1] = ' ';
 	print_map();
 }
 
@@ -206,7 +198,8 @@ void    PacmanScene::Move_up(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
-	pacmanMap[player.x][player.y] = ' ';
+	pacmanMap[player.x][player.y] = 'G';
+	pacmanMap[player.x + 1][player.y] = ' ';
 	print_map();
 }
 
@@ -222,7 +215,8 @@ void    PacmanScene::Move_down(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
-	pacmanMap[player.x][player.y] = ' ';
+	pacmanMap[player.x][player.y] = 'G';
+	pacmanMap[player.x - 1][player.y] = ' ';
 	print_map();
 }
 
@@ -238,18 +232,17 @@ int    PacmanScene::get_nbrfood(void)
 	return (nbr_food);
 }
 
-void    PacmanScene::GoshtMove(void)
-{
-		PacmanTexture["gosht3"].position.x -= WIDTH_TEXTURE;
-}
-
 void    PacmanScene::compute(void)
 {
-	long    now = getCurrentTime();
+	long now = getCurrentTime();
 
+	/*usleep(500000);
+	GoshtMove2();
+	GoshtMove3();
+	print_map();*/
 	if (now - currentTime > 250) {
-		Move_right();
-		PacmanTexture["gosht4"].position.y -= WIDTH_TEXTURE;
+		GoshtMove2();
+		GoshtMove3();
 		currentTime = now;
 	}
 }

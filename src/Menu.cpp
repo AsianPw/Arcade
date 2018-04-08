@@ -10,7 +10,7 @@
 #include <cstring>
 #include <algorithm>
 #include "../inc/utils.hpp"
-#include "../inc/Menu.hpp"
+#include "../inc/MenuTest.hpp"
 #include "../inc/Texture.hpp"
 #include "../inc/GameLoader.hpp"
 #include "../inc/ArcadeException.hpp"
@@ -165,9 +165,7 @@ void	Menu::compute()
 
 textureList	Menu::getText() const
 {
-	textureList	tmp = menuText;
-
-	return tmp;
+	return menuText;
 }
 
 textureList	Menu::getTexture() const

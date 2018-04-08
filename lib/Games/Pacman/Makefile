@@ -14,6 +14,7 @@ RM		=	rm -f
 SRCS	=	./Extern.cpp	\
 		./Pacman.cpp	\
 		./PacmanScene.cpp\
+		./MoveGosht.cpp\
 
 OBJS	=	$(SRCS:.cpp=.o)
 

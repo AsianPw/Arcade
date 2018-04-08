@@ -13,7 +13,7 @@
 Nibbler::Nibbler()
 {
 	this->name = "Nibbler";
-	this->description = "";
+	this->description = "Nibbler is an arcade game in which you control a snake in a map who grows when he eat objects.";
 }
 
 std::string	const&Nibbler::getDescription() const
