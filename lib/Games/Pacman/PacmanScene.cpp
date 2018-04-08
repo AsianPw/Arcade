@@ -44,9 +44,9 @@ PacmanScene::PacmanScene() : pacmanMap(WIDTH, std::vector<char>(HEIGHT))
 			else if (block == 'o')
 				PacmanTexture.insert({"food" + std::to_string(y) + std::to_string(x), (Texture){"./res/food_pacman.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'B')
-				PacmanTexture.insert({"gosht2", {"./res/blue_gosht.png", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+				PacmanTexture.insert({"gosht2", {"./res/pink.jpg", ' ',  true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			else if (block == 'C')
-				PacmanTexture.insert({"gosht3", {"./res/Ghosts_pacman1.png", ' ', true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
+				PacmanTexture.insert({"gosht3", {"./res/pink.jpg", ' ', true, true, {(int)(x * WIDTH_TEXTURE), (int)(y * HEIGHT_TEXTURE)}}});
 			x = x + 1;
 		}
 		y = y + 1;
