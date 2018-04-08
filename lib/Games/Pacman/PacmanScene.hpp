@@ -11,6 +11,8 @@
 #include "../../../inc/IScene.hpp"
 #include "../../../inc/Texture.hpp"
 #include "Pacman.hpp"
+#include <unistd.h>
+#include <iostream>
 
 static const size_t WIDTH_TEXTURE = 27;
 static const size_t HEIGHT_TEXTURE = 27;
@@ -20,11 +22,8 @@ private:
 	std::vector<std::vector<char>> pacmanMap;
 	size_t				score;
 	Position			player;
-	Position			gosht1;
 	Position			gosht2;
 	Position			gosht3;
-	Position			gosht4;
-	int				direction;
 	static const size_t		WIDTH = 26;
 	static const size_t		HEIGHT = 20;
 	std::map<std::string, Texture>	PacmanTexture;
@@ -47,7 +46,8 @@ public:
 	void				Move_up();
 	void				Move_left();
 	void				createMap();
-	void				GoshtMove();
+	void				GoshtMove3();
+    void				GoshtMove2();
 	void				print_map();
 	int				get_nbrfood();
 };
