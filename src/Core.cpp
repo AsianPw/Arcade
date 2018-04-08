@@ -9,7 +9,7 @@
 #include "../inc/Menu.hpp"
 #include "../inc/ArcadeException.hpp"
 
-Core::Core(std::string const &path) : scene(std::make_unique<Menu>()), loader(nullptr), gameLoader(nullptr), game(nullptr), display(nullptr)
+Core::Core(std::string const &path) : scene(std::make_unique<Menu>(path)), loader(nullptr), gameLoader(nullptr), game(nullptr), display(nullptr), path(path)
 {
 	try {
 		loader = std::make_unique<Loader>(path);
@@ -38,6 +38,7 @@ void	Core::loop()
 		}
 		scene->compute();
 		display->loadTexture(scene->getTexture());
+		display->loadMap(scene->getMap());
 		display->loadText(scene->getText());
 		display->Display();
 	}
@@ -76,6 +77,7 @@ void	Core::switchGraphicsLibrary()
 	} catch (arcade::GraphicsLibraryError const &e) {
 		throw arcade::CoreError(e.what());
 	}
+	path = tmpPath;
 }
 
 void Core::switchScene()
@@ -85,7 +87,7 @@ void Core::switchScene()
 		scene.reset();
 		game.reset();
 		gameLoader.reset();
-		scene = std::make_unique<Menu>();
+		scene = std::make_unique<Menu>(path);
 		return ;
 	}
 	try {

@@ -18,13 +18,15 @@ static const char PRESS[] = "Press Enter";
 
 class Menu : public IScene {
 public:
-	explicit Menu();
+	explicit Menu(std::string const &path);
 	~Menu() override = default;
 	void		sceneEvent(IDisplay *) override;
 	textureList	getTexture() const override;
 	textureList	getText() const override;
 	mapChar 	getMap() const override;
 	void		compute() override;
+public:
+	void	chooseGraphics(std::string const &);
 private:
 	textureList	menuTexture;
 	textureList	menuText;

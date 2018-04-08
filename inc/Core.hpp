@@ -27,6 +27,7 @@ private:
 	std::unique_ptr<GameLoader>	gameLoader;
 	std::unique_ptr<IGame>		game;
 	IDisplay			*display;
+	std::string			path;
 };
 
 #endif //CPP_ARCADE_CORE_HPP

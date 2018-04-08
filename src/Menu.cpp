@@ -35,23 +35,56 @@ void	listFiles(const char* path, stringList &list)
 void	init_text(char const *dir, stringList &list, textureList &text, Position &pos)
 {
 	size_t	count = 0;
+	unsigned long	subPos;
+	std::string	currentPath;
+	std::string	toErase;
 
 	listFiles(dir, list);
 	for (auto const &current : list) {
-		text.insert({current, {current, ' ', checkFileExist(current), count == 0, {pos.x, pos.y}}});
+		currentPath = current;
+		toErase = "lib_arcade_";
+		subPos = current.find(toErase);
+		if (subPos != std::string::npos)
+			currentPath.erase(subPos, toErase.size());
+		currentPath.erase(currentPath.size() - 3);
+		text.insert({current, {currentPath, ' ', checkFileExist(current), count == 0, {pos.x, pos.y}}});
 		count += 1;
 	}
 }
 
-Menu::Menu() : currentTime(getCurrentTime())
+void	Menu::chooseGraphics(std::string const &path)
+{
+	std::string	tmp;
+	std::string	tmpPath(path);
+	size_t	pos;
+
+	pos = path.find("./");
+	if (pos != std::string::npos)
+		tmpPath.erase(pos, 2);
+	for (auto &it : menuText) {
+		tmp = arcade::GRAPHICSDIR + it.first;
+		pos = tmp.find("./");
+		if (pos != std::string::npos)
+			tmp.erase(pos, 2);
+		it.second.display = (tmpPath == tmp);
+	}
+}
+
+Menu::Menu(std::string const &path) : currentTime(getCurrentTime())
 {
 	Position	pos = {arcade::WIDTH / 2 - 100, 100};
 
+	pos.x += 150;
 	init_text(arcade::GRAPHICSDIR, graphicLib, menuText, pos);
+	chooseGraphics(path);
+	pos.x -= 150;
+	menuText.insert({"graph", {"choose your graphic library:", ' ', false, true, {pos.x - 280, pos.y - 50}}});
+	menuText.insert({"game", {"choose your game:", ' ', false, true, {pos.x - 280, pos.y + 50}}});
 	pos.y = 200;
+	pos.x += 150;
 	init_text(arcade::GAMESDIR, gamesLib, menuText, pos);
 	menuText.insert({"press", {PRESS, ' ', false, true, {arcade::WIDTH / 2, 500} } });
-	menuTexture.insert({"cursor", {"./res/menu_cursor.png", '>', true, true, {140, 100}}});
+	menuTexture.insert({"cursor", {"./res/menu_cursor.png", '>', true, true, {280, 100}}});
 	menuTexture.insert({"0", {"./res/menu_wallpaper.jpeg", ' ', true, true, {0, 0}}});
 	menuTexture.insert({"champi", {"./res/menu_champi.png", ' ', true, true, {80, 160}}});
 	menuTexture.insert({"mario", {"./res/menu_mario.png", ' ', true, true, {0, 130}}});
@@ -86,7 +119,7 @@ void	Menu::sceneEvent(IDisplay *display)
 				menuText[*it].display = false;
 				menuText[*--it].display = true;
 				if (current == &graphicLib)
-					display->changeLibrary(menuText[*it].path);
+					display->changeLibrary(*it);
 				break;
 			}
 			it++;
@@ -98,7 +131,7 @@ void	Menu::sceneEvent(IDisplay *display)
 				menuText[*it].display = false;
 				menuText[*++it].display = true;
 				if (current == &graphicLib)
-					display->changeLibrary(menuText[*it].path);
+					display->changeLibrary(*it);
 				break;
 			}
 			it++;
@@ -132,7 +165,9 @@ void	Menu::compute()
 
 textureList	Menu::getText() const
 {
-	return menuText;
+	textureList	tmp = menuText;
+
+	return tmp;
 }
 
 textureList	Menu::getTexture() const

@@ -32,6 +32,8 @@ NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 		throw arcade::GraphicsLibraryError("Ncurses: Unable to init keypad");
 	if (nodelay(window, true) == ERR)
 		throw arcade::GraphicsLibraryError("Ncurses: Unable to init nodelay");
+	curs_set(0);
+	noecho();
 }
 
 NcursesDisplay::~NcursesDisplay()
@@ -154,11 +156,15 @@ bool NcursesDisplay::loadMap(mapChar const &map)
 {
 	int	y = 0;
 	int	x = 0;
+	size_t	lineSize;
+	size_t	nbLine;
 
+	nbLine = map.size();
 	for (auto const &line : map) {
 		x = 0;
+		lineSize = line.size();
 		for (auto const &character : line) {
-			mvprintw(x, y, "%c", character);
+			mvprintw((int)(LINES / 2 - nbLine / 2) + y, (int)(COLS / 2 - lineSize / 2) + x, "%c", character);
 			x += 1;
 		}
 		y += 1;
