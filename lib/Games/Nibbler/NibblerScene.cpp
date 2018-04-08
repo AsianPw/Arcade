@@ -6,7 +6,7 @@
 //
 
 #include <iostream>
-#include <chrono>
+#include <time.h>
 #include "../../../inc/Time.hpp"
 #include "NibblerScene.hpp"
 
@@ -137,6 +137,7 @@ int	NibblerScene::eatAndGrow() {
 
 void	NibblerScene::createCandy()
 {
+	srand(time(NULL));
 	int	x = rand() % WIDTH;
 	int	y = rand() % HEIGHT;
 
@@ -146,6 +147,8 @@ void	NibblerScene::createCandy()
 		nibblerTexture["candy"].position.x = (x+5)*20;
 		nibblerTexture["candy"].position.y = (y+5)*20;
 	}
+	else
+		createCandy();
 }
 
 void	NibblerScene::sceneEvent(IDisplay *display)
