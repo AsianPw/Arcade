@@ -47,6 +47,14 @@ Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true), window(nullp
 
 Sdl2::~Sdl2()
 {
+	for (auto &it : textures) {
+		SDL_FreeSurface(it.first);
+	}
+	textures.clear();
+	for (auto &it : texts) {
+		SDL_FreeSurface(it.first);
+	}
+	texts.clear();
 	TTF_Quit();
 	if (window != nullptr)
 		SDL_DestroyWindow(window);
@@ -131,7 +139,7 @@ bool Sdl2::loadText(textureList const&text)
 			continue;
 		texts.emplace(std::make_pair(tmpText, (Position){it.second.position.x, it.second.position.y}));
 	}
-	return false;
+	return true;
 }
 
 bool Sdl2::loadTexture(textureList const&toLoad)

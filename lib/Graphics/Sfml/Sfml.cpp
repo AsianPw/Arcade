@@ -12,7 +12,7 @@
 
 SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h), alreadyLoad(false)
 {
-	window = new sf::RenderWindow(sf::VideoMode(width,height), "SFML");
+	window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width,height), "SFML");
 	allEvent.insert({arcade::CLOSE, sf::Event::Closed});
 	allEvent.insert({arcade::ESCAPE,sf::Keyboard::Escape});
 	allEvent.insert({arcade::UP,sf::Keyboard::Up});
@@ -76,16 +76,18 @@ void	SfmlDisplay::setEvent(sf::Event &newEvent)
 
 bool SfmlDisplay::loadTexture(textureList const &texture)
 {
+	sf::Texture	newTexture;
+
 	textures.clear();
 	sprites.clear();
 	for (auto const &it : texture) {
-		sf::Texture	newTexture;
 		if (it.second.isFile && it.second.display && newTexture.loadFromFile(it.second.path)) {
 			sf::Sprite	newSprite;
+
 			textures.emplace_back(newTexture);
 			newSprite.setTexture(textures.back());
 			newSprite.setPosition(it.second.position.x, it.second.position.y);
-			sprites.insert(std::make_pair(it.first, newSprite));
+			sprites.emplace(std::make_pair(it.first, newSprite));
 		}
 	}
 	return true;
@@ -93,12 +95,15 @@ bool SfmlDisplay::loadTexture(textureList const &texture)
 
 bool SfmlDisplay::loadText(textureList const &text)
 {
+	sf::Text	newText;
+
 	texts.clear();
 	if (!font.loadFromFile("./res/Walk-Around-the-Block.ttf"))
 		return false;
 	for (auto const &it : text) {
 		if (!it.second.isFile && it.second.display) {
-			sf::Text	newText(it.second.path, font);
+			newText.setString(it.second.path);
+			newText.setFont(font);
 			newText.setPosition(it.second.position.x, it.second.position.y);
 			texts.emplace_back(newText);
 		}

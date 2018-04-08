@@ -43,8 +43,8 @@ private:
 	std::vector<sf::Texture>	textures;
 	std::map<std::string, sf::Sprite>	sprites;
 	eventList	allEvent;
-	sf::RenderWindow *window;
-	sf::Event event;
+	std::unique_ptr<sf::RenderWindow>	window;
+	sf::Event	event;
 };
 
 #endif //CPP_ARCADE_SFML_HPP

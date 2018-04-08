@@ -18,6 +18,8 @@ public:
 	explicit Core(std::string const &path);
 	~Core();
 	void	loop();
+	void	setChangeLibrary(std::string const &);
+	void	setChangeScene(std::string const &);
 private:
 	void	switchGraphicsLibrary();
 	void	switchScene();

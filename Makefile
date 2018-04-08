@@ -15,21 +15,27 @@ CXX		=	g++
 
 RM		=	rm -f
 
-UNIT_SRCS	=	./tests/display.cpp	\
-				./tests/GraphicsSfmlTest.cpp	\
-				./tests/GraphicsSdl2Test.cpp	\
-				./tests/LoaderTest.cpp	\
-				./src/utils.cpp	\
-				./lib/Graphics/Sfml/Sfml.cpp	\
-				./lib/Graphics/Sdl2/Sdl2.cpp	\
-				./src/Loader.cpp	\
-
-SRCS		=	./src/main.cpp	\
-				./src/utils.cpp	\
+SRCS_SHARED =	./src/utils.cpp	\
 				./src/Loader.cpp	\
 				./src/GameLoader.cpp	\
 				./src/Menu.cpp	\
 				./src/Core.cpp	\
+				./src/Arcade.cpp	\
+
+UNIT_SRCS	=	./tests/display.cpp	\
+				./tests/ArcadeTest.cpp	\
+				./tests/CoreTest.cpp	\
+				./tests/MenuTest.cpp	\
+				./tests/GraphicsSfmlTest.cpp	\
+				./tests/GraphicsSdl2Test.cpp	\
+				./tests/LoaderTest.cpp	\
+				./lib/Graphics/Sfml/Sfml.cpp	\
+				./lib/Graphics/Sdl2/Sdl2.cpp	\
+				$(SRCS_SHARED)	\
+
+SRCS		=	./src/main.cpp	\
+				$(SRCS_SHARED)	\
+
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -83,7 +89,7 @@ generate_coverage: tests_run
 	@lcov --directory . -c -o rapport.info
 	@genhtml -o ../rapport -t "Coverage of tests" rapport.info
 
-tests_run: all
+tests_run: re
 	@printf "$(COM_COLOR)% 50s % 30s$(NO_COLOR)\n" "[BUILD] $(UNIT_TEST)" "" | tr ' ' '-'
 	$(CXX) $(CXXFLAGS) $(UNIT_SRCS) --coverage -o $(UNIT_TEST) $(UNIT_FLAGS) $(LDFLAGS)
 	@printf "$(COM_COLOR)% 50s % 30s$(NO_COLOR)\n" "LAUNCH UNIT TEST" "" | tr ' ' '-'

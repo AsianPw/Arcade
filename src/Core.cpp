@@ -6,7 +6,7 @@
 */
 #include <iostream>
 #include "../inc/Core.hpp"
-#include "../inc/Menu.hpp"
+#include "../inc/MenuTest.hpp"
 #include "../inc/ArcadeException.hpp"
 
 Core::Core(std::string const &path) : scene(std::make_unique<Menu>(path)), loader(nullptr), gameLoader(nullptr), game(nullptr), display(nullptr), path(path)
@@ -91,10 +91,22 @@ void Core::switchScene()
 		return ;
 	}
 	try {
-		gameLoader.reset(new GameLoader(display->getNewGamePath()));
+		gameLoader.reset();
+		gameLoader = std::make_unique<GameLoader>(display->getNewGamePath());
 		game.reset(gameLoader->create());
 		scene.reset(game->start());
 	} catch (arcade::LoaderError const& e) {
 		throw arcade::CoreError(e.what());
 	}
+}
+
+void	Core::setChangeLibrary(std::string const &path)
+{
+	display->changeLibrary(path);
+}
+
+void	Core::setChangeScene(std::string const &path)
+{
+	display->setSwitchScene(true);
+	display->setNewGamePath(path);
 }
