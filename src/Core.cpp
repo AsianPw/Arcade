@@ -92,9 +92,9 @@ void Core::switchScene()
 	}
 	try {
 		gameLoader.reset(new GameLoader(display->getNewGamePath()));
+		game.reset(gameLoader->create());
+		scene.reset(game->start());
 	} catch (arcade::LoaderError const& e) {
 		throw arcade::CoreError(e.what());
 	}
-	game.reset(gameLoader->create());
-	scene.reset(game->start());
 }
