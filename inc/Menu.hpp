@@ -8,11 +8,11 @@
 #ifndef CPP_ARCADE_MENU_HPP
 #define CPP_ARCADE_MENU_HPP
 
-#include "../inc/IScene.hpp"
-#include "../inc/Loader.hpp"
-#include "../inc/IGame.hpp"
-#include "../inc/GameLoader.hpp"
-#include "../inc/Alias.hpp"
+#include "IScene.hpp"
+#include "Loader.hpp"
+#include "IGame.hpp"
+#include "GameLoader.hpp"
+#include "Alias.hpp"
 
 static const char PRESS[] = "Press Enter";
 

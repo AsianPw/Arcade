@@ -61,16 +61,19 @@ public:
 	void	setNewGamePath(std::string const &) override;
 	bool	getSwitchScene() const override;
 	void	setSwitchScene(bool) override;
-public:
+private:
 	void	initVulkanApi();
 	void	initVulkanInfo();
-	void	initSwapInfo(VkExtent2D, uint32_t, VkSurfaceFormatKHR);
+	void	initSwapInfo(VkExtent2D &, uint32_t &, VkSurfaceFormatKHR &);
+	void	fillSwapInfo(QueueFamilyIndices &, uint32_t *);
 	void	createInstance();
 	void	pickPhysicalDevice();
 	void	createLogicalDevice();
 	void	createSwapChain();
 	void	setupDebugCallback();
 	void	createSurface();
+	void	createImageView();
+	void	createGraphicsPipeline();
 	bool	checkValidationLayerSupport();
 	bool	isDeviceSuitable(VkPhysicalDevice);
 	QueueFamilyIndices	findQueueFamilies(VkPhysicalDevice);
@@ -92,6 +95,7 @@ private:
 	std::vector<VkImage>	swapChainImages;
 	VkFormat		swapChainImageFormat;
 	VkExtent2D		swapChainExtent;
+	std::vector<VkImageView>	swapChainImageViews;
 	VkSwapchainCreateInfoKHR	swapCreateInfo;
 	VkApplicationInfo	appInfo;
 	VkInstanceCreateInfo	createInfo;

@@ -29,6 +29,7 @@ SRCS		=	./src/main.cpp	\
 				./src/Loader.cpp	\
 				./src/GameLoader.cpp	\
 				./src/Menu.cpp	\
+				./src/Core.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
