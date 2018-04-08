@@ -244,6 +244,12 @@ void    PacmanScene::compute(void)
 		GoshtMove2();
 		GoshtMove3();
 		currentTime = now;
+		for (auto const &find : pacmanMap)
+		{
+			for (auto const &sec : find)
+				std::cout << sec;
+		}
+		std::cout<<std::endl;
 	}
 }
 
