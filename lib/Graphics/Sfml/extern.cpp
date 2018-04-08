@@ -6,7 +6,7 @@
 */
 
 #include "../../../inc/IDisplay.hpp"
-#include "Sfml.hpp"
+#include "../../../inc/Sfml.hpp"
 
 extern "C" IDisplay	*create_object(size_t w, size_t h)
 {

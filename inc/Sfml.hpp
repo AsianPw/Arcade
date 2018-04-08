@@ -9,8 +9,8 @@
 #	define CPP_ARCADE_SFML_HPP
 
 #	include <SFML/Graphics.hpp>
-#	include "../../../inc/IDisplay.hpp"
-#include "../../../inc/Alias.hpp"
+#	include "IDisplay.hpp"
+#include "Alias.hpp"
 
 class SfmlDisplay : public IDisplay {
 public:
