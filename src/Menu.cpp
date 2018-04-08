@@ -165,9 +165,7 @@ void	Menu::compute()
 
 textureList	Menu::getText() const
 {
-	textureList	tmp = menuText;
-
-	return tmp;
+	return menuText;
 }
 
 textureList	Menu::getTexture() const
