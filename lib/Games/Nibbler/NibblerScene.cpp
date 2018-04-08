@@ -101,6 +101,7 @@ void	NibblerScene::snakeMove()
 	x = 0;
 	if (nibblerMap[nibblerBody[x].y][nibblerBody[x].x] == '#' || nibblerMap[nibblerBody[x].y][nibblerBody[x].x] == 'O') {
 		nibblerText.insert({"loose", {"Game Over", ' ', false, true, {300, 280}}});
+		nibblerText.insert({"goMenu", {"Press M to go to the menu", ' ', false, true, {200, 340}}});
 		play = false;
 	}
 	else if (nibblerMap[nibblerBody[x].y][nibblerBody[x].x] == '@') {
