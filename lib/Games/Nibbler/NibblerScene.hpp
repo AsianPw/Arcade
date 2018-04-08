@@ -30,7 +30,7 @@ public:
 	std::map<std::string, Texture>	getTexture() const override ;
 	std::map<std::string, Texture>	getText() const override ;
 	void	compute() override;
-	int	eatAndGrow();
+	void	eatAndGrow();
 
 	std::vector<std::vector<char>> getMap() const override;
 

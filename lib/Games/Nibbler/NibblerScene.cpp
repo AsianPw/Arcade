@@ -123,16 +123,15 @@ void	NibblerScene::snakeMove()
 	createMap();
 }
 
-int	NibblerScene::eatAndGrow() {
+void	NibblerScene::eatAndGrow() {
 	Position	lastPos;
 
 	lastPos = {nibblerBody[nibblerBody.size() - 1].x, nibblerBody[nibblerBody.size() - 1].y};
 	score++;
-	snakeMove();
+	//snakeMove();
 	nibblerBody.resize(nibblerBody.size());
 	nibblerBody.emplace_back(lastPos);
 	createCandy();
-	return (0);
 }
 
 void	NibblerScene::createCandy()
@@ -141,14 +140,14 @@ void	NibblerScene::createCandy()
 	int	x = rand() % WIDTH;
 	int	y = rand() % HEIGHT;
 
-	if (nibblerMap[y][x] != '#' && nibblerMap[y][x] != 'O' && nibblerMap[y][x] != '@') {
-		candy.y = y;
-		candy.x = x;
-		nibblerTexture["candy"].position.x = (x+5)*20;
-		nibblerTexture["candy"].position.y = (y+5)*20;
+	while (nibblerMap[y][x] != ' ') {
+		y = rand() % HEIGHT;
+		x = rand() % WIDTH;
 	}
-	else
-		createCandy();
+	candy.y = y;
+	candy.x = x;
+	nibblerTexture["candy"].position.x = (x + 5) * 20;
+	nibblerTexture["candy"].position.y = (y + 5) * 20;
 }
 
 void	NibblerScene::sceneEvent(IDisplay *display)
