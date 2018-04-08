@@ -86,12 +86,12 @@ std::map<std::string, Texture>  PacmanScene::getText() const
 
 void    PacmanScene::sceneEvent(IDisplay *display)
 {
-	if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
+	if (display->GetKey(arcade::KEYBOARD, arcade::CLOSE)) {
 		display->destroyWindow();
-	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
+	}
+	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE)) {
 		display->destroyWindow();
-	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
-		display->destroyWindow();
+	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		if (loose == true || win == true)
 			exit(0);
@@ -152,7 +152,6 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 
 void     PacmanScene::Move_right(void)
 {
-	pacmanMap[player.x][player.y] = ' ';
 	PacmanTexture["player"].position.x += WIDTH_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
 	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
@@ -163,12 +162,12 @@ void     PacmanScene::Move_right(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
+	pacmanMap[player.x][player.y] = ' ';
 	print_map();
 }
 
 void    PacmanScene::Move_left(void)
 {
-	pacmanMap[player.x][player.y] = ' ';
 	PacmanTexture["player"].position.x -= WIDTH_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
 	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
@@ -179,12 +178,12 @@ void    PacmanScene::Move_left(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
+	pacmanMap[player.x][player.y] = ' ';
 	print_map();
 }
 
 void    PacmanScene::Move_up(void)
 {
-	pacmanMap[player.x][player.y] = ' ';
 	PacmanTexture["player"].position.y -= HEIGHT_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
 	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
@@ -195,12 +194,12 @@ void    PacmanScene::Move_up(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
+	pacmanMap[player.x][player.y] = ' ';
 	print_map();
 }
 
 void    PacmanScene::Move_down(void)
 {
-	pacmanMap[player.x][player.y] = ' ';
 	PacmanTexture["player"].position.y += HEIGHT_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
 	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
@@ -211,6 +210,7 @@ void    PacmanScene::Move_down(void)
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
+	pacmanMap[player.x][player.y] = ' ';
 	print_map();
 }
 
