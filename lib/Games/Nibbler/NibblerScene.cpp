@@ -6,7 +6,6 @@
 //
 
 #include <iostream>
-#include <time.h>
 #include "../../../inc/Time.hpp"
 #include "NibblerScene.hpp"
 
@@ -159,6 +158,10 @@ void	NibblerScene::sceneEvent(IDisplay *display)
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
 		display->destroyWindow();
+	if (display->GetKey(arcade::KEYBOARD, arcade::M)) {
+		display->setSwitchScene(true);
+		display->setNewGamePath("menu");
+	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		if (move.x == direction.right.x || move.x == direction.left.x || !keyOk)
 			return;

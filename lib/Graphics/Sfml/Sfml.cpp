@@ -21,6 +21,7 @@ SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h), alreadyLoad(
 	allEvent.insert({arcade::RIGHT,sf::Keyboard::Right});
 	allEvent.insert({arcade::ENTER, sf::Keyboard::Return});
 	allEvent.insert({arcade::Q, sf::Keyboard::Q});
+	allEvent.insert({arcade::M, sf::Keyboard::M});
 	change = false;
 	switchScene = false;
 }

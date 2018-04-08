@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <iostream>
 #include "../../../inc/Ncurses.hpp"
+#include "../../../inc/ArcadeException.hpp"
 
 NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 {
@@ -18,13 +19,19 @@ NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 	allEvent.insert({arcade::DOWN, KEY_DOWN});
 	allEvent.insert({arcade::LEFT, KEY_LEFT});
 	allEvent.insert({arcade::RIGHT, KEY_RIGHT});
-	allEvent.insert({arcade::Q, KEY_Q});
+	allEvent.insert({arcade::Q, 'q'});
+	allEvent.insert({arcade::M, 'm'});
 	allEvent.insert({arcade::ENTER, KEY_RETURN});
 	allEvent.insert({arcade::ESCAPE, 27});
-	initscr();
-	cbreak();
-	keypad(stdscr, true);
-	nodelay(stdscr, true);
+	window = initscr();
+	if (window == nullptr)
+		throw arcade::GraphicsLibraryError("Ncurses: Unable to init window.");
+	if (cbreak() == ERR)
+		throw arcade::GraphicsLibraryError("Ncurses: Unable to init cbreak.");
+	if (keypad(window, true) == ERR)
+		throw arcade::GraphicsLibraryError("Ncurses: Unable to init keypad");
+	if (nodelay(window, true) == ERR)
+		throw arcade::GraphicsLibraryError("Ncurses: Unable to init nodelay");
 }
 
 NcursesDisplay::~NcursesDisplay()
@@ -90,7 +97,8 @@ bool NcursesDisplay::loadTexture(textureList const &texture)
 	float	percentageX;
 	float	percentageY;
 
-	//clear();
+	if (clear() == ERR)
+		throw arcade::GraphicsLibraryError("Ncurses: Unable to clear");
 	for (auto const &it : texture) {
 		if (it.second.isFile && it.second.display && it.second.similar != ' ') {
 			percentageX = (it.second.position.x / static_cast<float>(arcade::WIDTH));

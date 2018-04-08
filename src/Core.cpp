@@ -82,8 +82,11 @@ void Core::switchScene()
 {
 	display->setSwitchScene(false);
 	if (display->getNewGamePath() == "menu") {
-		gameLoader = nullptr;
-		scene.reset(new Menu());
+		scene.reset();
+		game.reset();
+		gameLoader.reset();
+		scene = std::make_unique<Menu>();
+		return ;
 	}
 	try {
 		gameLoader.reset(new GameLoader(display->getNewGamePath()));

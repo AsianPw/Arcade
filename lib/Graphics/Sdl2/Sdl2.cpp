@@ -19,6 +19,7 @@ Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true), window(nullp
 	allEvent.insert({arcade::RIGHT, SDL_SCANCODE_RIGHT});
 	allEvent.insert({arcade::ENTER, SDL_SCANCODE_RETURN});
 	allEvent.insert({arcade::Q, SDL_SCANCODE_Q});
+	allEvent.insert({arcade::M, SDL_SCANCODE_M});
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_Quit();
 		throw arcade::GraphicsLibraryError(SDL_GetError());

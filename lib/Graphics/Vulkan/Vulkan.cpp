@@ -114,6 +114,7 @@ Vulkan::Vulkan(size_t width, size_t height) : physicalDevice(VK_NULL_HANDLE), wi
 	allEvent.insert({arcade::DOWN, GLFW_KEY_DOWN});
 	allEvent.insert({arcade::RIGHT, GLFW_KEY_RIGHT});
 	allEvent.insert({arcade::Q, GLFW_KEY_Q});
+	allEvent.insert({arcade::M, GLFW_KEY_M});
 	keyPress = false;
 	change = false;
 	switchScene = false;
