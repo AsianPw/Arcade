@@ -82,82 +82,42 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE)) {
 		display->destroyWindow();
 	}
-    if (display->GetKey(arcade::KEYBOARD, arcade::ENTER)) {
-        display->setSwitchScene(true);
-        display->setNewGamePath("menu");
-    }
+	if (display->GetKey(arcade::KEYBOARD, arcade::ENTER)) {
+		display->setSwitchScene(true);
+		display->setNewGamePath("menu");
+	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
+		way = 0;
 		if (loose == true || win == true) {
-            PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
-            return;
-        }
-		if (pacmanMap[player.x][player.y - 1] == '*')
+			PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
 			return;
-		if (pacmanMap[player.x][player.y - 1] == 'o') {
-			score += 10;
-			nbr_food--;
-			PacmanTexture.erase("food" + std::to_string(player.x) + std::to_string(player.y - 1));
-			PacmanText["score_value"].path = std::to_string(score);
-			PacmanText["food_value"].path = std::to_string(nbr_food);
 		}
-		player.y--;
 		Move_left();
 		PacmanTexture.erase("player");
 		PacmanTexture.insert({"player", {"./res/pacman_left.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT)) {
+		way = 1;
 		if (loose == true || win == true) {
 		    PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
 		    return;
 		}
-		if (pacmanMap[player.x][player.y + 1] == '*')
-			return;
-		if (pacmanMap[player.x][player.y + 1] == 'o') {
-			score += 10;
-			nbr_food--;
-			PacmanTexture.erase("food" + std::to_string(player.x) + std::to_string(player.y + 1));
-			PacmanText["score_value"].path = std::to_string(score);
-			PacmanText["food_value"].path = std::to_string(nbr_food);
-		}
-		player.y++;
 		Move_right();
 		PacmanTexture.erase("player");
 		PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP)) {
+		way = 2;
 		if (loose == true || win == true) {
-		    PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
-            return;
-		}
-		if (pacmanMap[player.x - 1][player.y] == '*')
+			PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
 			return;
-		if (pacmanMap[player.x - 1][player.y] == 'o') {
-			score += 10;
-			nbr_food--;
-			PacmanTexture.erase("food" + std::to_string(player.x - 1) + std::to_string(player.y));
-			PacmanText["score_value"].path = std::to_string(score);
-			PacmanText["food_value"].path = std::to_string(nbr_food);
 		}
-		player.x--;
 		Move_up();
 		PacmanTexture.erase("player");
 		PacmanTexture.insert({"player", {"./res/pacman_up.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::DOWN)) {
-		if (loose == true || win == true) {
-		    PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
-		    return;
-        }
-		if (pacmanMap[player.x + 1][player.y] == '*' || player.x > 20)
-			return;
-		if (pacmanMap[player.x + 1][player.y] == 'o') {
-			score += 10;
-			nbr_food--;
-			PacmanTexture.erase("food" + std::to_string(player.x + 1) + std::to_string(player.y));
-			PacmanText["score_value"].path = std::to_string(score);
-			PacmanText["food_value"].path = std::to_string(nbr_food);
-		}
-		player.x++;
+		way = 3;
 		Move_down();
 		PacmanTexture.erase("player");
 		PacmanTexture.insert({"player", {"./res/pacman_down.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
@@ -166,6 +126,17 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 
 void    PacmanScene::Move_right(void)
 {
+	if (pacmanMap[player.x][player.y + 1] == '*')
+		return;
+	if (pacmanMap[player.x][player.y + 1] == 'o') {
+		score += 10;
+		nbr_food--;
+		PacmanTexture.erase("food" + std::to_string(player.x) + std::to_string(player.y + 1));
+		PacmanText["score_value"].path = std::to_string(score);
+		PacmanText["food_value"].path = std::to_string(nbr_food);
+	}
+	player.y++;
+
 	PacmanTexture["player"].position.x += WIDTH_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'B' || pacmanMap[player.x][player.y] == 'C') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
@@ -181,6 +152,17 @@ void    PacmanScene::Move_right(void)
 
 void    PacmanScene::Move_left(void)
 {
+	if (pacmanMap[player.x][player.y - 1] == '*')
+		return;
+	if (pacmanMap[player.x][player.y - 1] == 'o') {
+		score += 10;
+		nbr_food--;
+		PacmanTexture.erase("food" + std::to_string(player.x) + std::to_string(player.y - 1));
+		PacmanText["score_value"].path = std::to_string(score);
+		PacmanText["food_value"].path = std::to_string(nbr_food);
+	}
+	player.y--;
+
 	PacmanTexture["player"].position.x -= WIDTH_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'B') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
@@ -196,6 +178,17 @@ void    PacmanScene::Move_left(void)
 
 void    PacmanScene::Move_up(void)
 {
+	if (pacmanMap[player.x - 1][player.y] == '*')
+		return;
+	if (pacmanMap[player.x - 1][player.y] == 'o') {
+		score += 10;
+		nbr_food--;
+		PacmanTexture.erase("food" + std::to_string(player.x - 1) + std::to_string(player.y));
+		PacmanText["score_value"].path = std::to_string(score);
+		PacmanText["food_value"].path = std::to_string(nbr_food);
+	}
+	player.x--;
+
 	PacmanTexture["player"].position.y -= HEIGHT_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'B') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
@@ -211,6 +204,21 @@ void    PacmanScene::Move_up(void)
 
 void    PacmanScene::Move_down(void)
 {
+	if (loose == true || win == true) {
+		PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
+		return;
+	}
+	if (pacmanMap[player.x + 1][player.y] == '*' || player.x > 20)
+		return;
+	if (pacmanMap[player.x + 1][player.y] == 'o') {
+		score += 10;
+		nbr_food--;
+		PacmanTexture.erase("food" + std::to_string(player.x + 1) + std::to_string(player.y));
+		PacmanText["score_value"].path = std::to_string(score);
+		PacmanText["food_value"].path = std::to_string(nbr_food);
+	}
+	player.x++;
+
 	PacmanTexture["player"].position.y += HEIGHT_TEXTURE;
 	if (pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'B') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
@@ -233,7 +241,7 @@ int PacmanScene::get_nbrfood(void)
 				nbr_food++;
 		}
 	}
-	return (nbr_food);
+	return nbr_food;
 }
 
 void    PacmanScene::compute(void)
@@ -243,6 +251,14 @@ void    PacmanScene::compute(void)
 	if (now - currentTime > 250) {
 		GoshtMove2();
 		GoshtMove3();
+		if (way == 0)
+			Move_left();
+		else if (way == 1)
+			Move_right();
+		else if (way == 2)
+			Move_up();
+		else if (way == 3)
+			Move_down();
 		currentTime = now;
 		for (auto const &find : pacmanMap)
 		{
