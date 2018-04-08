@@ -10,7 +10,7 @@
 #include <iostream>
 #include "../../../inc/Time.hpp"
 
-void PacmanScene::print_map()
+void    PacmanScene::print_map()
 {
 	std::cout<<"*******************************************************"<<std::endl;
 	for (int i = 0; i < 20; i++)
@@ -82,9 +82,15 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE)) {
 		display->destroyWindow();
 	}
+    if (display->GetKey(arcade::KEYBOARD, arcade::ENTER)) {
+        display->setSwitchScene(true);
+        display->setNewGamePath("menu");
+    }
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
-		if (loose == true || win == true)
-			exit(0);
+		if (loose == true || win == true) {
+            PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
+            return;
+        }
 		if (pacmanMap[player.x][player.y - 1] == '*')
 			return;
 		if (pacmanMap[player.x][player.y - 1] == 'o') {
@@ -94,14 +100,16 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 			PacmanText["score_value"].path = std::to_string(score);
 			PacmanText["food_value"].path = std::to_string(nbr_food);
 		}
-                player.y--;
+		player.y--;
 		Move_left();
 		PacmanTexture.erase("player");
 		PacmanTexture.insert({"player", {"./res/pacman_left.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT)) {
-		if (loose == true || win == true)
-			exit(0);
+		if (loose == true || win == true) {
+		    PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
+		    return;
+		}
 		if (pacmanMap[player.x][player.y + 1] == '*')
 			return;
 		if (pacmanMap[player.x][player.y + 1] == 'o') {
@@ -117,8 +125,10 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 		PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP)) {
-		if (loose == true || win == true)
-			exit(0);
+		if (loose == true || win == true) {
+		    PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
+            return;
+		}
 		if (pacmanMap[player.x - 1][player.y] == '*')
 			return;
 		if (pacmanMap[player.x - 1][player.y] == 'o') {
@@ -134,8 +144,10 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 		PacmanTexture.insert({"player", {"./res/pacman_up.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::DOWN)) {
-		if (loose == true || win == true)
-			exit(0);
+		if (loose == true || win == true) {
+		    PacmanText.insert({"goMenu", {"Press Enter to go to the menu", ' ', false, true, {200, 340}}});
+		    return;
+        }
 		if (pacmanMap[player.x + 1][player.y] == '*' || player.x > 20)
 			return;
 		if (pacmanMap[player.x + 1][player.y] == 'o') {
@@ -152,11 +164,10 @@ void    PacmanScene::sceneEvent(IDisplay *display)
 	}
 }
 
-void     PacmanScene::Move_right(void)
+void    PacmanScene::Move_right(void)
 {
 	PacmanTexture["player"].position.x += WIDTH_TEXTURE;
-	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
-	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
+	if (pacmanMap[player.x][player.y] == 'B' || pacmanMap[player.x][player.y] == 'C') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
 		loose = true;
 	}
@@ -166,14 +177,12 @@ void     PacmanScene::Move_right(void)
 	}
 	pacmanMap[player.x][player.y] = 'G';
 	pacmanMap[player.x][player.y - 1] = ' ';
-	print_map();
 }
 
 void    PacmanScene::Move_left(void)
 {
 	PacmanTexture["player"].position.x -= WIDTH_TEXTURE;
-	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
-	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
+	if (pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'B') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
 		loose = true;
 	}
@@ -183,14 +192,12 @@ void    PacmanScene::Move_left(void)
 	}
 	pacmanMap[player.x][player.y] = 'G';
 	pacmanMap[player.x][player.y + 1] = ' ';
-	print_map();
 }
 
 void    PacmanScene::Move_up(void)
 {
 	PacmanTexture["player"].position.y -= HEIGHT_TEXTURE;
-	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
-	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
+	if (pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'B') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
 		loose = true;
 	}
@@ -200,27 +207,24 @@ void    PacmanScene::Move_up(void)
 	}
 	pacmanMap[player.x][player.y] = 'G';
 	pacmanMap[player.x + 1][player.y] = ' ';
-	print_map();
 }
 
 void    PacmanScene::Move_down(void)
 {
 	PacmanTexture["player"].position.y += HEIGHT_TEXTURE;
-	if (pacmanMap[player.x][player.y] == 'A' || pacmanMap[player.x][player.y] == 'B' \
-	    || pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'D') {
+	if (pacmanMap[player.x][player.y] == 'C' || pacmanMap[player.x][player.y] == 'B') {
 		PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
 		loose = true;
-        }
+	}
 	if (nbr_food == 0) {
 		PacmanText.insert({"lost", {"You Won", ' ', false, true, {300, 280}}});
 		win = true;
 	}
 	pacmanMap[player.x][player.y] = 'G';
 	pacmanMap[player.x - 1][player.y] = ' ';
-	print_map();
 }
 
-int    PacmanScene::get_nbrfood(void)
+int PacmanScene::get_nbrfood(void)
 {
 	nbr_food = 0;
 	for (int i = 0; i < 20; i++) {
@@ -236,10 +240,6 @@ void    PacmanScene::compute(void)
 {
 	long now = getCurrentTime();
 
-	/*usleep(500000);
-	GoshtMove2();
-	GoshtMove3();
-	print_map();*/
 	if (now - currentTime > 250) {
 		GoshtMove2();
 		GoshtMove3();
@@ -251,28 +251,28 @@ void    PacmanScene::createMap(void)
 {
 	pacmanMap.resize(HEIGHT, std::vector<char>(WIDTH));
 	pacmanMap = {{'\n','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'},
-		     {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
-		     {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
-		     {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
-		     {'\n','*','o','o','*','o','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','o','*','o','o','*'},
-		     {'\n','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*'},
-		     {'\n','*','o','*','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','*','o','*'},
-		     {'\n','*','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','*'},
-		     {'\n','*','o','*','o','o','*','*','o','*','*','*',' ',' ',' ','*','*','*','o','o','*','*','o','*','o','*'},
-		     {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
-		     {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
-		     {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
-		     {'\n','*','o','*','o','o','*','*','o','*','*','*','*','*','*','*','*','*','o','o','*','*','o','*','o','*'},
-		     {'\n','*','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','*'},
-		     {'\n','*','o','*','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','*','o','*'},
-		     {'\n','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*'},
-		     {'\n','*','o','o','*','o','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','o','*','o','o','*'},
-		     {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
-		     {'\n','*','o','o','*','o','o','o','o','o','o',' ','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
-		     {'\n','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'}};
+                 {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
+                 {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
+                 {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
+                 {'\n','*','o','o','*','o','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','o','*','o','o','*'},
+                 {'\n','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*'},
+                 {'\n','*','o','*','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','*','o','*'},
+                 {'\n','*','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','*'},
+                 {'\n','*','o','*','o','o','*','*','o','*','*','*',' ',' ',' ','*','*','*','o','o','*','*','o','*','o','*'},
+                 {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
+                 {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
+                 {'\n','*','o','o','o','o','o','o','o','*',' ',' ',' ',' ',' ',' ',' ','*','o','o','o','o','o','o','o','*'},
+                 {'\n','*','o','*','o','o','*','*','o','*','*','*','*','*','*','*','*','*','o','o','*','*','o','*','o','*'},
+                 {'\n','*','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','*'},
+                 {'\n','*','o','*','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','*','o','*'},
+                 {'\n','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*'},
+                 {'\n','*','o','o','*','o','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','o','*','o','o','*'},
+                 {'\n','*','o','o','*','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
+                 {'\n','*','o','o','*','o','o','o','o','o','o',' ','o','o','o','o','o','o','o','o','o','o','*','o','o','*'},
+                 {'\n','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'}};
 }
 
-std::vector<std::vector<char>>   PacmanScene::getMap() const
+std::vector<std::vector<char>>  PacmanScene::getMap() const
 {
 	return pacmanMap;
 }

@@ -1,5 +1,8 @@
 //
-// Created by j-f on 08/04/18.
+// EPITECH PROJECT, 2018
+// Move of the goshts
+// File description:
+// source file
 //
 
 #include "PacmanScene.hpp"

@@ -47,7 +47,7 @@ public:
 	void				Move_left();
 	void				createMap();
 	void				GoshtMove3();
-    void				GoshtMove2();
+	void				GoshtMove2();
 	void				print_map();
 	int				get_nbrfood();
 };
