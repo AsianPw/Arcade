@@ -9,7 +9,7 @@
 #include "../../../inc/Sdl2.hpp"
 #include "../../../inc/ArcadeException.hpp"
 
-Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
+Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true), window(nullptr)
 {
 	allEvent.insert({arcade::CLOSE, SDL_WINDOWEVENT_CLOSE});
 	allEvent.insert({arcade::ESCAPE, SDL_SCANCODE_ESCAPE});
@@ -46,7 +46,8 @@ Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
 Sdl2::~Sdl2()
 {
 	TTF_Quit();
-	SDL_DestroyWindow(window);
+	if (window != nullptr)
+		SDL_DestroyWindow(window);
 	IMG_Quit();
 	SDL_Quit();
 }

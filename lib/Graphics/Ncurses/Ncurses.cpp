@@ -18,7 +18,8 @@ NcursesDisplay::NcursesDisplay(size_t w, size_t h)
 	allEvent.insert({arcade::DOWN, KEY_DOWN});
 	allEvent.insert({arcade::LEFT, KEY_LEFT});
 	allEvent.insert({arcade::RIGHT, KEY_RIGHT});
-	allEvent.insert({arcade::ENTER, 10});
+	allEvent.insert({arcade::Q, KEY_Q});
+	allEvent.insert({arcade::ENTER, KEY_RETURN});
 	allEvent.insert({arcade::ESCAPE, 27});
 	initscr();
 	cbreak();
@@ -53,7 +54,6 @@ bool	NcursesDisplay::isKey()
 
 bool	NcursesDisplay::GetKey(arcade::TypeEvent typeEvent, std::string const &type)
 {
-	printw("check for %d", currentKey);
 	if (typeEvent == arcade::WINDOW)
 		return false;
 	for (auto const &it : allEvent) {
@@ -90,7 +90,7 @@ bool NcursesDisplay::loadTexture(textureList const &texture)
 	float	percentageX;
 	float	percentageY;
 
-	clear();
+	//clear();
 	for (auto const &it : texture) {
 		if (it.second.isFile && it.second.display && it.second.similar != ' ') {
 			percentageX = (it.second.position.x / static_cast<float>(arcade::WIDTH));

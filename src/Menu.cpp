@@ -10,7 +10,7 @@
 #include <cstring>
 #include <algorithm>
 #include "../inc/utils.hpp"
-#include "Menu.hpp"
+#include "../inc/Menu.hpp"
 #include "../inc/Texture.hpp"
 #include "../inc/GameLoader.hpp"
 #include "../inc/ArcadeException.hpp"
@@ -65,6 +65,8 @@ void	Menu::sceneEvent(IDisplay *display)
 	if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
+		display->destroyWindow();
+	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP)) {
 		if (menuTexture["cursor"].position.y == 200) {

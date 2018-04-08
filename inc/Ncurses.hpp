@@ -14,6 +14,9 @@
 #include "IDisplay.hpp"
 #include "Alias.hpp"
 
+static const int KEY_Q = 113;
+static const int KEY_RETURN = 10;
+
 class NcursesDisplay : public IDisplay {
 public:
 	NcursesDisplay(size_t, size_t);
@@ -32,9 +35,9 @@ public:
 	void	destroyWindow() override;
 	const std::string	&getNewGamePath() const override;
 	void	setNewGamePath(std::string const &) override;
-	bool	loadMap(mapChar const &vector) override;
+	bool	loadMap(mapChar const &) override;
 	bool	getSwitchScene() const override;
-	void	setSwitchScene(bool b) override;
+	void	setSwitchScene(bool) override;
 private:
 	eventList	allEvent;
 	int		currentKey;
