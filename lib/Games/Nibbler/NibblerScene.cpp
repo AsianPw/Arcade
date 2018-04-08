@@ -201,11 +201,7 @@ void	NibblerScene::compute()
 	long	now = getCurrentTime();
 
 	if (play) {
-		int x = (nibblerTexture["candy"].position.x) / 20 - 5;
-		int y = (nibblerTexture["candy"].position.y) / 20 - 5;
 		if (now - currentTime > 250) {
-			if (nibblerMap[y + move.y][x + move.x] == '#')
-				exit(84);
 			snakeMove();
 			currentTime = now;
 			nibblerText["score"].path = std::to_string(score);
