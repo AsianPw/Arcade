@@ -17,8 +17,13 @@ void    PacmanScene::GoshtMove3(void)
         if (pacmanMap[gosht3.x][gosht3.y - 1] == 'o')
             pacmanMap[gosht3.x][gosht3.y] = 'o';
         else if (pacmanMap[gosht3.x][gosht3.y - 1] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht3.x][gosht3.y - 1] == ' ')
             pacmanMap[gosht3.x][gosht3.y] = ' ';
@@ -34,8 +39,13 @@ void    PacmanScene::GoshtMove3(void)
         else if (pacmanMap[gosht3.x][gosht3.y + 1] == ' ')
             pacmanMap[gosht3.x][gosht3.y] = ' ';
         else if (pacmanMap[gosht3.x][gosht3.y + 1] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht3.x][gosht3.y + 1] == '*' || pacmanMap[gosht3.x][gosht3.y + 1] == 'B')
             goto choosed_direction;
@@ -49,8 +59,13 @@ void    PacmanScene::GoshtMove3(void)
         else if (pacmanMap[gosht3.x - 1][gosht3.y] == ' ')
             pacmanMap[gosht3.x][gosht3.y] = ' ';
         else if (pacmanMap[gosht3.x - 1][gosht3.y] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht3.x - 1][gosht3.y] == '*' || pacmanMap[gosht3.x - 1][gosht3.y] == 'B')
             goto choosed_direction;
@@ -64,8 +79,13 @@ void    PacmanScene::GoshtMove3(void)
         else if (pacmanMap[gosht3.x + 1][gosht3.y] == ' ')
             pacmanMap[gosht3.x][gosht3.y] = ' ';
         else if (pacmanMap[gosht3.x + 1][gosht3.y] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht3.x + 1][gosht3.y] == '*' || pacmanMap[gosht3.x + 1][gosht3.y] == 'B')
             goto choosed_direction;
@@ -89,8 +109,13 @@ void    PacmanScene::GoshtMove2(void)
         else if (pacmanMap[gosht2.x][gosht2.y - 1] == ' ')
             pacmanMap[gosht2.x][gosht2.y] = ' ';
         else if (pacmanMap[gosht2.x][gosht2.y - 1] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht2.x][gosht2.y - 1] == '*' || pacmanMap[gosht2.x][gosht2.y - 1] == 'C')
             goto choosed_direction;
@@ -104,8 +129,13 @@ void    PacmanScene::GoshtMove2(void)
         else if (pacmanMap[gosht2.x][gosht2.y + 1] == ' ')
             pacmanMap[gosht2.x][gosht2.y] = ' ';
         else if (pacmanMap[gosht2.x][gosht2.y + 1] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht2.x][gosht2.y + 1] == '*' || pacmanMap[gosht2.x][gosht2.y + 1] == 'C')
             goto choosed_direction;
@@ -119,8 +149,13 @@ void    PacmanScene::GoshtMove2(void)
         else if (pacmanMap[gosht2.x - 1][gosht2.y] == ' ')
             pacmanMap[gosht2.x][gosht2.y] = ' ';
         else if (pacmanMap[gosht2.x - 1][gosht2.y] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht2.x - 1][gosht2.y] == '*' || pacmanMap[gosht2.x - 1][gosht2.y] == 'C')
             goto choosed_direction;
@@ -134,8 +169,13 @@ void    PacmanScene::GoshtMove2(void)
         else if (pacmanMap[gosht2.x + 1][gosht2.y] == ' ')
             pacmanMap[gosht2.x][gosht2.y] = ' ';
         else if (pacmanMap[gosht2.x + 1][gosht2.y] == 'G') {
-            PacmanText.insert({"lost", {"Game Over", ' ', false, true, {300, 280}}});
-            loose = true;
+            life--;
+            pacmanMap[player.x][player.y] = ' ';
+            player.x = 8;
+            player.y = 13;
+            pacmanMap[player.x][player.y] = 'G';
+            PacmanTexture.erase("player");
+            PacmanTexture.insert({"player", {"./res/pacman_right.jpg", ' ',  true, true, {(int)(player.y * WIDTH_TEXTURE), (int)(player.x * HEIGHT_TEXTURE)}}});
         }
         else if (pacmanMap[gosht2.x + 1][gosht2.y] == '*' || pacmanMap[gosht2.x + 1][gosht2.y] == 'C')
             goto choosed_direction;
