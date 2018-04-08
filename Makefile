@@ -22,8 +22,7 @@ SRCS_SHARED =	./src/utils.cpp	\
 				./src/Core.cpp	\
 				./src/Arcade.cpp	\
 
-UNIT_SRCS	=	./tests/display.cpp	\
-				./tests/ArcadeTest.cpp	\
+UNIT_SRCS	=	./tests/ArcadeTest.cpp	\
 				./tests/CoreTest.cpp	\
 				./tests/MenuTest.cpp	\
 				./tests/GraphicsSfmlTest.cpp	\
