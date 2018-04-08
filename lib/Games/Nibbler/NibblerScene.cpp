@@ -6,7 +6,6 @@
 //
 
 #include <iostream>
-#include <chrono>
 #include "../../../inc/Time.hpp"
 #include "NibblerScene.hpp"
 
@@ -89,7 +88,7 @@ void	NibblerScene::createMap()
 
 void	NibblerScene::snakeMove()
 {
-	size_t	x = nibblerBody.size()-1;
+	size_t	x = nibblerBody.size() - 1;
 
 	while (x)
 	{
@@ -123,37 +122,48 @@ void	NibblerScene::snakeMove()
 	createMap();
 }
 
-int	NibblerScene::eatAndGrow() {
-	Position	lastPos;
+void	NibblerScene::eatAndGrow() {
+	Position	lastPos = {
+		nibblerBody[nibblerBody.size() - 1].x,
+		nibblerBody[nibblerBody.size() - 1].y
+	};
 
-	lastPos = {nibblerBody[nibblerBody.size() - 1].x, nibblerBody[nibblerBody.size() - 1].y};
 	score++;
-	snakeMove();
 	nibblerBody.resize(nibblerBody.size());
 	nibblerBody.emplace_back(lastPos);
 	createCandy();
-	return (0);
 }
 
 void	NibblerScene::createCandy()
 {
-	int	x = rand() % WIDTH;
-	int	y = rand() % HEIGHT;
+	int	x;
+	int	y;
 
-	if (nibblerMap[y][x] != '#' && nibblerMap[y][x] != 'O') {
-		candy.y = y;
-		candy.x = x;
-		nibblerTexture["candy"].position.x = (x+5)*20;
-		nibblerTexture["candy"].position.y = (y+5)*20;
+	srand(time(NULL));
+	x = rand() % WIDTH;
+	y = rand() % HEIGHT;
+	while (nibblerMap[y][x] != ' ') {
+		y = rand() % HEIGHT;
+		x = rand() % WIDTH;
 	}
+	candy.y = y;
+	candy.x = x;
+	nibblerTexture["candy"].position.x = (x + 5) * 20;
+	nibblerTexture["candy"].position.y = (y + 5) * 20;
 }
 
 void	NibblerScene::sceneEvent(IDisplay *display)
 {
-	if (display->GetKey(arcade::KEYBOARD, arcade::CLOSE))
+	if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
 		display->destroyWindow();
+	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
+		display->destroyWindow();
+	if (display->GetKey(arcade::KEYBOARD, arcade::M)) {
+		display->setSwitchScene(true);
+		display->setNewGamePath("menu");
+	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		if (move.x == direction.right.x || move.x == direction.left.x || !keyOk)
 			return;
@@ -188,11 +198,13 @@ void	NibblerScene::sceneEvent(IDisplay *display)
 	}
 }
 
-std::map<std::string, Texture>	NibblerScene::getTexture() const {
+textureList	NibblerScene::getTexture() const
+{
 	return nibblerTexture;
 }
 
-std::map<std::string, Texture>	NibblerScene::getText() const {
+textureList	NibblerScene::getText() const
+{
 	return nibblerText;
 }
 
@@ -201,11 +213,7 @@ void	NibblerScene::compute()
 	long	now = getCurrentTime();
 
 	if (play) {
-		int x = (nibblerTexture["candy"].position.x) / 20 - 5;
-		int y = (nibblerTexture["candy"].position.y) / 20 - 5;
 		if (now - currentTime > 250) {
-			if (nibblerMap[y + move.y][x + move.x] == '#')
-				exit(84);
 			snakeMove();
 			currentTime = now;
 			nibblerText["score"].path = std::to_string(score);
@@ -214,7 +222,7 @@ void	NibblerScene::compute()
 	}
 }
 
-std::vector<std::vector<char>> NibblerScene::getMap() const
+mapChar	NibblerScene::getMap() const
 {
 	return nibblerMap;
 }

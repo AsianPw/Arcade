@@ -86,12 +86,12 @@ std::map<std::string, Texture>  PacmanScene::getText() const
 
 void    PacmanScene::sceneEvent(IDisplay *display)
 {
-	if (display->GetKey(arcade::KEYBOARD, arcade::CLOSE)) {
+	if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 		display->destroyWindow();
-	}
-	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE)) {
+	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
 		display->destroyWindow();
-	}
+	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
+		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		if (loose == true || win == true)
 			exit(0);
