@@ -6,7 +6,7 @@
 */
 #include <iostream>
 #include "../inc/Core.hpp"
-#include "../inc/MenuTest.hpp"
+#include "../inc/Menu.hpp"
 #include "../inc/ArcadeException.hpp"
 
 Core::Core(std::string const &path) : scene(std::make_unique<Menu>(path)), loader(nullptr), gameLoader(nullptr), game(nullptr), display(nullptr), path(path)

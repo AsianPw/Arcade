@@ -32,6 +32,8 @@ private:
 	bool				loose = false;
 	bool				win = false;
 	int				nbr_food;
+	int				way;
+	int 			life = 3;
 public:
 	PacmanScene();
 	~PacmanScene() override = default;
@@ -47,7 +49,7 @@ public:
 	void				Move_left();
 	void				createMap();
 	void				GoshtMove3();
-    void				GoshtMove2();
+	void				GoshtMove2();
 	void				print_map();
 	int				get_nbrfood();
 };
