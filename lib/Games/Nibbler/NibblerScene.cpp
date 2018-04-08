@@ -140,7 +140,7 @@ void	NibblerScene::createCandy()
 	int	x = rand() % WIDTH;
 	int	y = rand() % HEIGHT;
 
-	if (nibblerMap[y][x] != '#' && nibblerMap[y][x] != 'O') {
+	if (nibblerMap[y][x] != '#' && nibblerMap[y][x] != 'O' && nibblerMap[y][x] != '@') {
 		candy.y = y;
 		candy.x = x;
 		nibblerTexture["candy"].position.x = (x+5)*20;
