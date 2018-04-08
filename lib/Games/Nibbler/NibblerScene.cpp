@@ -88,7 +88,7 @@ void	NibblerScene::createMap()
 
 void	NibblerScene::snakeMove()
 {
-	size_t	x = nibblerBody.size()-1;
+	size_t	x = nibblerBody.size() - 1;
 
 	while (x)
 	{
@@ -123,11 +123,12 @@ void	NibblerScene::snakeMove()
 }
 
 void	NibblerScene::eatAndGrow() {
-	Position	lastPos;
+	Position	lastPos = {
+		nibblerBody[nibblerBody.size() - 1].x,
+		nibblerBody[nibblerBody.size() - 1].y
+	};
 
-	lastPos = {nibblerBody[nibblerBody.size() - 1].x, nibblerBody[nibblerBody.size() - 1].y};
 	score++;
-	//snakeMove();
 	nibblerBody.resize(nibblerBody.size());
 	nibblerBody.emplace_back(lastPos);
 	createCandy();
@@ -135,10 +136,12 @@ void	NibblerScene::eatAndGrow() {
 
 void	NibblerScene::createCandy()
 {
-	srand(time(NULL));
-	int	x = rand() % WIDTH;
-	int	y = rand() % HEIGHT;
+	int	x;
+	int	y;
 
+	srand(time(NULL));
+	x = rand() % WIDTH;
+	y = rand() % HEIGHT;
 	while (nibblerMap[y][x] != ' ') {
 		y = rand() % HEIGHT;
 		x = rand() % WIDTH;
@@ -195,11 +198,13 @@ void	NibblerScene::sceneEvent(IDisplay *display)
 	}
 }
 
-std::map<std::string, Texture>	NibblerScene::getTexture() const {
+textureList	NibblerScene::getTexture() const
+{
 	return nibblerTexture;
 }
 
-std::map<std::string, Texture>	NibblerScene::getText() const {
+textureList	NibblerScene::getText() const
+{
 	return nibblerText;
 }
 
@@ -217,7 +222,7 @@ void	NibblerScene::compute()
 	}
 }
 
-std::vector<std::vector<char>> NibblerScene::getMap() const
+mapChar	NibblerScene::getMap() const
 {
 	return nibblerMap;
 }

@@ -27,24 +27,21 @@ public:
 	NibblerScene();
 	~NibblerScene() override = default;
 	void	sceneEvent(IDisplay *) override ;
-	std::map<std::string, Texture>	getTexture() const override ;
-	std::map<std::string, Texture>	getText() const override ;
+	textureList	getTexture() const override ;
+	textureList	getText() const override ;
 	void	compute() override;
 	void	eatAndGrow();
-
-	std::vector<std::vector<char>> getMap() const override;
-
+	mapChar	getMap() const override;
 	void	showMap();
 	void	snakeMove();
 	void	createCandy();
 	void	createMap();
 	void	createSnake();
-
 private:
-	std::map<std::string, Texture>	nibblerTexture;
-	std::map<std::string, Texture>	nibblerText;
+	textureList	nibblerTexture;
+	textureList	nibblerText;
 	std::vector<Position>		nibblerBody;
-	std::vector<std::vector<char>>	nibblerMap;
+	mapChar	nibblerMap;
 	int				score;
 	Direction			direction;
 	Position			move;
