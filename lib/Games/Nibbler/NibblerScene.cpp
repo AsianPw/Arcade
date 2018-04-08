@@ -150,9 +150,11 @@ void	NibblerScene::createCandy()
 
 void	NibblerScene::sceneEvent(IDisplay *display)
 {
-	if (display->GetKey(arcade::KEYBOARD, arcade::CLOSE))
+	if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
+		display->destroyWindow();
+	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		if (move.x == direction.right.x || move.x == direction.left.x || !keyOk)

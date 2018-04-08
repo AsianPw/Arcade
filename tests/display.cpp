@@ -8,7 +8,7 @@
 #include <criterion/criterion.h>
 #include <iostream>
 #include "../inc/utils.hpp"
-#include "../lib/Graphics/Sfml/Sfml.hpp"
+#include "../inc/Sfml.hpp"
 
 Test(Utils, FileExist, .description = "Check if file exist")
 {

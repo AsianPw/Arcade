@@ -7,7 +7,7 @@
 
 #include <SFML/Window.hpp>
 #include <iostream>
-#include "Sfml.hpp"
+#include "../../../inc/Sfml.hpp"
 #include "../../../inc/Alias.hpp"
 
 SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h), alreadyLoad(false)
@@ -20,6 +20,7 @@ SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h), alreadyLoad(
 	allEvent.insert({arcade::LEFT,sf::Keyboard::Left});
 	allEvent.insert({arcade::RIGHT,sf::Keyboard::Right});
 	allEvent.insert({arcade::ENTER, sf::Keyboard::Return});
+	allEvent.insert({arcade::Q, sf::Keyboard::Q});
 	change = false;
 	switchScene = false;
 }
