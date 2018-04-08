@@ -80,14 +80,11 @@ void	NibblerScene::createMap()
 				nibblerMap[y][x] = '@';
 			else if (!state)
 				nibblerMap[y][x] = ' ';
-			std::cout << nibblerMap[y][x];
 			x++;
 			it = nibblerBody.begin();
 		}
-		std::cout << std::endl;
 		y++;
 	}
-	std::cout << std::endl;
 }
 
 void	NibblerScene::snakeMove()
@@ -107,8 +104,15 @@ void	NibblerScene::snakeMove()
 		nibblerText.insert({"loose", {"Game Over", ' ', false, true, {300, 280}}});
 		play = false;
 	}
-	else if (nibblerMap[nibblerBody[x].y][nibblerBody[x].x] == '@')
+	else if (nibblerMap[nibblerBody[x].y][nibblerBody[x].x] == '@') {
 		eatAndGrow();
+		for (auto const &line : nibblerBody) {
+			nibblerTexture["nibbler" + std::to_string(x)].position.x = (line.x + 5) * 20;
+			nibblerTexture["nibbler" + std::to_string(x)].position.y = (line.y + 5) * 20;
+			nibblerTexture.insert({"nibbler" + std::to_string(nibblerBody.size()-1), (Texture){"./res/nibbler.png", ' ', true, true, {(int)((line.x + 5) * WIDTH_TEXTURE), (int)((line.y + 5) * HEIGHT_TEXTURE)}}});
+			x++;
+		}
+	}
 	else {
 		for (auto const &line : nibblerBody) {
 			nibblerTexture["nibbler" + std::to_string(x)].position.x = (line.x + 5) * 20;
@@ -127,7 +131,6 @@ int	NibblerScene::eatAndGrow() {
 	snakeMove();
 	nibblerBody.resize(nibblerBody.size());
 	nibblerBody.emplace_back(lastPos);
-	nibblerTexture.insert({"nibbler" + std::to_string(nibblerBody.size()), (Texture){"./res/nibbler.png", ' ', true, true, {(int)((lastPos.x + 5) * WIDTH_TEXTURE), (int)((lastPos.y + 5) * HEIGHT_TEXTURE)}}});
 	createCandy();
 	return (0);
 }
