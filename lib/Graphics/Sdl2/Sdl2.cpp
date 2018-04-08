@@ -97,7 +97,6 @@ bool	Sdl2::Display()
 		rect.h = it.first->h;
 		SDL_BlitSurface(it.first, nullptr, windowSurface, &rect);
 	}
-
 	for (auto const &text : texts) {
 		rect.x = text.second.x;
 		rect.y = text.second.y;
