@@ -161,7 +161,7 @@ void	NibblerScene::sceneEvent(IDisplay *display)
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
 		display->destroyWindow();
-	if (display->GetKey(arcade::KEYBOARD, arcade::M)) {
+	if (display->GetKey(arcade::KEYBOARD, arcade::M) && !play) {
 		display->setSwitchScene(true);
 		display->setNewGamePath("menu");
 	}
