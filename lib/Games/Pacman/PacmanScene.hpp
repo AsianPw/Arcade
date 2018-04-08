@@ -12,41 +12,27 @@
 #include "../../../inc/Texture.hpp"
 #include "Pacman.hpp"
 
-static const size_t WIDTH_TEXTURE = 30;
-static const size_t HEIGHT_TEXTURE = 30;
-
-typedef enum way_to_go
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
-}           way_go;
-
-struct Way{
-	Position     up = {0, 1};
-	Position     left = {-1, 0};
-	Position     down = {0, -1};
-	Position     right = {1, 0};
-	Position     none = {0, 0};
-};
+static const size_t WIDTH_TEXTURE = 27;
+static const size_t HEIGHT_TEXTURE = 27;
 
 class PacmanScene : public IScene {
 private:
 	std::vector<std::vector<char>> pacmanMap;
-	Way                dir;
-	Position           gosht;
-	Position           move;
 	size_t             score;
 	Position           player;
 	Position           gosht1;
 	Position           gosht2;
 	Position           gosht3;
 	Position           gosht4;
+	int                direction;
 	static const size_t             WIDTH = 26;
 	static const size_t             HEIGHT = 20;
 	std::map<std::string, Texture>  PacmanTexture;
 	std::map<std::string, Texture>  PacmanText;
+	long                            currentTime;
+	bool                            loose = false;
+	bool                            win = false;
+	int                             nbr_food;
 public:
 	PacmanScene();
 	~PacmanScene() override = default;
@@ -61,9 +47,9 @@ public:
 	void    Move_up();
 	void    Move_left();
 	void    createMap();
-	void    PlayerEatFood();
 	void    GoshtMove();
 	void    print_map();
+	int     get_nbrfood();
 };
 
 #endif
