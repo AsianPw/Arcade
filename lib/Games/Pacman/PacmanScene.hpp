@@ -32,6 +32,7 @@ private:
 	bool				loose = false;
 	bool				win = false;
 	int				nbr_food;
+	int                             way;
 public:
 	PacmanScene();
 	~PacmanScene() override = default;
