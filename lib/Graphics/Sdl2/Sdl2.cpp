@@ -9,7 +9,7 @@
 #include "../../../inc/Sdl2.hpp"
 #include "../../../inc/ArcadeException.hpp"
 
-Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
+Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true), window(nullptr)
 {
 	allEvent.insert({arcade::CLOSE, SDL_WINDOWEVENT_CLOSE});
 	allEvent.insert({arcade::ESCAPE, SDL_SCANCODE_ESCAPE});
@@ -18,6 +18,8 @@ Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
 	allEvent.insert({arcade::LEFT, SDL_SCANCODE_LEFT});
 	allEvent.insert({arcade::RIGHT, SDL_SCANCODE_RIGHT});
 	allEvent.insert({arcade::ENTER, SDL_SCANCODE_RETURN});
+	allEvent.insert({arcade::Q, 4});
+	allEvent.insert({arcade::M, 51});
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_Quit();
 		throw arcade::GraphicsLibraryError(SDL_GetError());
@@ -39,12 +41,15 @@ Sdl2::Sdl2(size_t w, size_t h) : width(w), height(h), finish(true)
 		SDL_Quit();
 		throw arcade::GraphicsLibraryError(SDL_GetError());
 	}
+	change = false;
+	switchScene = false;
 }
 
 Sdl2::~Sdl2()
 {
 	TTF_Quit();
-	SDL_DestroyWindow(window);
+	if (window != nullptr)
+		SDL_DestroyWindow(window);
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -57,9 +62,7 @@ bool	Sdl2::GetKey(arcade::TypeEvent typeEvent, std::string const &currentEvent)
 		return false;
 	if (typeEvent == arcade::WINDOW && search->second == event.window.event)
 		return true;
-	if (event.type == SDL_KEYUP && typeEvent == arcade::KEYBOARD && search->second == event.key.keysym.scancode)
-		return true;
-	return false;
+	return search->second == event.key.keysym.scancode;
 }
 
 bool	Sdl2::isKey()
@@ -78,6 +81,7 @@ bool	Sdl2::Display()
 {
 	SDL_Rect	rect;
 
+	SDL_FillRect(windowSurface, nullptr, SDL_MapRGB(windowSurface->format, 0, 0, 0));
 	for (auto const &it : textures) {
 		rect.x = it.second.x;
 		rect.y = it.second.y;
@@ -109,9 +113,10 @@ void Sdl2::setEvent(const SDL_Event &event)
 	Sdl2::event = event;
 }
 
-bool Sdl2::loadText(std::map<std::string, Texture> const&text)
+bool Sdl2::loadText(textureList const&text)
 {
-	SDL_Color	black = {0, 0, 0, 0};
+	SDL_Color	black = {255, 255, 255, 0};
+	SDL_Surface	*tmpText;
 
 	if (font == nullptr)
 		return false;
@@ -121,18 +126,17 @@ bool Sdl2::loadText(std::map<std::string, Texture> const&text)
 	for (auto const &it : text) {
 		if (it.second.isFile || !it.second.display)
 			continue;
-		SDL_Surface	*tmpText;
-
 		tmpText = TTF_RenderText_Blended(font, it.second.path.c_str(), black);
 		if (tmpText == nullptr)
 			continue;
-		texts.insert({tmpText, {it.second.position.x, it.second.position.y}});
+		texts.emplace(std::make_pair(tmpText, (Position){it.second.position.x, it.second.position.y}));
 	}
 	return false;
 }
 
-bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
+bool Sdl2::loadTexture(textureList const&toLoad)
 {
+	SDL_Surface	*tmpTexture;
 
 	for (auto const &it : textures)
 		SDL_FreeSurface(it.first);
@@ -140,14 +144,59 @@ bool Sdl2::loadTexture(std::map<std::string, Texture> const&toLoad)
 	for (auto const &it : toLoad) {
 		if (!it.second.isFile || !it.second.display)
 			continue;
-		SDL_Surface	*tmpTexture;
-
 		tmpTexture = IMG_Load(it.second.path.c_str());
 		if (tmpTexture == nullptr) {
 			std::cerr << "Can't load " << it.second.path << std::endl;
 			continue;
 		}
-		textures.insert({tmpTexture, {it.second.position.x, it.second.position.y}});
+		textures.emplace(std::make_pair(tmpTexture, (Position){it.second.position.x, it.second.position.y}));
 	}
 	return true;
+}
+
+void Sdl2::changeLibrary(std::string const &path)
+{
+	change = true;
+	newLibraryPath = path;
+}
+
+std::string const&	Sdl2::getLibraryPath() const
+{
+	return newLibraryPath;
+}
+
+bool	Sdl2::getChange() const
+{
+	return change;
+}
+
+void	Sdl2::setChange(bool state)
+{
+	change = state;
+}
+
+bool Sdl2::getSwitchScene() const
+{
+	return switchScene;
+}
+
+void	Sdl2::setSwitchScene(bool state)
+{
+	switchScene = state;
+}
+
+std::string const	&Sdl2::getNewGamePath() const
+{
+	return newGamePath;
+}
+
+void Sdl2::setNewGamePath(std::string const &gamePath)
+{
+	newGamePath = gamePath;
+}
+
+bool Sdl2::loadMap(mapChar const &map)
+{
+	(void)map;
+	return false;
 }

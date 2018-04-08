@@ -14,8 +14,8 @@ using criterion::logging::warn;
 Test(SDL2_TEST, ESCAPE_KEY)
 {
 	std::unique_ptr<Sdl2>	sdl(new Sdl2(800, 600));
-
 	SDL_Event	event;
+
 	event.key.keysym.scancode = SDL_SCANCODE_ESCAPE;
 	sdl->setEvent(event);
 	cr_assert(sdl->GetKey(arcade::KEYBOARD, arcade::ESCAPE),
@@ -26,8 +26,8 @@ Test(SDL2_TEST, ESCAPE_KEY)
 Test(SDL2_TEST, UNKNOWN_KEY)
 {
 	std::unique_ptr<Sdl2>	sdl(new Sdl2(800, 600));
-
 	SDL_Event	event;
+
 	event.key.keysym.scancode = SDL_SCANCODE_L;
 	sdl->setEvent(event);
 	cr_assert_not(sdl->GetKey(arcade::KEYBOARD, arcade::ESCAPE),

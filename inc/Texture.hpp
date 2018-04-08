@@ -12,17 +12,18 @@
 #include <string>
 
 struct Position {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
 };
 
 struct Texture {
 	std::string	path;
+	char		similar;
 	bool		isFile;
 	bool		display;
 	Position	position;
 };
 
-Texture	createTexture(std::string, bool, size_t, size_t);
+Texture	createTexture(std::string, bool, int, int);
 
 #endif //CPP_ARCADE_TEXTURE_HPP

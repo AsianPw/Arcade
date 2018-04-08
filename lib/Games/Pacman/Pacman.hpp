@@ -9,11 +9,13 @@
 #define CPP_ARCADE_PACMAN_HPP
 
 #include "../../../inc/IGame.hpp"
+#include "time.h"
 
 class Pacman : public IGame {
 public:
 	Pacman();
 	~Pacman() override = default;
+	IScene	*start() override;
 
 public:
 	std::string	const &getName() const override;

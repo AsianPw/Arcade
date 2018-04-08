@@ -8,11 +8,15 @@
 #include <iostream>
 #include <dirent.h>
 #include <cstring>
+#include <algorithm>
 #include "../inc/utils.hpp"
-#include "Menu.hpp"
+#include "../inc/Menu.hpp"
+#include "../inc/Texture.hpp"
 #include "../inc/GameLoader.hpp"
+#include "../inc/ArcadeException.hpp"
+#include "../inc/Time.hpp"
 
-void	listFiles(const char* path, std::vector<std::string> &list)
+void	listFiles(const char* path, stringList &list)
 {
 	DIR		*dirFile = opendir(path);
 	struct dirent	*hFile;
@@ -20,8 +24,6 @@ void	listFiles(const char* path, std::vector<std::string> &list)
 	if (dirFile)
 	{
 		while ((hFile = readdir( dirFile )) != nullptr) {
-			if (!strcmp(hFile->d_name, "." )) continue;
-			if (!strcmp(hFile->d_name, "..")) continue;
 			if ((hFile->d_name[0] == '.')) continue;
 			if (strstr(hFile->d_name, ".so"))
 				list.emplace_back(hFile->d_name);
@@ -30,41 +32,74 @@ void	listFiles(const char* path, std::vector<std::string> &list)
 	}
 }
 
-void	init_text(char const *dir, std::vector<std::string> &list, std::map<std::string, Texture> &text, Position &pos)
+void	init_text(char const *dir, stringList &list, textureList &text, Position &pos)
 {
 	size_t	count = 0;
+	unsigned long	subPos;
+	std::string	currentPath;
+	std::string	toErase;
 
 	listFiles(dir, list);
 	for (auto const &current : list) {
-		text.insert({current, createTexture(current, count == 0, pos.x, pos.y)});
+		currentPath = current;
+		toErase = "lib_arcade_";
+		subPos = current.find(toErase);
+		if (subPos != std::string::npos)
+			currentPath.erase(subPos, toErase.size());
+		currentPath.erase(currentPath.size() - 3);
+		text.insert({current, {currentPath, ' ', checkFileExist(current), count == 0, {pos.x, pos.y}}});
 		count += 1;
 	}
 }
 
-Menu::Menu()
+void	Menu::chooseGraphics(std::string const &path)
+{
+	std::string	tmp;
+	std::string	tmpPath(path);
+	size_t	pos;
+
+	pos = path.find("./");
+	if (pos != std::string::npos)
+		tmpPath.erase(pos, 2);
+	for (auto &it : menuText) {
+		tmp = arcade::GRAPHICSDIR + it.first;
+		pos = tmp.find("./");
+		if (pos != std::string::npos)
+			tmp.erase(pos, 2);
+		it.second.display = (tmpPath == tmp);
+	}
+}
+
+Menu::Menu(std::string const &path) : currentTime(getCurrentTime())
 {
 	Position	pos = {arcade::WIDTH / 2 - 100, 100};
 
-	time = 0;
+	pos.x += 150;
 	init_text(arcade::GRAPHICSDIR, graphicLib, menuText, pos);
+	chooseGraphics(path);
+	pos.x -= 150;
+	menuText.insert({"graph", {"choose your graphic library:", ' ', false, true, {pos.x - 280, pos.y - 50}}});
+	menuText.insert({"game", {"choose your game:", ' ', false, true, {pos.x - 280, pos.y + 50}}});
 	pos.y = 200;
+	pos.x += 150;
 	init_text(arcade::GAMESDIR, gamesLib, menuText, pos);
-	menuText.insert({"press", createTexture(PRESS, true, arcade::WIDTH / 2, 500)});
-	menuTexture.insert({"cursor", createTexture("./res/menu_cursor.png", true, 140, 100)});
-	menuTexture.insert({"0", createTexture("./res/menu_wallpaper.jpeg", true, 0, 0)});
-	menuTexture.insert({"champi", createTexture("./res/menu_champi.png", true, 80, 160)});
-	menuTexture.insert({"mario", createTexture("./res/menu_mario.png", true, 0, 130)});
+	menuText.insert({"press", {PRESS, ' ', false, true, {arcade::WIDTH / 2, 500} } });
+	menuTexture.insert({"cursor", {"./res/menu_cursor.png", '>', true, true, {280, 100}}});
+	menuTexture.insert({"0", {"./res/menu_wallpaper.jpeg", ' ', true, true, {0, 0}}});
+	menuTexture.insert({"champi", {"./res/menu_champi.png", ' ', true, true, {80, 160}}});
+	menuTexture.insert({"mario", {"./res/menu_mario.png", ' ', true, true, {0, 130}}});
 	current = &graphicLib;
 }
 
 void	Menu::sceneEvent(IDisplay *display)
 {
 	auto	it = current->begin();
-	size_t	count = 0;
 
 	if (display->GetKey(arcade::WINDOW, arcade::CLOSE))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::ESCAPE))
+		display->destroyWindow();
+	if (display->GetKey(arcade::KEYBOARD, arcade::Q))
 		display->destroyWindow();
 	if (display->GetKey(arcade::KEYBOARD, arcade::UP)) {
 		if (menuTexture["cursor"].position.y == 200) {
@@ -80,31 +115,33 @@ void	Menu::sceneEvent(IDisplay *display)
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::LEFT)) {
 		while (it != current->end()) {
-			if (count > 0 && menuText[*it].display) {
+			if (it != current->begin() && menuText[*it].display) {
 				menuText[*it].display = false;
 				menuText[*--it].display = true;
+				if (current == &graphicLib)
+					display->changeLibrary(*it);
 				break;
 			}
-			count += 1;
 			it++;
 		}
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::RIGHT)) {
 		while (it != current->end()) {
-			if (current->size() - 1 > count && menuText[*it].display) {
+			if (it != current->end() - 1 && menuText[*it].display) {
 				menuText[*it].display = false;
 				menuText[*++it].display = true;
+				if (current == &graphicLib)
+					display->changeLibrary(*it);
 				break;
 			}
-			count += 1;
 			it++;
 		}
 	}
 	if (display->GetKey(arcade::KEYBOARD, arcade::ENTER)) {
-		std::cout << "Enter press" << std::endl;
 		for (auto const &game : gamesLib) {
 			if (menuText[game].display) {
-				std::cout << "Load game " << game << std::endl;
+				display->setSwitchScene(true);
+				display->setNewGamePath(arcade::GAMESDIR + game);
 			}
 		}
 	}
@@ -112,25 +149,33 @@ void	Menu::sceneEvent(IDisplay *display)
 
 void	Menu::compute()
 {
-	if (time == 10) {
+	long	now = getCurrentTime();
+
+	if (now - currentTime > 250) {
 		menuText["press"].display = !menuText["press"].display;
-		time = 0;
+		currentTime = now;
 	}
 	menuTexture["champi"].position.x += 2;
 	menuTexture["mario"].position.x += 2;
-	if (menuTexture["champi"].position.x > arcade::WIDTH)
-		menuTexture["champi"].position.x = 0;
-	if (menuTexture["mario"].position.x > arcade::WIDTH)
-		menuTexture["mario"].position.x = 0;
-	time += 1;
+	if (menuTexture["champi"].position.x > (int)(arcade::WIDTH + 20))
+		menuTexture["champi"].position.x = -20;
+	if (menuTexture["mario"].position.x > (int)(arcade::WIDTH + 20))
+		menuTexture["mario"].position.x = -20;
 }
 
-std::map<std::string, Texture> Menu::getText() const
+textureList	Menu::getText() const
 {
-	return menuText;
+	textureList	tmp = menuText;
+
+	return tmp;
 }
 
-std::map<std::string, Texture> Menu::getTexture() const
+textureList	Menu::getTexture() const
 {
 	return menuTexture;
+}
+
+mapChar	Menu::getMap() const
+{
+	return menuMap;
 }

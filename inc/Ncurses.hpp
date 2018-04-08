@@ -12,23 +12,36 @@
 #include <map>
 #include <ncurses.h>
 #include "IDisplay.hpp"
+#include "Alias.hpp"
+
+static const int KEY_Q = 113;
+static const int KEY_RETURN = 10;
 
 class NcursesDisplay : public IDisplay {
 public:
 	NcursesDisplay(size_t, size_t);
-	~NcursesDisplay();
+	~NcursesDisplay() override;
 public:
-	bool Display();
-	bool isOpen();
-	bool GetKey(arcade::TypeEvent typeEvent, std::string const &type);
-	bool isKey();
-	bool	loadTexture(std::map<std::string, Texture> const&);
-	bool	loadText(std::map<std::string, Texture> const&);
-	void destroyWindow();
+	bool	Display() override;
+	bool	isOpen() override;
+	bool	GetKey(arcade::TypeEvent, std::string const &) override;
+	bool	isKey() override;
+	bool	loadTexture(textureList const&) override;
+	bool	loadText(textureList const&) override;
+	void	changeLibrary(std::string const &) override;
+	bool	getChange() const override;
+	void	setChange(bool) override;
+	const std::string	&getLibraryPath() const override;
+	void	destroyWindow() override;
+	const std::string	&getNewGamePath() const override;
+	void	setNewGamePath(std::string const &) override;
+	bool	loadMap(mapChar const &) override;
+	bool	getSwitchScene() const override;
+	void	setSwitchScene(bool) override;
 private:
-	std::map<std::string, int> allEvent;
-	int currentKey;
-	WINDOW *window;
+	eventList	allEvent;
+	int		currentKey;
+	WINDOW		*window;
 };
 
 #endif //CPP_ARCADE_NCURSES_HPP

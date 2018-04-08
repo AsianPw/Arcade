@@ -29,10 +29,11 @@ SRCS		=	./src/main.cpp	\
 				./src/Loader.cpp	\
 				./src/GameLoader.cpp	\
 				./src/Menu.cpp	\
+				./src/Core.cpp	\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
-UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system -lSDL2
+UNIT_FLAGS	=	-lcriterion -lsfml-graphics -lsfml-window -lsfml-system -lSDL2 -lSDL2_image -lSDL2_ttf
 
 LDFLAGS		=	-ldl
 CXXFLAGS	=	-W -Wall -Wextra -std=c++14
@@ -59,6 +60,7 @@ install:
 	sudo apt install libsfml-dev
 	sudo apt install libglfw3
 	sudo apt install libglfw3-dev
+	sudo apt install mesa-vulkan-drivers vulkan-utils
 
 %.o: %.cpp
 	@printf "[\033[0;32mcompiled\033[0m] % 70s\n" $< | tr ' ' '.'
