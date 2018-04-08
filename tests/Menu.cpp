@@ -7,7 +7,7 @@
 
 #include <unistd.h>
 #include <criterion/criterion.h>
-#include "../inc/MenuTest.hpp"
+#include "../inc/Menu.hpp"
 #include "../inc/Time.hpp"
 #include "../inc/Sfml.hpp"
 

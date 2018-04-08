@@ -27,6 +27,8 @@ public:
 	void		compute() override;
 public:
 	void	chooseGraphics(std::string const &);
+	void	listFiles(const char* path, stringList &list);
+	void	init_text(char const *, stringList &, textureList &, Position &);
 private:
 	textureList	menuTexture;
 	textureList	menuText;
@@ -35,6 +37,7 @@ private:
 	stringList	graphicLib;
 	stringList	gamesLib;
 	long	currentTime;
+	long	marioTime;
 };
 
 #endif //CPP_ARCADE_MENU_HPP

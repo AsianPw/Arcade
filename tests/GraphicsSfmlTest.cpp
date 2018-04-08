@@ -9,6 +9,7 @@
 #include <iostream>
 #include "../inc/Sfml.hpp"
 #include "../inc/Loader.hpp"
+#include "../inc/ArcadeException.hpp"
 
 Test(SFML_Library, ESCAPE_Key, .description = "Test of KEY_ESCAPE binding")
 {
@@ -97,6 +98,13 @@ Test(SFML_Library, isOpen, .description = "Check if window is open")
 	cr_assert(sfml->isOpen(), "Test window is open failed !\n");
 	sfml->Display();
 	sfml->destroyWindow();
+}
+
+Test(SFML_LIBRARY, EXCEPTION_WINDOW)
+{
+	std::unique_ptr<SfmlDisplay>	sfml = nullptr;
+
+	cr_assert_throw(sfml = std::make_unique<SfmlDisplay>(-1, -1), arcade::GraphicsLibraryError, "SFML doesn't crash");
 }
 
 Test(SFML_LIBRARY, Load_SFML_LIBRARY)

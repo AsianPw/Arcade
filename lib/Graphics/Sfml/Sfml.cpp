@@ -9,10 +9,16 @@
 #include <iostream>
 #include "../../../inc/Sfml.hpp"
 #include "../../../inc/Alias.hpp"
+#include "../../../inc/ArcadeException.hpp"
 
 SfmlDisplay::SfmlDisplay(size_t w, size_t h) : width(w), height(h), alreadyLoad(false)
 {
+	if (w > 1920 || h > 1080)
+		throw arcade::GraphicsLibraryError("SFML: Size are too big");
 	window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width,height), "SFML");
+	if (window == nullptr) {
+		throw arcade::GraphicsLibraryError("SFML: Unable to init window");
+	}
 	allEvent.insert({arcade::CLOSE, sf::Event::Closed});
 	allEvent.insert({arcade::ESCAPE,sf::Keyboard::Escape});
 	allEvent.insert({arcade::UP,sf::Keyboard::Up});
